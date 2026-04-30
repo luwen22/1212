@@ -250,9 +250,29 @@
 
         .footer-note { text-align: center; font-size: 10px; color: #9B8BA8; padding: 4px 0; line-height: 1.6; }
         .toast-msg { position: fixed; top: 50px; left: 50%; transform: translateX(-50%); background: rgba(60,40,60,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #FFFBF7; padding: 9px 20px; border-radius: 50px; font-size: 13px; z-index: 200; pointer-events: none; animation: fadeIn .3s ease; }
+
+        /* 音乐按钮样式 */
+        #musicBtn {
+            position: fixed; bottom: 25px; right: 20px; z-index: 999;
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(255,255,255,.6);
+            border: 1px solid rgba(180,180,220,.4);
+            font-size: 18px; cursor: pointer;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(100,80,140,.1);
+            transition: all .3s ease;
+        }
+        #musicBtn:active { transform: scale(.9); background: rgba(255,255,255,.8); }
     </style>
 </head>
 <body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="HOYO-MiX, Aimer - 未行之路 The Road Not Taken.ogg" type="audio/ogg">
+    </audio>
+    <!-- 音乐控制按钮 -->
+    <button id="musicBtn" onclick="toggleMusic()">🎵</button>
+
     <div class="bg-lens-flare"></div>
     <canvas id="particleCanvas"></canvas>
 
@@ -296,6 +316,16 @@
     </div>
 
     <script>
+        // 音乐控制
+        let musicOn = false;
+        function toggleMusic() {
+            const m = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicBtn');
+            if (musicOn) { m.pause(); btn.textContent = '🎵'; }
+            else { m.play().catch(() => {}); btn.textContent = '🎶'; }
+            musicOn = !musicOn;
+        }
+
         const whitelist = {
             '张湘伟':{code:'202211',badge:'挚友档案',tag:'从线上相识到跨城相伴',desc:'2022年9月，学生会查课让你们在线上初识。从QQ好友到结伴旅行，从怀化跨年到娄底小聚，再到芷江晚风、北海逐浪，你们的青春填满了烟火气与长情。',tagline:'你们的故事，从辛普森头像开始',achievements:[{icon:'📋',title:'查课线上初识',desc:'2022年9月，虽未实地查课，但学生会的工作让你们在线上正式结缘。',date:'2022.09'},{icon:'📸',title:'宿舍摄影萌芽',desc:'2023年，张湘伟来你宿舍，让你尝试拍美式风格照片，摄影的种子就此埋下。',date:'2023'},{icon:'🎮',title:'MC地铁建造者',desc:'2024年初春联机MC，规划庞大线路：1号线村庄→矿山，2号线矿山→海信，3号线矿山→地丹→矿源→雪海→森屋，4号线矿山→长白山，5号线长白山→蜜雪冰村→鸣沙神殿，6号线鸣沙神殿→月牙泉。',date:'2024春'},{icon:'🎤',title:'怀化跨年欢唱',desc:'2024年末，一起在怀化跨年，看电影、K歌，在歌声中迎接新年。',date:'2024.12'},{icon:'🌊',title:'北海出片达人',desc:'2025年4月共赴北海，海岛上吃着海鲜吹着海风，你一路为他拍下无数美好瞬间。',date:'2025.04'},{icon:'🎈',title:'奶龙气球跨年夜',desc:'2025年末，与刘丰华一起吃着麦当劳，带着奶龙气球，在万达酒店欢乐跨年。',date:'2025.12'},{icon:'🍵',title:'娄底故里之行',desc:'2025年12月底，你们来到娄底。K歌、拍照、喝茶，张湘伟爸爸的茶格外好喝，还一起睡在姐姐的婚房，去了寺庙祈福。',date:'2025.12'},{icon:'🐱',title:'芷江晚风与猫',desc:'2026年4月，同游芷江，漫步风雨桥与桃花溪，一只小猫一路跟随，温柔治愈。',date:'2026.04'}],words:[{text:'辛普森',detail:'你的经典黄色头像，是相识最初的小众记忆点。'},{text:'摄影',detail:'从宿舍随手拍开始，你成了他镜头里最自然的主角。'},{text:'MC地铁',detail:'那些天马行空的线路规划，是专属你们的解压天地。'},{text:'北海',detail:'海风、海鲜与不停按下的快门，是2025年最闪亮的日子。'},{text:'奶龙',detail:'跨年夜牵着的气球，是傻气又真挚的快乐证明。'},{text:'娄底',detail:'走入彼此生活，喝茶闲聊，是友情最踏实的模样。'},{text:'芷江',detail:'晚风、古桥与跟随的小猫，构成了四月最温柔的画面。'},{text:'押题',detail:'每逢期末一起商讨重点，你的字迹好看又清晰。'}],quiz:[{q:'你们最初是如何相识的？',opts:['军训现场','学生会线上查课','社团活动','食堂偶遇'],ans:1,exp:'2022年9月，学生会查课工作让你们在线上结缘。'},{q:'张湘伟早期经典QQ头像是？',opts:['风景壁纸','黄色辛普森','动漫角色','纯色图'],ans:1,exp:'黄色辛普森，是你们初识时的独家记忆。'},{q:'不属于MC地铁2号线站点的是？',opts:['矿山','海信','长白山','无'],ans:2,exp:'长白山属于4号线，2号线是矿山到海信。'},{q:'2026年春日一同前往的地方是？',opts:['成都','娄底','芷江','北海'],ans:2,exp:'四月芷江行，晚风相伴，小猫跟随。'},{q:'2025年4月海岛之行，他做得最多的事是？',opts:['游泳','给你拍照出片','钓鱼','睡懒觉'],ans:1,exp:'北海之行，他一直是你的专属出片达人。'}],spectrumEval:'扫描了你们四年的轨迹，发现三个异常峰值：一起出现的城市数量、跨年夜的KTV分贝、以及你手机里他的丑照存量。模型判定，这人已经不只是朋友了，是青春存档里的高频关键词。',spectrumFactors:[{name:'旅行搭子',pct:37},{name:'情绪兜底',pct:28},{name:'出片达人',pct:21}],spectrumConclusion:'浅交无数，深交唯一。友情可持续性评估为长期续航型。',souvenirMeta:'相识于学生会线上名单<br>跨年相伴、怀化欢唱、北海出片<br>娄底品茶、芷江漫步、MC建造<br>岁岁相伴 2022-2026',sayWords:'那就做一辈子的好朋友吧。从学生会名单到跨了那么多城市，你早就是旅行的固定搭子了。以后去哪记得叫我。'},
             '卢山林':{code:'202410',badge:'温暖档案',tag:'跨越屏幕的温暖挚友',desc:'2024年10月，你们经由朋友介绍相识。从线上发神经的聊天，到第一次鼓起勇气的视频通话，再到唯一一次武汉线下见面，你们的友谊超越了距离和屏幕。',tagline:'虽然只见一面，却已胜过无数',achievements:[{icon:'🌐',title:'线上相识',desc:'2024年10月，在朋友介绍下认识，开始了一段独特的网友情谊。',date:'2024.10'},{icon:'📹',title:'视频初体验',desc:'2024年末，你总是聊天发神经，他却无限宽容。原本不敢跟人视频的你，却和他经常打视频聊天。',date:'2024.12'},{icon:'🍲',title:'武汉火锅之约',desc:'2025年1月唯一一次线下见面。一起吃了好吃的火锅，他当时身体不适不能尽兴吃辣。电影有点无聊，但其中的惊喜只有你们懂。',date:'2025.01'},{icon:'🦵',title:'愿你腿伤康复',desc:'2025年他腿受伤了，你一直盼着他恢复得健健康康，继续活蹦乱跳。',date:'2025'},{icon:'🎂',title:'考研百天蛋糕',desc:'2025年考研仅剩100天时，他给你订了蛋糕。你和朋友们一起分享，大家都羡慕你有这样的朋友。',date:'2025'},{icon:'📚',title:'马理论研友',desc:'他说也想考马理论的研究生。你祝他考研顺利，教资也一次过，未来越来越好。',date:'2026'}],words:[{text:'网友',detail:'虽是网友，关系却超越了身边许多人。'},{text:'视频',detail:'从不敢到习惯，他是你视频通话最多的人。'},{text:'火锅',detail:'武汉的那顿火锅，味道和细节都很难忘。'},{text:'蛋糕',detail:'考研路上的甜蜜鼓励，让朋友们都嫉妒。'},{text:'宽容',detail:'在他面前可以尽情发神经，他都理解。'}],quiz:[{q:'你们是通过谁认识的？',opts:['大学同学','共同朋友介绍','社团招新','食堂偶遇'],ans:1,exp:'2024年10月，通过共同朋友介绍相识。'},{q:'你们唯一线下见面的城市是？',opts:['长沙','武汉','怀化','娄底'],ans:1,exp:'2025年1月，在武汉一起吃火锅看电影。'},{q:'考研百天时，他送了你什么？',opts:['书本','蛋糕','文具','衣服'],ans:1,exp:'一个让朋友们都羡慕的蛋糕，甜蜜又暖心。'}],spectrumEval:'这段关系的地理距离和情感密度成反比。你们线下只见了一次，但线上聊天记录如果打印出来，大概能铺满从怀化到武汉的高铁轨道。模型判定，深度网友型关系，信任值异常高。',spectrumFactors:[{name:'情感信任',pct:40},{name:'线上陪伴',pct:32},{name:'考研鼓励',pct:18}],spectrumConclusion:'见面次数不重要，重要的是凌晨三点发神经还有人回的底气。',souvenirMeta:'相识于网络，见面于武汉<br>火锅、电影与说不完的话<br>蛋糕、鼓励与考研的约定<br>超越距离的友谊',sayWords:'考研加油，教资顺利。虽然只见了一面，但你订的那个蛋糕我一直记得。以后有机会再吃火锅。'},
@@ -341,7 +371,7 @@
 
         function submitMsg(){const input=document.getElementById('messageInput');const text=input.value.trim();if(!text){showToast('请输入留言内容 💬');return}const list=document.getElementById('messageList');const item=document.createElement('div');item.className='msg-item';item.innerHTML=`<div class="msg-author">${currentName}</div><div>${text}</div>`;list.children.length>1?list.insertBefore(item,list.children[1]):list.appendChild(item);input.value='';localStorage.setItem('msg_'+currentName,list.innerHTML);spawnPlane()}
         function loadMsgs(){const cache=localStorage.getItem('msg_'+currentName);if(cache)document.getElementById('messageList').innerHTML=cache}
-        function spawnPlane(){const plane=document.createElement('div');plane.className='paper-plane';plane.textContent='✈️';const btn=document.querySelector('.btn-sub');if(!btn)return;const rect=btn.getBoundingClientRect();plane.style.top=rect.top+'px';plane.style.left=rect.right-30+'px';document.body.appendChild(plane);setTimeout(()=>plane.remove(),1600)}
+        function spawnPlane(){const plane=document.createElement('div');plane.className='paper-plane';plane.textContent='✈️';const btn=document.querySelector('.btn-sub');if(!btn)return;const rect=btn.getBingClientRect();plane.style.top=rect.top+'px';plane.style.left=rect.right-30+'px';document.body.appendChild(plane);setTimeout(()=>plane.remove(),1600)}
 
         function openTicket(data,name){setParticleSpeed(2.5);const overlay=document.createElement('div');overlay.className='ticket-overlay';overlay.id='ticketOverlay';
             overlay.innerHTML=`<div class="ticket-paper" id="ticketPaper">
