@@ -14,15 +14,19 @@ const POEM = [
 /* 全站文案 */
 const META = {
   coverPlace: "怀化学院 · 2022—2026",
-  ip:         "立文之家",
   copyright:  "© 立文之家 版权所有",
-  enter:      "进去",
+  namePlaceholder: "写下你的名字",
+  enter:      "来了",
   present:    "立文之家 出品",
-  preface:    ["一个从安徽来湖南的人，","把四年里认识过的人，记在这里。"],
   endingWord: "来过",
   signature:  "沈立文 · 记于毕业前夕",
   endingSub:  "你也来过。",
-  gridIntro:  ["朋友圈里都是我一个人。","这里，把你们也放进来。"]
+  savePrompt: "保存这一刻",
+  peopleTitle:"那些人",
+  nav: [
+    { id:"preface", label:"序" }, { id:"y1", label:"大一" }, { id:"y2", label:"大二" },
+    { id:"y3", label:"大三" }, { id:"y4", label:"大四" }, { id:"people", label:"那些人" }, { id:"finale", label:"来过" }
+  ]
 };
 
 /* 四个章节 */

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>来过 · 立文之家</title>
+<title>来过</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -12,69 +12,81 @@
   :root{
     --bg:#080705; --ink:#f2e8d8; --gold:#d4a855;
     --ink-dim:rgba(242,232,216,.55); --ink-faint:rgba(242,232,216,.28);
-    --gold-dim:rgba(212,168,85,.55);
-    --paper:#faf5ea; --paper-ink:#3a3329; --map:#e7d8b8; --seal:#bb4a36;
+    --gold-dim:rgba(212,168,85,.55); --seal:#bb4a36;
+    --paper:#faf5ea; --paper-ink:#3a3329; --map:#e7d8b8;
     --f-serif:'Noto Serif SC','Songti SC','STSong',serif;
     --f-hand:'Ma Shan Zheng','STKaiti','Kaiti SC','KaiTi','楷体',cursive;
     --f-type:'Courier New',ui-monospace,'Songti SC',monospace;
+    --ease:cubic-bezier(.2,.7,.3,1);
   }
   html{scroll-behavior:smooth;}
   body{font-family:var(--f-serif);background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
   body.locked{overflow:hidden;height:100vh;}
   img{display:block;max-width:100%;}
 
-  /* 全站氛围层 */
-  .grain{position:fixed;inset:-50%;z-index:9990;pointer-events:none;opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr .6s steps(4) infinite;}
+  /* 氛围层 */
+  .grain{position:fixed;inset:-50%;z-index:9990;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr .7s steps(4) infinite;}
   @keyframes gr{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}100%{transform:translate(2%,3%)}}
-  .vignette{position:fixed;inset:0;z-index:9989;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%);animation:vig 9s ease-in-out infinite;}
-  @keyframes vig{0%,100%{opacity:.9}50%{opacity:1}}
+  .vignette{position:fixed;inset:0;z-index:9989;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 56%,rgba(0,0,0,.52) 100%);}
   .dust{position:fixed;inset:0;z-index:9988;pointer-events:none;overflow:hidden;}
-  .dust i{position:absolute;border-radius:50%;background:rgba(242,232,216,.6);animation:floatUp linear infinite;}
-  @keyframes floatUp{0%{transform:translateY(30px);opacity:0}12%{opacity:.55}88%{opacity:.4}100%{transform:translateY(-46vh);opacity:0}}
-  .leak{position:fixed;border-radius:50%;filter:blur(70px);mix-blend-mode:screen;pointer-events:none;z-index:9987;}
-  .leak.a{width:340px;height:340px;background:rgba(212,168,85,.20);animation:leakA 26s ease-in-out infinite;}
-  .leak.b{width:300px;height:300px;background:rgba(90,140,160,.16);animation:leakB 32s ease-in-out infinite;}
-  @keyframes leakA{0%{top:-10%;left:-8%}50%{top:60%;left:75%}100%{top:-10%;left:-8%}}
-  @keyframes leakB{0%{top:80%;left:90%}50%{top:10%;left:5%}100%{top:80%;left:90%}}
+  .dust i{position:absolute;border-radius:50%;background:rgba(242,232,216,.55);animation:floatUp linear infinite;}
+  @keyframes floatUp{0%{transform:translateY(30px);opacity:0}12%{opacity:.5}88%{opacity:.35}100%{transform:translateY(-46vh);opacity:0}}
+  .leak{position:fixed;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;pointer-events:none;z-index:9987;}
+  .leak.a{width:360px;height:360px;background:rgba(212,168,85,.16);animation:leakA 30s ease-in-out infinite;}
+  .leak.b{width:320px;height:320px;background:rgba(90,140,160,.12);animation:leakB 38s ease-in-out infinite;}
+  @keyframes leakA{0%{top:-12%;left:-10%}50%{top:62%;left:78%}100%{top:-12%;left:-10%}}
+  @keyframes leakB{0%{top:82%;left:92%}50%{top:8%;left:4%}100%{top:82%;left:92%}}
 
-  .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:9991;background:linear-gradient(90deg,var(--gold-dim),var(--gold));box-shadow:0 0 10px rgba(212,168,85,.6);transition:width .1s linear;}
+  /* 顶部进度条 + 章节导航 */
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:9992;background:linear-gradient(90deg,rgba(212,168,85,.4),var(--gold));box-shadow:0 0 12px rgba(212,168,85,.7);}
+  #nav{position:fixed;top:0;left:0;right:0;z-index:9991;display:flex;justify-content:center;gap:clamp(12px,4vw,34px);
+    padding:13px 16px;background:linear-gradient(to bottom,rgba(8,7,5,.82),rgba(8,7,5,0));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    transform:translateY(-110%);transition:transform .5s var(--ease),opacity .5s;opacity:0;}
+  #nav.show{transform:translateY(0);opacity:1;}
+  #nav a{font-size:12px;letter-spacing:.18em;color:var(--ink-faint);cursor:pointer;position:relative;padding:4px 2px;transition:color .3s;white-space:nowrap;}
+  #nav a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s var(--ease);}
+  #nav a.active{color:var(--gold);} #nav a.active::after{transform:scaleX(1);}
+  #nav a:hover{color:var(--ink);}
 
   .cursor,.cursor-dot{position:fixed;top:0;left:0;z-index:9995;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:difference;}
   .cursor{width:30px;height:30px;border:1px solid rgba(242,232,216,.7);transition:width .22s,height .22s,background .22s,border-color .22s;}
-  .cursor.big{width:62px;height:62px;background:rgba(212,168,85,.18);border-color:var(--gold);}
+  .cursor.big{width:64px;height:64px;background:rgba(212,168,85,.16);border-color:var(--gold);}
   .cursor-dot{width:4px;height:4px;background:var(--ink);}
   @media (pointer:coarse){.cursor,.cursor-dot{display:none;}}
 
-  .reveal{opacity:0;transform:translateY(36px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.3,1);}
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.1s ease,transform 1.1s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
 
   /* ===================================================== 封面 */
-  #cover{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease;overflow:hidden;}
-  .breath{position:absolute;top:46%;left:50%;width:760px;height:760px;max-width:150vw;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;
-    background:radial-gradient(circle,rgba(245,225,180,.14) 0%,rgba(212,168,85,.10) 32%,rgba(212,168,85,.03) 52%,transparent 72%);filter:blur(6px);animation:breathe 7s ease-in-out infinite;}
-  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.92);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.08);opacity:1}}
-  .converge{position:absolute;top:50%;left:50%;width:150vmax;height:150vmax;transform:translate(-50%,-50%);pointer-events:none;z-index:0;opacity:0;
-    background:repeating-conic-gradient(from 0deg,rgba(245,225,180,.05) 0deg 5deg,transparent 5deg 13deg);animation:conv 2.6s ease-out forwards;}
-  @keyframes conv{0%{opacity:0;transform:translate(-50%,-50%) scale(1.5) rotate(0)}28%{opacity:.6}100%{opacity:0;transform:translate(-50%,-50%) scale(.18) rotate(46deg)}}
-  .cflash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:2;animation:cflash 2.8s ease-out forwards;}
-  @keyframes cflash{0%,16%{opacity:0}21%{opacity:.42}30%{opacity:0}100%{opacity:0}}
-  .flare{position:absolute;top:44%;width:60%;height:2px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,240,210,.5),rgba(212,168,85,.7),transparent);filter:blur(2px);left:-30%;opacity:0;animation:flareSweep 3s 1.3s ease-out forwards;}
-  @keyframes flareSweep{0%{left:-30%;opacity:0}30%{opacity:.85}100%{left:120%;opacity:0}}
+  #cover{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .6s ease;overflow:hidden;}
+  .godray{position:absolute;top:46%;left:50%;width:170vmax;height:170vmax;transform:translate(-50%,-50%);pointer-events:none;z-index:0;opacity:.05;
+    background:repeating-conic-gradient(from 0deg,rgba(245,232,205,.6) 0deg 1.6deg,transparent 1.6deg 9deg);
+    -webkit-mask:radial-gradient(circle,#000 0%,transparent 58%);mask:radial-gradient(circle,#000 0%,transparent 58%);animation:rayspin 90s linear infinite;}
+  @keyframes rayspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .breath{position:absolute;top:46%;left:50%;width:820px;height:820px;max-width:160vw;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(245,228,188,.13) 0%,rgba(212,168,85,.09) 34%,rgba(212,168,85,.025) 54%,transparent 72%);filter:blur(8px);animation:breathe 14s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(.99);opacity:.86}50%{transform:translate(-50%,-50%) scale(1.04);opacity:1}}
+  .converge{position:absolute;top:50%;left:50%;width:150vmax;height:150vmax;transform:translate(-50%,-50%);pointer-events:none;z-index:0;opacity:0;background:repeating-conic-gradient(from 0deg,rgba(245,225,180,.06) 0deg 5deg,transparent 5deg 13deg);animation:conv 2.8s ease-out forwards;}
+  @keyframes conv{0%{opacity:0;transform:translate(-50%,-50%) scale(1.5) rotate(0)}28%{opacity:.55}100%{opacity:0;transform:translate(-50%,-50%) scale(.18) rotate(46deg)}}
+  .flare{position:absolute;top:44%;width:62%;height:2px;z-index:2;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,240,210,.45),rgba(212,168,85,.65),transparent);filter:blur(2px);left:-30%;opacity:0;animation:flareSweep 3s 1.4s ease-out forwards;}
+  @keyframes flareSweep{0%{left:-30%;opacity:0}30%{opacity:.8}100%{left:120%;opacity:0}}
   .silhouette{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
-  .silhouette i{position:absolute;bottom:-4%;border-radius:48% 48% 0 0;background:rgba(0,0,0,.55);filter:blur(11px);opacity:.5;}
+  .silhouette i{position:absolute;bottom:-4%;border-radius:48% 48% 0 0;background:rgba(0,0,0,.5);filter:blur(12px);opacity:.45;}
   .cover-inner{position:relative;z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center;}
-  .poem{display:flex;flex-direction:column;gap:clamp(16px,2.6vh,30px);margin-bottom:clamp(36px,6vh,64px);}
-  .pline{font-size:clamp(21px,5.6vw,33px);font-weight:300;letter-spacing:.3em;text-indent:.3em;line-height:1.5;white-space:nowrap;text-shadow:0 1px 22px rgba(8,6,4,.92),0 0 3px rgba(8,6,4,.7);}
+  .poem{display:flex;flex-direction:column;gap:clamp(20px,3.4vh,40px);margin-bottom:clamp(54px,9vh,96px);}
+  .pline{font-size:clamp(26px,7.2vw,42px);font-weight:300;letter-spacing:.32em;text-indent:.32em;line-height:1.5;white-space:nowrap;text-shadow:0 1px 26px rgba(8,6,4,.92),0 0 3px rgba(8,6,4,.7);animation:floaty 7s ease-in-out infinite;}
+  .pline:nth-child(2){animation-delay:.8s} .pline:nth-child(3){animation-delay:1.6s} .pline:nth-child(4){animation-delay:2.4s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
   .pline .ch{opacity:0;filter:blur(6px);display:inline-block;transition:opacity 1.1s ease,filter 1.1s ease;}
   .pline.gold{color:var(--gold);}
-  .cover-id{display:flex;flex-direction:column;align-items:center;gap:9px;opacity:0;transition:opacity 1.6s ease;}
-  .ip-mark{font-size:clamp(15px,4vw,18px);letter-spacing:.28em;text-indent:.28em;color:var(--gold);display:flex;align-items:center;gap:9px;}
-  .ip-mark .seal{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--seal);color:#fff;font-size:11px;border-radius:3px;font-family:var(--f-serif);letter-spacing:0;text-indent:0;box-shadow:0 0 0 1px rgba(255,255,255,.15) inset;}
+  .name-field{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--gold-dim);padding:6px 2px;margin-bottom:clamp(30px,5vh,52px);opacity:0;transition:opacity 1.4s ease,border-color .3s;}
+  .name-field:focus-within{border-color:var(--gold);}
+  .name-field input{background:none;border:none;outline:none;color:var(--ink);font-family:inherit;font-size:16px;letter-spacing:.16em;text-align:center;width:min(62vw,240px);}
+  .name-field input::placeholder{color:var(--ink-faint);letter-spacing:.2em;}
+  .cover-id{display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;transition:opacity 1.6s ease;}
   .cover-place{font-size:12px;letter-spacing:.34em;text-indent:.34em;color:var(--gold-dim);}
-  .copyright{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);margin-top:2px;}
-  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;font-size:11px;letter-spacing:.4em;color:var(--ink-faint);opacity:0;transition:opacity 1.6s ease;}
-  .enter-link{margin-top:clamp(28px,5vh,48px);font-size:16px;letter-spacing:.45em;text-indent:.45em;color:var(--ink);position:relative;cursor:pointer;opacity:0;transition:opacity 1.4s ease,color .4s;padding-bottom:8px;background:none;border:none;font-family:inherit;}
+  .copyright{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
+  .enter-link{margin-top:clamp(30px,5vh,52px);font-size:17px;letter-spacing:.45em;text-indent:.45em;color:var(--ink);position:relative;cursor:pointer;opacity:0;transition:opacity 1.4s ease,color .4s;padding-bottom:9px;background:none;border:none;font-family:inherit;}
   .enter-link::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);transition:width .5s ease;}
   .enter-link:hover{color:var(--gold);} .enter-link:hover::after{width:100%;}
   .flashout{position:fixed;left:50%;top:50%;width:40px;height:40px;z-index:9100;background:#fff;border-radius:50%;transform:translate(-50%,-50%) scale(0);pointer-events:none;opacity:0;}
@@ -82,67 +94,50 @@
   @keyframes flashGo{0%{transform:translate(-50%,-50%) scale(0);opacity:.9}40%{opacity:1}60%{transform:translate(-50%,-50%) scale(60);opacity:1}100%{transform:translate(-50%,-50%) scale(60);opacity:0}}
 
   /* ===================================================== 序章 */
-  #preface{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;gap:26px;position:relative;}
+  #preface{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;gap:30px;position:relative;}
   .pre-present{font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--gold);}
-  .pre-word{font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(56px,18vw,120px);letter-spacing:.14em;color:var(--ink);}
-  .pre-rule{width:38px;height:1px;background:var(--gold-dim);}
-  .pre-text{font-size:clamp(14px,3.8vw,17px);color:var(--ink-dim);line-height:2.1;letter-spacing:.1em;}
-  .pre-cue{margin-top:14px;font-size:22px;color:var(--gold-dim);animation:bob 1.8s ease-in-out infinite;}
+  .pre-word{font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(64px,20vw,140px);letter-spacing:.14em;color:var(--ink);text-shadow:0 0 50px rgba(212,168,85,.18);}
+  .pre-rule{width:40px;height:1px;background:var(--gold-dim);}
+  .scroll-cue{position:absolute;bottom:7vh;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink-faint);font-size:12px;letter-spacing:.3em;text-indent:.3em;animation:cueFade 3s ease 1;}
+  .scroll-cue .ar{font-size:18px;animation:bob 1.8s ease-in-out infinite;}
   @keyframes bob{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}
+  @keyframes cueFade{from{opacity:0}to{opacity:1}}
 
-  /* ===================================================== 章节通用 */
-  .chapter{position:relative;padding:clamp(80px,16vh,150px) 22px;overflow:hidden;}
-  .ch-head{max-width:760px;margin:0 auto clamp(40px,8vh,72px);text-align:center;}
+  /* ===================================================== 章节通用（苹果式 hero） */
+  .chapter{position:relative;padding:clamp(60px,12vh,120px) 22px clamp(80px,16vh,150px);overflow:hidden;}
+  .ch-head{max-width:760px;margin:0 auto clamp(40px,8vh,72px);text-align:center;position:sticky;top:16vh;z-index:1;}
   .ch-era{font-size:13px;letter-spacing:.4em;text-indent:.4em;color:var(--gold);}
   .ch-span{font-size:11px;letter-spacing:.3em;color:var(--ink-faint);margin-top:8px;}
-  .ch-title{font-size:clamp(28px,7vw,46px);font-weight:500;margin-top:22px;letter-spacing:.08em;}
+  .ch-title{font-size:clamp(30px,7.4vw,50px);font-weight:500;margin-top:22px;letter-spacing:.08em;}
   .ch-desc{font-size:clamp(14px,3.6vw,16px);color:var(--ink-dim);margin-top:18px;line-height:1.9;letter-spacing:.05em;}
-  /* 时间节点（融入章头）*/
-  .chrono{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;margin-top:26px;}
-  .cnode{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.08em;color:var(--ink-dim);
-    border:1px solid rgba(242,232,216,.14);border-radius:50px;padding:5px 13px 5px 10px;}
-  .cnode b{font-weight:400;color:var(--gold);font-size:11px;}
-  .cnode .d{width:7px;height:7px;border-radius:50%;background:var(--gold);}
-  .cnode.era2 .d{border-radius:1px;background:var(--seal);}
-  .cnode.era3 .d{background:none;} .cnode.era3 .d::before{content:'📍';font-size:11px;}
-  .cnode.era4 .d{border-radius:1px;background:#f0b060;box-shadow:0 0 8px rgba(255,150,60,.6);}
-  .cnode.era1 .cn-place{font-family:var(--f-hand);font-size:13px;}
-  /* 引言（水墨渗开）*/
-  .quote{max-width:600px;margin:clamp(50px,9vh,90px) auto 0;text-align:center;font-size:clamp(17px,4.4vw,22px);line-height:2.3;letter-spacing:.14em;}
+  .ch-body{position:relative;z-index:2;}
+  .quote{max-width:600px;margin:clamp(50px,9vh,90px) auto 0;text-align:center;font-size:clamp(17px,4.4vw,22px);line-height:2.3;letter-spacing:.14em;position:relative;z-index:2;}
   .quote div{opacity:0;filter:blur(8px);transform:translateY(8px);transition:opacity 1.4s ease,filter 1.6s ease,transform 1.4s ease;}
-  .quote.in div{opacity:1;filter:blur(0);transform:none;}
-  .quote.in div:nth-child(2){transition-delay:.5s;}
+  .quote.in div{opacity:1;filter:blur(0);transform:none;} .quote.in div:nth-child(2){transition-delay:.5s;}
   .quote .q2{color:var(--gold);}
 
-  /* 章节一 · 手账涂鸦 */
+  /* 大一 手账 */
   #y1{background:var(--paper);color:var(--paper-ink);}
   #y1 .ch-era{color:#c9923a;} #y1 .ch-desc{color:#6b6052;} #y1 .ch-span{color:#a99c86;}
   #y1 .ch-title{font-family:var(--f-hand);font-weight:400;}
-  #y1 .cnode{color:#6b6052;border-color:rgba(120,100,70,.25);} #y1 .cnode b{color:#c9923a;} #y1 .cnode .d{background:#c9923a;}
   .doodle{position:absolute;font-size:30px;opacity:.5;pointer-events:none;user-select:none;animation:doodleFloat 7s ease-in-out infinite;}
   @keyframes doodleFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(6deg)}}
   .scatter{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:30px 26px;position:relative;}
-  .polaroid{background:#fff;padding:12px 12px 40px;box-shadow:0 10px 26px rgba(60,50,30,.22);cursor:pointer;position:relative;transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .3s;width:clamp(150px,42vw,200px);}
-  .polaroid:nth-child(3n){transform:rotate(-4deg);} .polaroid:nth-child(3n+1){transform:rotate(3deg);} .polaroid:nth-child(3n+2){transform:rotate(-1.5deg);}
+  .polaroid{background:#fff;padding:12px 12px 40px;box-shadow:0 10px 26px rgba(60,50,30,.22);cursor:pointer;position:relative;width:clamp(150px,42vw,200px);
+    opacity:0;transform:translateY(-44px) rotate(var(--r,0deg));transition:opacity .7s ease,box-shadow .3s,transform .8s var(--ease);}
+  .polaroid.in{opacity:1;transform:translateY(0) rotate(var(--r,0deg));}
   .polaroid:hover{transform:scale(1.12) rotate(0) !important;z-index:20;box-shadow:0 22px 50px rgba(60,50,30,.34);}
   .polaroid .ph{aspect-ratio:1/1;background:#efe7d6;display:flex;align-items:center;justify-content:center;color:#bcae93;font-size:22px;overflow:hidden;}
-  .polaroid .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;}
-  .polaroid .ph img.loaded{opacity:1;}
+  .polaroid .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .polaroid .ph img.loaded{opacity:1;}
   .polaroid .tag{font-family:var(--f-hand);text-align:center;margin-top:12px;font-size:15px;color:#5a5040;}
 
-  /* 撕开过渡 */
   .tear{position:relative;height:64px;background:var(--bg);}
-  .tear::before{content:'';position:absolute;top:-1px;left:0;right:0;height:30px;background:var(--paper);
-    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;}
+  .tear::before{content:'';position:absolute;top:-1px;left:0;right:0;height:30px;background:var(--paper);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;}
+  /* 无字光过渡 */
+  .lightcut{height:140px;position:relative;overflow:hidden;background:#0a0908;}
+  .lightcut::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,170,80,.10),transparent 55%),radial-gradient(ellipse at 75% 50%,rgba(212,168,85,.10),transparent 55%);}
 
-  /* 漏光/烧灼艺术过渡 */
-  .interlude{height:200px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0a0908;}
-  .interlude .ink-line{font-family:var(--f-hand);font-size:clamp(18px,5vw,26px);color:var(--ink-dim);letter-spacing:.2em;opacity:0;filter:blur(10px);}
-  .interlude.in .ink-line{opacity:1;filter:blur(0);transition:opacity 1.6s ease,filter 1.8s ease;}
-  .interlude::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,170,80,.10),transparent 55%),radial-gradient(ellipse at 75% 50%,rgba(212,168,85,.10),transparent 55%);animation:leakPulse 6s ease-in-out infinite;}
-  @keyframes leakPulse{0%,100%{opacity:.5}50%{opacity:1}}
-
-  /* 章节二 · 档案卡片墙 */
+  /* 大二 档案墙 */
   #y2{background:#0d0b09;}
   #y2::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:linear-gradient(rgba(212,168,85,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,85,.05) 1px,transparent 1px);background-size:42px 42px;}
   .type-title{font-family:var(--f-type);} .type-title::after{content:'_';animation:cursorBlink 1s steps(1) infinite;color:var(--gold);} .type-title.done::after{content:'';}
@@ -153,45 +148,44 @@
   .archive{max-width:920px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:22px;position:relative;z-index:2;}
   @media(min-width:680px){.archive{grid-template-columns:repeat(3,1fr);gap:28px;}}
   .acard{background:linear-gradient(160deg,#efe6d2,#e3d7be);padding:12px;position:relative;cursor:pointer;box-shadow:0 14px 30px rgba(0,0,0,.45);
-    transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s;}
-  .acard:nth-child(2n){transform:rotate(-1.4deg);} .acard:nth-child(3n){transform:rotate(1.2deg);}
-  .acard:hover{transform:translateY(-8px) rotate(0) !important;box-shadow:0 26px 50px rgba(0,0,0,.6);}
+    opacity:0;transition:opacity .7s ease,box-shadow .4s,transform .8s var(--ease);transform:translateX(var(--fx,0)) rotate(var(--fr,0deg));}
+  .acard.in{opacity:1;transform:translateX(0) rotate(var(--rr,0deg));}
+  .acard:hover{transform:translateY(-9px) rotate(0) !important;box-shadow:0 28px 54px rgba(0,0,0,.6);}
   .acard .aph{aspect-ratio:4/5;background:#cdbf9f;display:flex;align-items:center;justify-content:center;color:#a08f6c;font-size:24px;overflow:hidden;}
   .acard .aph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .acard .aph img.loaded{opacity:1;}
   .acard .alabel{font-family:var(--f-type);font-size:11px;color:#4a4031;margin-top:9px;display:flex;justify-content:space-between;letter-spacing:.05em;}
   .acard .stamp{position:absolute;top:14px;right:14px;font-family:var(--f-type);font-size:9px;color:var(--seal);border:1.5px solid var(--seal);padding:2px 5px;transform:rotate(-9deg);opacity:.85;letter-spacing:.1em;border-radius:2px;}
   .acard .apin{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0b060,#b07020);box-shadow:0 2px 4px rgba(0,0,0,.5);z-index:2;}
 
-  /* 章节三 · 手绘地图图钉 */
+  /* 大三 地图（图钉带常显缩略图）*/
   #y3{background:var(--map);color:#4a3d28;}
   #y3 .ch-era{color:#9c6b2f;} #y3 .ch-desc{color:#6b5a3c;} #y3 .ch-span{color:#a08a64;}
   #y3 .ch-title{font-family:var(--f-hand);font-weight:400;}
-  #y3 .cnode{color:#6b5a3c;border-color:rgba(120,90,40,.3);} #y3 .cnode b{color:#9c6b2f;}
   #y3 .quote{color:#4a3d28;} #y3 .quote .q2{color:#9c6b2f;}
   .mapwrap{max-width:760px;margin:0 auto;position:relative;}
-  .map{position:relative;width:100%;aspect-ratio:4/5;max-height:78vh;border-radius:8px;overflow:hidden;
-    background:
-      radial-gradient(circle at 70% 20%,rgba(150,120,70,.12),transparent 40%),
-      linear-gradient(160deg,#efe2c4,#e2d2ac);
+  .map{position:relative;width:100%;aspect-ratio:4/5;max-height:80vh;border-radius:8px;overflow:hidden;
+    background:radial-gradient(circle at 70% 20%,rgba(150,120,70,.12),transparent 40%),linear-gradient(160deg,#efe2c4,#e2d2ac);
     box-shadow:inset 0 0 60px rgba(120,90,40,.25),0 18px 40px rgba(0,0,0,.25);border:1px solid rgba(120,90,40,.3);}
   .map svg{position:absolute;inset:0;width:100%;height:100%;}
   .pin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;z-index:3;}
-  .pin .pdot{font-size:26px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));transition:transform .3s;}
-  .pin:hover .pdot{transform:scale(1.25) translateY(-2px);}
-  .pin .plabel{position:absolute;top:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-hand);font-size:clamp(13px,3.6vw,16px);color:#5a4327;text-shadow:0 1px 2px rgba(255,250,235,.8);}
-  .pin .ppop{position:absolute;bottom:30px;left:50%;transform:translateX(-50%) scale(.4);transform-origin:bottom center;width:120px;background:#fff;padding:6px 6px 22px;box-shadow:0 12px 26px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s cubic-bezier(.2,.7,.3,1);}
-  .pin.show .ppop,.pin:hover .ppop{opacity:1;transform:translateX(-50%) scale(1);}
-  .pin .ppop .pph{aspect-ratio:1/1;background:#e9dcc0;display:flex;align-items:center;justify-content:center;color:#b7a981;overflow:hidden;}
-  .pin .ppop .pph img{width:100%;height:100%;object-fit:cover;}
-  .pin .ppop .pcap{font-family:var(--f-hand);text-align:center;font-size:12px;color:#5a4327;margin-top:5px;}
+  .pin .pthumb{width:clamp(72px,20vw,104px);background:#fff;padding:5px 5px 18px;box-shadow:0 10px 22px rgba(0,0,0,.4);transform:rotate(var(--pr,0deg));transition:transform .35s var(--ease),box-shadow .35s;
+    opacity:0;animation:pinDrop .7s var(--ease) forwards;}
+  @keyframes pinDrop{0%{opacity:0;transform:translateY(-30px) rotate(var(--pr,0deg)) scale(.7)}60%{opacity:1;transform:translateY(4px) rotate(var(--pr,0deg)) scale(1.03)}100%{opacity:1;transform:translateY(0) rotate(var(--pr,0deg)) scale(1)}}
+  .pin:hover .pthumb{transform:rotate(0) scale(1.16);box-shadow:0 18px 36px rgba(0,0,0,.5);z-index:5;}
+  .pin .pph{aspect-ratio:1/1;background:#e9dcc0;display:flex;align-items:center;justify-content:center;color:#b7a981;overflow:hidden;}
+  .pin .pph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s;} .pin .pph img.loaded{opacity:1;}
+  .pin .pcap{font-family:var(--f-hand);text-align:center;font-size:12px;color:#5a4327;margin-top:4px;line-height:1.2;}
+  .pin .pneedle{position:absolute;left:50%;bottom:-7px;width:2px;height:14px;background:linear-gradient(#b07020,#6a3d12);transform:translateX(-50%);}
   .map-hint{text-align:center;font-family:var(--f-hand);font-size:14px;color:#8a6a35;margin-top:18px;}
-  .wash{position:absolute;left:50%;bottom:-4%;width:320px;height:170px;transform:translateX(-50%);pointer-events:none;background:radial-gradient(ellipse,rgba(80,120,140,.16),transparent 70%);filter:blur(16px);animation:leakPulse 7s ease-in-out infinite;}
+  .wash{position:absolute;left:50%;bottom:-4%;width:320px;height:170px;transform:translateX(-50%);pointer-events:none;background:radial-gradient(ellipse,rgba(80,120,140,.16),transparent 70%);filter:blur(16px);}
 
-  /* 章节四 · 放映机 */
+  /* 大四 放映机 */
   #y4{background:#0a0907;}
-  .beam{position:absolute;top:-6%;left:50%;transform:translateX(-50%);width:80%;height:120%;pointer-events:none;z-index:0;background:linear-gradient(to bottom,rgba(255,235,190,.16),rgba(255,235,190,.05) 40%,transparent 72%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);filter:blur(3px);animation:beamFlick 5s ease-in-out infinite;}
-  @keyframes beamFlick{0%,100%{opacity:.85}45%{opacity:1}52%{opacity:.65}55%{opacity:1}}
-  .beam-dust{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:90%;pointer-events:none;z-index:1;overflow:hidden;}
+  #y4 .ch-body{opacity:0;transition:opacity 1.2s ease .5s;} #y4.lit .ch-body{opacity:1;}
+  .beam{position:absolute;top:-6%;left:50%;transform:translateX(-50%) scaleY(.2);transform-origin:top center;width:80%;height:120%;pointer-events:none;z-index:0;background:linear-gradient(to bottom,rgba(255,235,190,.18),rgba(255,235,190,.05) 40%,transparent 72%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);filter:blur(3px);opacity:0;transition:transform 1.1s var(--ease),opacity 1s ease;}
+  #y4.lit .beam{transform:translateX(-50%) scaleY(1);opacity:1;animation:beamFlick 5s ease-in-out 1.2s infinite;}
+  @keyframes beamFlick{0%,100%{opacity:.9}45%{opacity:1}52%{opacity:.7}55%{opacity:1}}
+  .beam-dust{position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:90%;pointer-events:none;z-index:1;overflow:hidden;opacity:0;transition:opacity 1s ease 1s;} #y4.lit .beam-dust{opacity:1;}
   .beam-dust i{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,240,200,.7);animation:floatUp linear infinite;}
   .count{position:absolute;top:24px;right:24px;font-family:var(--f-type);font-size:13px;color:rgba(255,235,190,.4);letter-spacing:.3em;z-index:2;}
   .danmaku{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;}
@@ -206,38 +200,46 @@
   .flip-back{transform:rotateY(180deg);background:#120d08;color:var(--ink-dim);padding:18px;text-align:center;font-size:13px;line-height:1.9;letter-spacing:.08em;box-shadow:inset 0 0 30px rgba(255,150,60,.18);border-color:rgba(212,140,60,.4);}
   .flip:hover .flip-in{box-shadow:0 0 26px rgba(255,150,60,.25);}
 
-  /* ===================================================== 人物集换卡 */
-  #people{background:var(--bg);padding:clamp(70px,14vh,130px) 20px clamp(90px,18vh,160px);}
-  .grid-intro{text-align:center;max-width:600px;margin:0 auto clamp(46px,9vh,80px);font-size:clamp(17px,4.4vw,21px);line-height:2.1;letter-spacing:.1em;}
-  .grid-intro .l2{color:var(--gold);}
-  .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:20px;}}
+  /* ===================================================== 人物集换卡（统一闪卡）*/
+  #people{background:var(--bg);padding:clamp(70px,14vh,130px) 20px clamp(40px,8vh,70px);}
+  .people-title{text-align:center;font-size:clamp(22px,6vw,32px);letter-spacing:.3em;text-indent:.3em;color:var(--ink);margin-bottom:clamp(46px,9vh,80px);font-weight:500;}
+  .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;perspective:1200px;}
+  @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:22px;}}
   @media(min-width:860px){.grid{grid-template-columns:repeat(4,1fr);}}
-  .pcard{position:relative;aspect-ratio:3/4;border-radius:6px;overflow:hidden;cursor:pointer;background:#15110c;border:1px solid rgba(242,232,216,.18);transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s,border-color .35s;}
-  .pcard:hover{transform:translateY(-8px);}
-  .pcard.gold{border-color:var(--gold);} .pcard.gold:hover{box-shadow:0 0 26px rgba(212,168,85,.4);}
-  .pcard.special{border-color:#9ad0c0;border-image:linear-gradient(135deg,#d4a855,#9ad0c0,#d4a855) 1;}
-  .pcard .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);background:repeating-linear-gradient(135deg,rgba(212,168,85,.04) 0 12px,transparent 12px 24px);filter:grayscale(1) brightness(.85);transition:filter .4s;}
+  .pcard{position:relative;aspect-ratio:3/4;border-radius:9px;overflow:hidden;cursor:pointer;background:#15110c;transition:transform .3s var(--ease),box-shadow .35s;
+    border:1.5px solid transparent;background-image:linear-gradient(#15110c,#15110c),linear-gradient(135deg,#8a6a2e,#f3e2ab,#d4a855,#f3e2ab,#8a6a2e);background-origin:border-box;background-clip:padding-box,border-box;
+    box-shadow:0 8px 22px rgba(0,0,0,.4);opacity:0;transform:translateY(34px);}
+  .pcard.in{opacity:1;transform:translateY(0);transition:opacity .8s ease,transform .8s var(--ease);}
+  .pcard:hover{box-shadow:0 18px 40px rgba(212,168,85,.3);}
+  .pcard .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--gold-dim);background:repeating-linear-gradient(135deg,rgba(212,168,85,.05) 0 12px,transparent 12px 24px);filter:grayscale(1) brightness(.82);transition:filter .45s;}
   .pcard:hover .ph{filter:grayscale(0) brightness(1);}
   .pcard .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .pcard .ph img.loaded{opacity:1;}
-  .pcard .tier-tag{position:absolute;top:8px;left:8px;font-size:9px;letter-spacing:.1em;padding:2px 7px;border-radius:50px;z-index:3;}
-  .pcard.gold .tier-tag{background:rgba(212,168,85,.85);color:#1a1206;} .pcard.special .tier-tag{background:rgba(154,208,192,.85);color:#10231e;}
-  .pcard .cap{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:14px 12px;font-size:12px;line-height:1.6;color:#fff;background:linear-gradient(to top,rgba(8,6,4,.92),rgba(8,6,4,.5) 60%,transparent);transform:translateY(101%);transition:transform .4s cubic-bezier(.2,.7,.3,1);}
+  .pcard .holo{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;mix-blend-mode:color-dodge;transition:opacity .4s;
+    background:linear-gradient(115deg,transparent 22%,rgba(255,255,255,.5) 38%,rgba(120,230,200,.45) 47%,rgba(212,168,85,.5) 56%,rgba(180,140,255,.4) 66%,transparent 82%);background-size:280% 280%;}
+  .pcard:hover .holo{opacity:.55;animation:holo 1.1s ease;}
+  @keyframes holo{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+  .pcard .cap{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:14px 12px;font-size:12px;line-height:1.6;color:#fff;background:linear-gradient(to top,rgba(8,6,4,.94),rgba(8,6,4,.5) 60%,transparent);transform:translateY(101%);transition:transform .4s var(--ease);}
   .pcard:hover .cap{transform:translateY(0);}
-  @media (pointer:coarse){.pcard .cap{transform:translateY(0);background:linear-gradient(to top,rgba(8,6,4,.9),transparent);}.pcard .ph{filter:grayscale(.2);}}
+  @media (pointer:coarse){.pcard .cap{transform:translateY(0);background:linear-gradient(to top,rgba(8,6,4,.9),transparent);}.pcard .ph{filter:grayscale(.15);}}
+  /* 人物 → 结尾 下滑引导 */
+  .down-cue{text-align:center;padding:clamp(40px,9vh,80px) 20px clamp(20px,5vh,40px);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--ink-faint);font-size:12px;letter-spacing:.34em;text-indent:.34em;}
+  .down-cue .ar{font-size:18px;color:var(--gold-dim);animation:bob 1.8s ease-in-out infinite;}
 
-  /* ===================================================== 结尾 · 照片墙汇聚 */
-  #finale{position:relative;height:360vh;background:var(--bg);}
+  /* ===================================================== 结尾 · 照片拼成「来过」*/
+  #finale{position:relative;height:420vh;background:var(--bg);}
   .finale-stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
   .wall{position:absolute;inset:0;}
-  .tile{position:absolute;width:var(--tw);height:var(--th);will-change:transform,opacity;
-    background:repeating-linear-gradient(135deg,rgba(212,168,85,.06) 0 10px,transparent 10px 20px);border:1px solid rgba(242,232,216,.10);overflow:hidden;}
+  .tile{position:absolute;will-change:transform,opacity;border:1px solid rgba(255,235,200,.12);overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.4);}
   .tile img{width:100%;height:100%;object-fit:cover;}
-  .finale-word{position:relative;z-index:4;font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(80px,26vw,210px);letter-spacing:.12em;color:var(--ink);opacity:0;filter:blur(26px);transform:scale(1.3);text-shadow:0 0 40px rgba(212,168,85,.3);}
-  .finale-sign{position:absolute;left:0;right:0;bottom:12vh;z-index:4;text-align:center;opacity:0;}
-  .finale-sign .s1{font-size:14px;letter-spacing:.26em;color:var(--gold-dim);}
-  .finale-sign .s2{margin-top:18px;font-size:clamp(18px,5vw,24px);letter-spacing:.2em;color:var(--ink);}
-  .finale-sign .s3{margin-top:22px;font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
+  .finale-center{position:relative;z-index:4;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  .finale-name{font-size:clamp(18px,5vw,26px);letter-spacing:.2em;color:var(--gold);opacity:0;}
+  .finale-word{font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(78px,24vw,200px);letter-spacing:.1em;color:var(--ink);line-height:1;opacity:0;filter:blur(26px);transform:scale(1.25);text-shadow:0 0 46px rgba(212,168,85,.32);}
+  .finale-sign{position:absolute;left:0;right:0;bottom:9vh;z-index:4;text-align:center;opacity:0;}
+  .finale-sign .s1{font-size:13px;letter-spacing:.26em;color:var(--gold-dim);}
+  .finale-sign .s2{margin-top:14px;font-size:clamp(16px,4.4vw,20px);letter-spacing:.2em;color:var(--ink);}
+  .finale-sign .s3{margin-top:18px;font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
+  .save-btn{position:absolute;left:50%;bottom:3.5vh;transform:translateX(-50%);z-index:6;background:none;border:1px solid var(--gold-dim);color:var(--gold);font-family:inherit;font-size:13px;letter-spacing:.24em;text-indent:.24em;padding:10px 26px;border-radius:50px;cursor:pointer;opacity:0;transition:opacity .6s ease,background .3s,color .3s;pointer-events:none;}
+  .save-btn.show{opacity:1;pointer-events:auto;} .save-btn:hover{background:rgba(212,168,85,.14);color:var(--ink);}
 
   /* 灯箱 */
   #lb{position:fixed;inset:0;z-index:9300;background:#0a0807;display:none;flex-direction:column;}
@@ -247,7 +249,7 @@
   .lb-count{font-size:12px;letter-spacing:.26em;color:var(--gold-dim);}
   .lb-close{width:40px;height:40px;border-radius:50%;background:rgba(242,232,216,.08);border:none;color:var(--ink);font-size:22px;cursor:pointer;}
   .lb-stage{flex:1;position:relative;overflow:hidden;touch-action:pan-y;}
-  .lb-track{display:flex;height:100%;transition:transform .38s cubic-bezier(.2,.7,.3,1);}
+  .lb-track{display:flex;height:100%;transition:transform .38s var(--ease);}
   .lb-slide{min-width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:10px 18px;}
   .lb-slide img{max-width:100%;max-height:74vh;object-fit:contain;opacity:0;transition:opacity .5s;border:1px solid rgba(242,232,216,.12);} .lb-slide img.loaded{opacity:1;}
   .lb-frame{width:min(82vw,440px);aspect-ratio:4/3;max-height:60vh;border:1px dashed var(--gold-dim);display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:30px;background:repeating-linear-gradient(135deg,rgba(212,168,85,.03) 0 14px,transparent 14px 28px);}
@@ -255,6 +257,8 @@
   .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(242,232,216,.07);border:none;color:var(--ink);font-size:24px;cursor:pointer;}
   .lb-nav.p{left:10px;} .lb-nav.n{right:10px;} .lb-nav.hidden{opacity:0;pointer-events:none;}
   @media(max-width:600px){.lb-nav{display:none;}}
+  .toast{position:fixed;left:50%;bottom:12vh;transform:translateX(-50%);z-index:9400;background:rgba(20,15,10,.92);color:var(--ink);border:1px solid var(--gold-dim);padding:12px 22px;border-radius:50px;font-size:13px;letter-spacing:.1em;opacity:0;transition:opacity .3s;pointer-events:none;}
+  .toast.show{opacity:1;}
 
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;}}
 </style>
@@ -264,21 +268,22 @@
 <div class="dust" id="dust"></div>
 <div class="leak a"></div><div class="leak b"></div>
 <div class="progress" id="progress"></div>
+<nav id="nav"></nav>
 <div class="cursor" id="cursor"></div><div class="cursor-dot" id="cursorDot"></div>
 
 <!-- 封面 -->
 <section id="cover">
-  <div class="converge"></div><div class="cflash"></div><div class="flare"></div>
+  <div class="godray"></div><div class="converge"></div><div class="flare"></div>
   <div class="breath"></div>
   <div class="silhouette" id="silhouette"></div>
   <div class="cover-inner">
     <div class="poem" id="poem"></div>
+    <label class="name-field" id="nameField"><input id="nameInput" type="text" maxlength="12" autocomplete="off" spellcheck="false"></label>
     <div class="cover-id" id="coverId">
-      <div class="ip-mark"><span class="seal">印</span><span id="ipName">立文之家</span></div>
       <div class="cover-place" id="coverPlace"></div>
       <div class="copyright" id="copyright"></div>
     </div>
-    <button class="enter-link" id="enterLink" data-cursor>进去 →</button>
+    <button class="enter-link" id="enterLink" data-cursor></button>
   </div>
 </section>
 <div class="flashout" id="flashout"></div>
@@ -289,67 +294,67 @@
     <div class="pre-present reveal" id="prePresent"></div>
     <div class="pre-word reveal">来过</div>
     <div class="pre-rule reveal"></div>
-    <div class="pre-text reveal" id="preText"></div>
-    <div class="pre-cue reveal">↓</div>
+    <div class="scroll-cue"><span>向下滑动</span><span class="ar">↓</span></div>
   </section>
 
   <!-- 大一 -->
   <section class="chapter" id="y1">
-    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p><div class="chrono" data-era="1"></div></div>
-    <div class="scatter reveal" id="y1scatter"></div>
+    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p></div>
+    <div class="ch-body"><div class="scatter" id="y1scatter"></div></div>
   </section>
   <div class="tear"></div>
 
   <!-- 大二 -->
   <section class="chapter" id="y2">
     <div class="frags" id="y2frags"></div>
-    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title type-title"></h2><p class="ch-desc"></p><div class="chrono" data-era="2"></div></div>
-    <div class="archive reveal" id="y2archive"></div>
-    <div class="quote" id="y2quote"></div>
+    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title type-title"></h2><p class="ch-desc"></p></div>
+    <div class="ch-body"><div class="archive" id="y2archive"></div><div class="quote" id="y2quote"></div></div>
   </section>
-  <div class="interlude" id="il1"><div class="ink-line">那一年，路过很多人</div></div>
+  <div class="lightcut"></div>
 
   <!-- 大三 -->
   <section class="chapter" id="y3">
-    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p><div class="chrono" data-era="3"></div></div>
-    <div class="mapwrap reveal"><div class="map" id="y3map"></div><div class="map-hint">轻点图钉，照片会从那里冒出来</div></div>
-    <div class="quote" id="y3quote"></div>
+    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p></div>
+    <div class="ch-body"><div class="mapwrap reveal"><div class="map" id="y3map"></div><div class="map-hint">轻点照片可放大</div></div><div class="quote" id="y3quote"></div></div>
     <div class="wash"></div>
   </section>
-  <div class="interlude" id="il2"><div class="ink-line">山高水长，后会有期</div></div>
+  <div class="lightcut"></div>
 
   <!-- 大四 -->
   <section class="chapter" id="y4">
     <div class="beam"></div><div class="beam-dust" id="beamDust"></div>
     <div class="count" id="y4count">…3…2…1…</div>
     <div class="danmaku" id="y4danmaku"></div>
-    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p><div class="chrono" data-era="4"></div></div>
-    <div class="scatter4 reveal" id="y4scatter"></div>
+    <div class="ch-head reveal"><div class="ch-era"></div><div class="ch-span"></div><h2 class="ch-title"></h2><p class="ch-desc"></p></div>
+    <div class="ch-body"><div class="scatter4" id="y4scatter"></div></div>
   </section>
 
   <!-- 人物集换卡 -->
   <section id="people">
-    <div class="grid-intro reveal" id="gridIntro"></div>
+    <div class="people-title reveal" id="peopleTitle"></div>
     <div class="grid" id="grid"></div>
+    <div class="down-cue reveal"><span>向下滑动</span><span class="ar">↓</span></div>
   </section>
 
-  <!-- 结尾 · 照片墙汇聚 -->
+  <!-- 结尾 -->
   <section id="finale" data-scene="finale">
     <div class="finale-stick">
       <div class="wall" id="wall"></div>
-      <div class="finale-word" id="finaleWord">来过</div>
-      <div class="finale-sign" id="finaleSign">
-        <div class="s1"></div><div class="s2"></div><div class="s3"></div>
+      <div class="finale-center">
+        <div class="finale-name" id="finaleName"></div>
+        <div class="finale-word" id="finaleWord">来过</div>
       </div>
+      <div class="finale-sign" id="finaleSign"><div class="s1"></div><div class="s2"></div><div class="s3"></div></div>
+      <button class="save-btn" id="saveBtn"></button>
     </div>
   </section>
 </main>
 
-<!-- 灯箱 -->
 <section id="lb">
   <div class="lb-top"><div class="lb-count" id="lbCount"></div><button class="lb-close" id="lbClose">×</button></div>
   <div class="lb-stage" id="lbStage"><button class="lb-nav p" id="lbPrev">‹</button><button class="lb-nav n" id="lbNext">›</button><div class="lb-track" id="lbTrack"></div></div>
 </section>
+<div class="toast" id="toast"></div>
 
 <script src="gallery.js"></script>
 <script>
@@ -359,96 +364,111 @@
   const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const POEM_=(typeof POEM!=='undefined')?POEM:[], META_=(typeof META!=='undefined')?META:{},
         CH=(typeof CHAPTERS!=='undefined')?CHAPTERS:[], DM=(typeof DANMAKU!=='undefined')?DANMAKU:[],
-        TL=(typeof TIMELINE!=='undefined')?TIMELINE:[], PPL=(typeof PEOPLE!=='undefined')?PEOPLE:[];
+        PPL=(typeof PEOPLE!=='undefined')?PEOPLE:[];
   const hasImg=x=>!!(x&&x.src);
-  const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),
-        easeIO=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  const lerp=(a,b,t)=>a+(b-a)*t, clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), easeIO=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  let NAME='';
 
   /* 尘埃 */
-  (function(){const d=$('#dust');for(let i=0;i<26;i++){const s=document.createElement('i');const sz=1+Math.random()*2.5;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(60+Math.random()*40)+'%';s.style.animationDuration=(10+Math.random()*14)+'s';s.style.animationDelay=(-Math.random()*16)+'s';d.appendChild(s);}})();
+  (function(){const d=$('#dust');for(let i=0;i<26;i++){const s=document.createElement('i');const sz=1+Math.random()*2.5;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(60+Math.random()*40)+'%';s.style.animationDuration=(11+Math.random()*15)+'s';s.style.animationDelay=(-Math.random()*18)+'s';d.appendChild(s);}})();
 
   /* 自定义光标 */
   (function(){const cur=$('#cursor'),dot=$('#cursorDot');let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y;
     addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY;dot.style.left=x+'px';dot.style.top=y+'px';});
     (function loop(){cx+=(x-cx)*.18;cy+=(y-cy)*.18;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(loop);})();
-    const sel='[data-cursor],a,button,.polaroid,.pcard,.flip,.acard,.pin,.enter-link';
+    const sel='[data-cursor],a,button,input,.polaroid,.pcard,.flip,.acard,.pin';
     document.addEventListener('mouseover',e=>{if(e.target.closest(sel))cur.classList.add('big');});
     document.addEventListener('mouseout',e=>{if(e.target.closest(sel))cur.classList.remove('big');});
   })();
 
-  /* 进度条 */
-  addEventListener('scroll',()=>{const h=document.documentElement;$('#progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%';},{passive:true});
+  /* 顶部导航 + 进度条 */
+  (function(){
+    const nav=$('#nav');const items=(META_.nav||[]);
+    nav.innerHTML=items.map(n=>`<a data-to="${n.id}">${esc(n.label)}</a>`).join('');
+    nav.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;const t=document.getElementById(a.dataset.to);if(t)t.scrollIntoView({behavior:'smooth'});});
+  })();
+  function updateTopbar(){
+    const h=document.documentElement;const sc=h.scrollTop;
+    $('#progress').style.width=(sc/(h.scrollHeight-h.clientHeight||1)*100)+'%';
+    const nav=$('#nav');if(sc>innerHeight*0.5)nav.classList.add('show');else nav.classList.remove('show');
+    // active
+    const items=(META_.nav||[]);let cur=items[0]&&items[0].id;
+    for(const n of items){const el=document.getElementById(n.id);if(el&&el.getBoundingClientRect().top<=innerHeight*0.4)cur=n.id;}
+    $$('#nav a').forEach(a=>a.classList.toggle('active',a.dataset.to===cur));
+  }
 
-  /* 进场淡入 */
-  const revObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');const im=e.target.querySelector&&e.target.querySelector('img[data-src]');revObs.unobserve(e.target);}}),{threshold:.16,rootMargin:'0px 0px -8% 0px'});
+  /* 进场 */
+  const revObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}}),{threshold:.16,rootMargin:'0px 0px -8% 0px'});
   function watch(el){revObs.observe(el);}
-  $$('.reveal,.quote,.interlude').forEach(watch);
+  $$('.reveal,.quote').forEach(watch);
 
-  /* 封面剪影 + 诗 + 署名 */
+  /* 封面：剪影 + 诗 + 署名 + 名字 */
   (function(){
     const sil=$('#silhouette');[[20,140,260],[44,170,300],[68,150,250],[33,90,200],[80,110,230]].forEach(([l,w,hh])=>{const i=document.createElement('i');i.style.left=l+'%';i.style.width=w+'px';i.style.height=hh+'px';i.style.marginLeft=(-w/2)+'px';sil.appendChild(i);});
     const box=$('#poem');let delay=1300;
     POEM_.forEach(line=>{const d=document.createElement('div');d.className='pline'+(line.gold?' gold':'');[...line.t].forEach((ch,i)=>{const s=document.createElement('span');s.className='ch';s.textContent=ch;const cd=delay+i*70;setTimeout(()=>{s.style.opacity=1;s.style.filter='blur(0)';},cd);d.appendChild(s);});box.appendChild(d);delay+=line.t.length*70+520;});
-    $('#ipName').textContent=META_.ip||'立文之家';
+    $('#nameInput').placeholder=META_.namePlaceholder||'写下你的名字';
     $('#coverPlace').textContent=META_.coverPlace||'';
     $('#copyright').textContent=META_.copyright||'';
-    setTimeout(()=>{$('#coverId').style.opacity=1;},delay);
-    $('#enterLink').textContent=(META_.enter||'进去')+' →';
-    setTimeout(()=>{$('#enterLink').style.opacity=1;},delay+500);
+    $('#enterLink').textContent=(META_.enter||'来了')+' →';
+    setTimeout(()=>{$('#nameField').style.opacity=1;},delay-200);
+    setTimeout(()=>{$('#coverId').style.opacity=1;},delay+200);
+    setTimeout(()=>{$('#enterLink').style.opacity=1;},delay+600);
   })();
 
   /* 进入 */
-  $('#enterLink').addEventListener('click',()=>{
+  function enter(){
+    NAME=($('#nameInput').value||'').trim().slice(0,12);
+    buildFinaleText();
     const f=$('#flashout');f.classList.add('go');
     setTimeout(()=>{document.body.classList.remove('locked');$('#cover').style.opacity=0;window.scrollTo(0,0);},560);
     setTimeout(()=>{$('#cover').style.display='none';f.classList.remove('go');},1200);
-  });
+  }
+  $('#enterLink').addEventListener('click',enter);
+  $('#nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')enter();});
 
-  /* 序章文案 */
-  $('#prePresent').textContent=META_.present||'立文之家 出品';
-  $('#preText').innerHTML=(META_.preface||[]).map(esc).join('<br>');
+  /* 序章 */
+  $('#prePresent').textContent=META_.present||'';
 
-  /* 章头文案 + 时间节点 */
+  /* 章头文案 */
   function fillHead(sec,c,typed){if(!c)return;sec.querySelector('.ch-era').textContent=c.era;sec.querySelector('.ch-span').textContent=c.span;const t=sec.querySelector('.ch-title');if(typed)t.dataset.text=c.title;else t.textContent=c.title;sec.querySelector('.ch-desc').textContent=c.desc;}
   const c1=CH[0],c2=CH[1],c3=CH[2],c4=CH[3];
   fillHead($('#y1'),c1,false);fillHead($('#y2'),c2,true);fillHead($('#y3'),c3,false);fillHead($('#y4'),c4,false);
-  // 时间节点融入各章
-  $$('.chrono').forEach(box=>{const era=+box.dataset.era;TL.filter(n=>n.era===era).forEach(n=>{const el=document.createElement('div');el.className='cnode era'+era;el.innerHTML=`<span class="d"></span><b>${esc(n.date)}</b><span class="cn-place">${esc(n.place)}</span>`;box.appendChild(el);});});
 
-  /* 大一散落拍立得 */
+  /* 大一 拍立得 */
   (function(){const box=$('#y1scatter');const n=(c1&&c1.photos)||5;const tags=['新生报到','第一张','宿舍楼','大操场','图书馆','食堂'];const items=[];
-    for(let i=0;i<n;i++){const it={src:'',caption:tags[i]||''};items.push(it);const d=document.createElement('div');d.className='polaroid';d.innerHTML=`<div class="ph">◦</div><div class="tag">${esc(tags[i]||'照片待补')}</div>`;d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);}
+    const rots=[3,-4,-1.5,4,-2.5,2];
+    for(let i=0;i<n;i++){const it={src:'',caption:tags[i]||''};items.push(it);const d=document.createElement('div');d.className='polaroid';d.style.setProperty('--r',rots[i%rots.length]+'deg');d.style.transitionDelay=(i*0.08)+'s';d.innerHTML=`<div class="ph">◦</div><div class="tag">${esc(tags[i]||'照片待补')}</div>`;d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);}
     const doos=['✈️','🗺️','🎮','⭐','📍','✏️'];[[6,12],[86,16],[9,72],[90,64],[48,3],[78,86]].forEach((p,i)=>{const s=document.createElement('div');s.className='doodle';s.textContent=doos[i%doos.length];s.style.left=p[0]+'%';s.style.top=p[1]+'%';s.style.animationDelay=(i*0.7)+'s';$('#y1').appendChild(s);});
   })();
 
-  /* 大二档案卡片墙 */
+  /* 大二 档案墙（两侧飞入）*/
   (function(){const box=$('#y2archive');const n=(c2&&c2.photos)||6;const labels=['学生会','检查卫生','宣传部','素拓部','团委','迎新'];const items=[];
     for(let i=0;i<n;i++){const it={src:'',caption:labels[i]||''};items.push(it);const no=String(i+1).padStart(3,'0');const d=document.createElement('div');d.className='acard';
+      const dir=i%2?1:-1;d.style.setProperty('--fx',(dir*120)+'px');d.style.setProperty('--fr',(dir*8)+'deg');d.style.setProperty('--rr',((i%3-1)*1.3)+'deg');d.style.transitionDelay=(i*0.07)+'s';
       d.innerHTML=`<div class="apin"></div><div class="stamp">已归档</div><div class="aph">◦</div><div class="alabel"><span>NO.B-${no}</span><span>${esc(labels[i]||'')}</span></div>`;
-      d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);}
+      d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);}
     if(c2&&c2.quote)$('#y2quote').innerHTML=`<div>${esc(c2.quote[0])}</div><div class="q2">${esc(c2.quote[1])}</div>`;
     const f=$('#y2frags');((c2&&c2.fragments)||[]).forEach((t,i)=>{const b=document.createElement('b');b.textContent=t;b.style.top=(8+(i*15)%80)+'%';b.style.animationDelay=(i*2.4)+'s';f.appendChild(b);});
-    // 打字机标题
     const t=$('#y2 .type-title');const text=t.dataset.text||'';const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){let i=0;(function st(){t.textContent=text.slice(0,i++);if(i<=text.length)setTimeout(st,90);else t.classList.add('done');})();obs.disconnect();}}),{threshold:.4});obs.observe(t);
   })();
 
-  /* 大三手绘地图图钉 */
+  /* 大三 地图（图钉带常显缩略图）*/
   (function(){const map=$('#y3map');const pins=(c3&&c3.pins)||[];const items=pins.map(p=>({src:p.src||'',caption:p.note||p.place}));
-    // 手绘路线
-    if(pins.length){const pts=pins.map(p=>`${p.x},${p.y}`).join(' ');const svg=`<svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="#8a6a35" stroke-width="0.5" stroke-dasharray="2 1.6" opacity="0.55"/></svg>`;map.insertAdjacentHTML('beforeend',svg);}
+    if(pins.length){const pts=pins.map(p=>`${p.x},${p.y}`).join(' ');map.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="#8a6a35" stroke-width="0.5" stroke-dasharray="2 1.6" opacity="0.5"/></svg>`);}
     pins.forEach((p,i)=>{const pin=document.createElement('div');pin.className='pin';pin.style.left=p.x+'%';pin.style.top=p.y+'%';
-      pin.innerHTML=`<div class="plabel">${esc(p.place)}</div><div class="pdot">📍</div>
-        <div class="ppop"><div class="pph">◦</div><div class="pcap">${esc(p.note||'')}</div></div>`;
-      pin.addEventListener('click',e=>{e.stopPropagation();const open=pin.classList.contains('show');$$('.pin').forEach(x=>x.classList.remove('show'));if(!open)pin.classList.add('show');});
-      pin.querySelector('.ppop').addEventListener('click',e=>{e.stopPropagation();openLB(items,i);});
+      pin.innerHTML=`<div class="pthumb" style="--pr:${(i%2?2.5:-2.5)}deg"><div class="pph">◦</div><div class="pcap">${esc(p.place)}</div></div><div class="pneedle"></div>`;
+      pin.querySelector('.pthumb').style.animationDelay=(0.2+i*0.15)+'s';
+      pin.addEventListener('click',e=>{e.stopPropagation();openLB(items,i);});
       map.appendChild(pin);});
     if(c3&&c3.quote)$('#y3quote').innerHTML=`<div>${esc(c3.quote[0])}</div><div class="q2">${esc(c3.quote[1])}</div>`;
   })();
 
-  /* 大四 放映机 */
+  /* 大四 放映机：先打光再出内容 */
   (function(){const box=$('#y4scatter');const n=(c4&&c4.photos)||6;const items=[];
     for(let i=0;i<n;i++){const it={src:'',caption:DM[i]||''};items.push(it);const f=document.createElement('div');f.className='flip';f.innerHTML=`<div class="flip-in"><div class="flip-face flip-front"><div class="fph2">◦</div></div><div class="flip-face flip-back">${esc(DM[i]||'照片待补')}</div></div>`;f.addEventListener('click',()=>f.classList.toggle('flipped'));box.appendChild(f);}
     const bd=$('#beamDust');for(let i=0;i<16;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=(40+Math.random()*60)+'%';s.style.animationDuration=(6+Math.random()*8)+'s';s.style.animationDelay=(-Math.random()*10)+'s';bd.appendChild(s);}
+    new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$('#y4').classList.add('lit');}),{threshold:.25}).observe($('#y4'));
     const dmBox=$('#y4danmaku');let timer=null;
     function spawn(){const txt=DM[Math.floor(Math.random()*DM.length)];const el=document.createElement('div');el.className='dm';el.textContent=txt;el.style.top=(8+Math.random()*78)+'%';el.style.left='100%';dmBox.appendChild(el);const dur=7000+Math.random()*5000;el.animate([{transform:'translateX(0)'},{transform:`translateX(-${innerWidth+260}px)`}],{duration:dur,easing:'linear'});setTimeout(()=>el.remove(),dur);}
     new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){if(!timer)timer=setInterval(spawn,950);}else{clearInterval(timer);timer=null;}}),{threshold:.05}).observe($('#y4'));
@@ -456,72 +476,96 @@
   })();
 
   /* 人物集换卡 */
-  (function(){const gi=$('#gridIntro');const lines=META_.gridIntro||[];gi.innerHTML=lines.map((t,i)=>`<div class="${i===lines.length-1?'l2':''}">${esc(t)}</div>`).join('');
-    const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal '+(p.tier||'');const tag=p.tier==='gold'?'<div class="tier-tag">重要</div>':p.tier==='special'?'<div class="tier-tag">特别</div>':'';card.innerHTML=`${tag}<div class="ph">◦</div><div class="cap">${esc(p.caption)}</div>`;card.addEventListener('click',()=>openLB(PPL,i));grid.appendChild(card);watch(card);});
+  (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
+    const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard';card.style.transitionDelay=((i%4)*0.06)+'s';
+      card.innerHTML=`<div class="ph">◦</div><div class="holo"></div><div class="cap">${esc(p.caption)}</div>`;
+      card.addEventListener('click',()=>openLB(PPL,i));
+      // 3D 倾斜
+      card.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const r=card.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;card.style.transform=`translateY(-8px) rotateX(${(-py*9).toFixed(2)}deg) rotateY(${(px*9).toFixed(2)}deg)`;});
+      card.addEventListener('pointerleave',()=>{card.style.transform='';});
+      grid.appendChild(card);watch(card);});
   })();
 
-  /* ============ 结尾 · 照片墙汇聚（苹果式滚动逐帧）============ */
-  let TILES=[];
-  (function(){
-    const wall=$('#wall');const COLS=6,ROWS=6,N=COLS*ROWS;
-    const gw=100/COLS, gh=100/ROWS;
-    for(let i=0;i<N;i++){
-      const col=i%COLS, row=(i/COLS|0);
+  /* ============ 结尾：照片拼成「来过」字形 ============ */
+  let TILES=[],glyphReady=false;
+  function buildGlyphTargets(text){
+    const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+    x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 110px "Songti SC","STSong",serif';
+    x.fillText(text,W/2,H/2+4);
+    const d=x.getImageData(0,0,W,H).data,pts=[],step=6;
+    for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}
+    return {pts,ratio:W/H};
+  }
+  function buildTiles(){
+    const wall=$('#wall');wall.innerHTML='';TILES=[];
+    const {pts,ratio}=buildGlyphTargets('来过');
+    // 字形显示区域（视口百分比）
+    const boxW=Math.min(74, 70), bw=boxW, bh=bw/ratio* (innerWidth/innerHeight); // 近似
+    const dispW=Math.min(innerWidth*0.78, 760), dispH=dispW/ratio;
+    const cxp=50, cyp=44;
+    pts.forEach((pt,i)=>{
       const t=document.createElement('div');t.className='tile';
-      t.style.setProperty('--tw',`calc(${gw}% - 6px)`);t.style.setProperty('--th',`calc(${gh}% - 6px)`);
-      // 终态网格中心位置（百分比，含3px间隙）
-      const gx=col*gw+gw/2, gy=row*gh+gh/2;
-      // 初始散乱位置（远处随机）
-      const ang=Math.random()*Math.PI*2, dist=80+Math.random()*120;
-      const sx=50+Math.cos(ang)*dist, sy=50+Math.sin(ang)*dist;
-      const rot=(Math.random()-.5)*80, scl=.3+Math.random()*.5;
-      t.dataset.gx=gx;t.dataset.gy=gy;t.dataset.sx=sx;t.dataset.sy=sy;t.dataset.rot=rot;t.dataset.scl=scl;t.dataset.delay=Math.random()*.35;
+      // 混合横竖小图
+      const land=Math.random()>.5;const w=land?20:15, h=land?15:20;
+      t.style.width=w+'px';t.style.height=h+'px';
+      t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.92),hsla(34,52%,32%,.78))`;
+      const gx=cxp+(pt[0]-0.5)*(dispW/innerWidth*100);
+      const gy=cyp+(pt[1]-0.5)*(dispH/innerHeight*100);
+      const ang=Math.random()*Math.PI*2,dist=70+Math.random()*120;
+      t.dataset.gx=gx;t.dataset.gy=gy;t.dataset.sx=50+Math.cos(ang)*dist;t.dataset.sy=50+Math.sin(ang)*dist;
+      t.dataset.rot=(Math.random()-.5)*120;t.dataset.scl=.4+Math.random()*.6;t.dataset.delay=Math.random()*.3;
       wall.appendChild(t);TILES.push(t);
-    }
-    const s=META_;
-    $('#finaleSign .s1').textContent=s.signature||'';
-    $('#finaleSign .s2').textContent=s.endingSub||'';
-    $('#finaleSign .s3').textContent=s.copyright||'';
-    $('#finaleWord').textContent=s.endingWord||'来过';
-  })();
+    });
+    glyphReady=true;
+  }
+  function buildFinaleText(){
+    $('#finaleName').textContent=NAME?NAME:'';
+    $('#finaleWord').textContent=NAME?'来过！':'来过';
+    $('#finaleSign .s1').textContent=META_.signature||'';
+    $('#finaleSign .s2').textContent=NAME?(NAME+' 来过！'):(META_.endingSub||'你也来过。');
+    $('#finaleSign .s3').textContent=META_.copyright||'';
+    $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
+  }
   function finaleUpdate(p){
-    // p: 0..1 across the tall #finale
-    const assemble=clamp(p/0.5,0,1);
-    const floatUp=clamp((p-0.5)/0.22,0,1);
-    const ink=clamp((p-0.72)/0.24,0,1);
-    const wallEl=$('#wall');
-    for(const t of TILES){
-      const dl=+t.dataset.delay;
-      const a=easeIO(clamp((assemble-dl)/(1-dl),0,1));
-      const x=lerp(+t.dataset.sx,+t.dataset.gx,a);
-      const y=lerp(+t.dataset.sy,+t.dataset.gy,a) - floatUp*60;
-      const rot=lerp(+t.dataset.rot,0,a);
-      const scl=lerp(+t.dataset.scl,1,a);
-      t.style.left=x+'%';t.style.top=y+'%';
-      t.style.transform=`translate(-50%,-50%) rotate(${rot}deg) scale(${scl})`;
-      t.style.opacity=(a*0.9)*(1-floatUp*0.92);
-    }
-    wallEl.style.filter=`blur(${floatUp*6}px)`;
-    const w=$('#finaleWord');w.style.opacity=ink;w.style.filter=`blur(${(1-ink)*26}px)`;w.style.transform=`scale(${lerp(1.3,1,easeIO(ink))})`;
-    $('#finaleSign').style.opacity=clamp((ink-0.5)/0.5,0,1);
+    if(!glyphReady)return;
+    const assemble=clamp(p/0.45,0,1), fade=clamp((p-0.62)/0.16,0,1), ink=clamp((p-0.72)/0.22,0,1);
+    for(const t of TILES){const dl=+t.dataset.delay;const a=easeIO(clamp((assemble-dl)/(1-dl),0,1));
+      const X=lerp(+t.dataset.sx,+t.dataset.gx,a),Y=lerp(+t.dataset.sy,+t.dataset.gy,a);
+      const R=lerp(+t.dataset.rot,0,a),S=lerp(+t.dataset.scl,1,a);
+      t.style.left=X+'%';t.style.top=Y+'%';t.style.transform=`translate(-50%,-50%) rotate(${R}deg) scale(${S})`;
+      t.style.opacity=(a)*(1-fade);}
+    const w=$('#finaleWord');w.style.opacity=ink;w.style.filter=`blur(${(1-ink)*26}px)`;w.style.transform=`scale(${lerp(1.25,1,easeIO(ink))})`;
+    $('#finaleName').style.opacity=clamp((ink-0.3)/0.5,0,1)*(NAME?1:0);
+    $('#finaleSign').style.opacity=clamp((ink-0.45)/0.55,0,1);
+    const sb=$('#saveBtn');if(ink>0.9)sb.classList.add('show');else sb.classList.remove('show');
   }
 
-  /* ============ scroll engine（视差 + finale scrub）============ */
-  const depthEls=$$('[data-depth]');const scenes=$$('[data-scene]');
-  let ticking=false;
+  /* scroll engine */
+  const scenes=$$('[data-scene]');let ticking=false;
   function frame(){
-    const vh=innerHeight, mid=vh/2;
-    for(const el of depthEls){const r=el.getBoundingClientRect();const off=(r.top+r.height/2)-mid;el.style.transform=`translateY(${(-off*(+el.dataset.depth)).toFixed(1)}px)`;}
+    updateTopbar();
+    const vh=innerHeight;
     for(const s of scenes){const r=s.getBoundingClientRect();const total=r.height-vh;let p=total>0?clamp((-r.top)/total,0,1):0;if(s.dataset.scene==='finale')finaleUpdate(p);}
     ticking=false;
   }
   function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(frame);}}
-  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);frame();
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',()=>{buildTiles();frame();});
+  buildTiles();buildFinaleText();frame();
 
-  /* 全局懒加载 */
+  /* 懒加载 */
   const imgObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const im=e.target;if(im.dataset.src&&!im.src)im.src=im.dataset.src;imgObs.unobserve(im);}}),{rootMargin:'200px'});
   $$('img[data-src]').forEach(im=>imgObs.observe(im));
   document.addEventListener('load',e=>{if(e.target.tagName==='IMG')e.target.classList.add('loaded');},true);
+
+  /* 保存这一刻 */
+  function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+  function loadH2C(){return new Promise((res,rej)=>{if(window.html2canvas)return res();const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+  $('#saveBtn').addEventListener('click',async()=>{
+    try{toast('正在生成…');await loadH2C();const node=$('#finale .finale-stick');const cv=await html2canvas(node,{backgroundColor:'#080705',scale:2,logging:false});
+      const a=document.createElement('a');a.download=`来过${NAME?'_'+NAME:''}.png`;a.href=cv.toDataURL('image/png');a.click();toast('已保存 ✓');
+    }catch(e){toast('长按画面截图保存');}
+  });
 
   /* 灯箱 */
   let lbItems=[],lbCur=0;const lbTrack=$('#lbTrack'),lbStage=$('#lbStage');
@@ -532,8 +576,6 @@
   $('#lbClose').addEventListener('click',lbClose);$('#lbPrev').addEventListener('click',()=>lbGo(lbCur-1));$('#lbNext').addEventListener('click',()=>lbGo(lbCur+1));
   addEventListener('keydown',e=>{if(!$('#lb').classList.contains('active'))return;if(e.key==='ArrowLeft')lbGo(lbCur-1);else if(e.key==='ArrowRight')lbGo(lbCur+1);else if(e.key==='Escape')lbClose();});
   let lx=0,ld=0,ldr=false;lbStage.addEventListener('touchstart',e=>{lx=e.touches[0].clientX;ld=0;ldr=true;lbTrack.style.transition='none';},{passive:true});lbStage.addEventListener('touchmove',e=>{if(!ldr)return;ld=e.touches[0].clientX-lx;lbTrack.style.transform=`translateX(calc(${-lbCur*100}% + ${ld}px))`;},{passive:true});lbStage.addEventListener('touchend',()=>{if(!ldr)return;ldr=false;lbTrack.style.transition='';const th=lbStage.offsetWidth*.18;if(ld<-th)lbGo(lbCur+1);else if(ld>th)lbGo(lbCur-1);else lbGo(lbCur);ld=0;});
-  // 点空白关掉地图弹出
-  document.addEventListener('click',e=>{if(!e.target.closest('.pin'))$$('.pin.show').forEach(x=>x.classList.remove('show'));});
 })();
 </script>
 </body>
