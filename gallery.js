@@ -13,19 +13,19 @@ const POEM = [
 
 /* 全站文案 */
 const META = {
-  coverPlace: "怀化学院 · 2022—2026",
+  coverPlace: "怀化学院 · 2026",
   copyright:  "© 立文之家 版权所有",
   namePlaceholder: "写下你的名字",
   enter:      "来了",
   present:    "立文之家 出品",
   endingWord: "来过",
-  signature:  "沈立文 · 记于毕业前夕",
-  endingSub:  "你也来过。",
+  cardDate:   "2026.06",
+  cardFoot:   "怀化学院 · 2026 · 立文之家",
   savePrompt: "保存这一刻",
   peopleTitle:"那些人",
   nav: [
-    { id:"preface", label:"序" }, { id:"y1", label:"大一" }, { id:"y2", label:"大二" },
-    { id:"y3", label:"大三" }, { id:"y4", label:"大四" }, { id:"people", label:"那些人" }, { id:"finale", label:"来过" }
+    { id:"preface", label:"序" }, { id:"y1", label:"初见" }, { id:"y2", label:"忙碌" },
+    { id:"y3", label:"远行" }, { id:"y4", label:"散场" }, { id:"people", label:"他们" }, { id:"finale", label:"来过" }
   ]
 };
 
