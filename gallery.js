@@ -33,8 +33,19 @@ const META = {
 
 /* 四个章节 */
 const CHAPTERS = [
-  { id:"y1", era:"大一", span:"2022秋—2023春", title:"刚来，什么都是新的", desc:"那时候谁都不认识谁。",
-    quote:null, photos:5 },
+  { id:"y1", era:"大一", span:"2022秋—2023春", title:"刚来，什么都是新的", desc:"那时候谁都不认识谁，先把校园走了个遍。",
+    quote:null,
+    spots:[
+      {place:"南门",src:""},{place:"喷泉",src:""},{place:"体育馆",src:""},{place:"操场",src:""},
+      {place:"一食堂（1）",src:""},{place:"一食堂（2）",src:""},{place:"学院超市",src:""},
+      {place:"二食堂（1）",src:""},{place:"二食堂（2）",src:""},{place:"宿舍",src:""},
+      {place:"厚德楼（1）",src:""},{place:"厚德楼（2）",src:""},{place:"厚德楼（3）",src:""},
+      {place:"蜜雪冰城",src:""},{place:"明德广场",src:""},{place:"后山（1）",src:""},
+      {place:"后山（2）",src:""},{place:"后山（3）",src:""},{place:"宽也楼",src:""},
+      {place:"图书馆（1）",src:""},{place:"图书馆（2）",src:""},{place:"图书馆（3）",src:""},
+      {place:"图书馆（4）",src:""},{place:"博学楼（1）",src:""},{place:"博学楼（2）",src:""},
+      {place:"博学楼（3）",src:""},{place:"博学楼（4）",src:""},{place:"北门",src:""}
+    ] },
   { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"后来认识了你。",
     quote:["那些年做了很多不是自己想做的事，","但你是真的。"], photos:8,
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"] },
