@@ -40,8 +40,8 @@ const CHAPTERS = [
       {place:"一食堂（1）",src:"photos/y1/05.jpg",pos:"center 55%"},{place:"一食堂（2）",src:"photos/y1/06.jpg",pos:"center 50%"},{place:"学院超市",src:"photos/y1/07.jpg",pos:"center 58%"},
       {place:"二食堂（1）",src:"photos/y1/08.jpg",pos:"center 55%"},{place:"二食堂（2）",src:"photos/y1/09.jpg",pos:"center 60%"},{place:"宿舍",src:"photos/y1/10.jpg",pos:"center 45%"},
       {place:"厚德楼（1）",src:"photos/y1/11.jpg",pos:"center 38%"},{place:"厚德楼（2）",src:"photos/y1/12.jpg",pos:"center 48%"},{place:"厚德楼（3）",src:"photos/y1/13.jpg",pos:"center 52%"},
-      {place:"蜜雪冰城",src:""},{place:"明德广场",src:"photos/y1/15.jpg",pos:"center 42%"},{place:"后山（1）",src:""},
-      {place:"后山（2）",src:""},{place:"后山（3）",src:""},{place:"宽也楼",src:""},
+      {place:"蜜雪冰城",src:"photos/y1/14.jpg",pos:"center 28%"},{place:"明德广场",src:"photos/y1/15.jpg",pos:"center 42%"},{place:"后山（1）",src:"photos/y1/16.jpg",pos:"center 40%"},
+      {place:"后山（2）",src:"photos/y1/17.jpg",pos:"center 52%"},{place:"后山（3）",src:"photos/y1/18.jpg",pos:"center 48%"},{place:"宽也楼",src:"photos/y1/19.jpg",pos:"center 45%"},
       {place:"图书馆（1）",src:""},{place:"图书馆（2）",src:""},{place:"图书馆（3）",src:""},
       {place:"图书馆（4）",src:""},{place:"博学楼（1）",src:""},{place:"博学楼（2）",src:""},
       {place:"博学楼（3）",src:""},{place:"博学楼（4）",src:""},{place:"北门",src:""}
