@@ -37,8 +37,8 @@ const CHAPTERS = [
     quote:null,
     spots:[
       {place:"南门",src:"photos/y1/01.jpg",pos:"center 80%"},{place:"喷泉",src:"photos/y1/02.jpg",pos:"center 55%"},{place:"体育馆",src:"photos/y1/03.jpg",pos:"center 42%"},{place:"操场",src:"photos/y1/04.jpg",pos:"center 60%"},
-      {place:"一食堂（1）",src:""},{place:"一食堂（2）",src:""},{place:"学院超市",src:""},
-      {place:"二食堂（1）",src:""},{place:"二食堂（2）",src:""},{place:"宿舍",src:""},
+      {place:"一食堂（1）",src:"photos/y1/05.jpg",pos:"center 55%"},{place:"一食堂（2）",src:"photos/y1/06.jpg",pos:"center 50%"},{place:"学院超市",src:"photos/y1/07.jpg",pos:"center 58%"},
+      {place:"二食堂（1）",src:"photos/y1/08.jpg",pos:"center 55%"},{place:"二食堂（2）",src:"photos/y1/09.jpg",pos:"center 60%"},{place:"宿舍",src:""},
       {place:"厚德楼（1）",src:""},{place:"厚德楼（2）",src:""},{place:"厚德楼（3）",src:""},
       {place:"蜜雪冰城",src:""},{place:"明德广场",src:""},{place:"后山（1）",src:""},
       {place:"后山（2）",src:""},{place:"后山（3）",src:""},{place:"宽也楼",src:""},
