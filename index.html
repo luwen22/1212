@@ -287,7 +287,14 @@
   .lb-nav.p{left:10px;} .lb-nav.n{right:10px;} .lb-nav.hidden{opacity:0;pointer-events:none;}
   @media(max-width:600px){.lb-nav{display:none;}}
 
-  .toast{position:fixed;left:50%;bottom:16vh;transform:translateX(-50%);z-index:99995;background:rgba(20,15,10,.92);color:var(--ink);border:1px solid var(--gold-dim);padding:12px 22px;border-radius:50px;font-size:13px;letter-spacing:.1em;opacity:0;transition:opacity .3s;pointer-events:none;}
+  #saveModal{position:fixed;inset:0;z-index:99996;background:rgba(8,6,4,.92);display:none;align-items:center;justify-content:center;padding:24px;flex-direction:column;gap:16px;}
+  #saveModal.show{display:flex;animation:fadeIn .3s ease;}
+  #saveModal img{max-width:min(86vw,360px);max-height:66vh;box-shadow:0 24px 60px rgba(0,0,0,.7);}
+  #saveModal .sm-tip{color:var(--ink-dim);font-size:13px;letter-spacing:.16em;text-align:center;}
+  #saveModal .sm-btns{display:flex;gap:14px;}
+  #saveModal .sm-dl,#saveModal .sm-close{padding:10px 24px;border-radius:50px;border:1px solid var(--gold-dim);color:var(--gold);font-size:13px;letter-spacing:.16em;cursor:pointer;text-decoration:none;background:none;font-family:inherit;}
+  #saveModal .sm-dl:hover,#saveModal .sm-close:hover{background:rgba(212,168,85,.14);color:var(--ink);}
+  .toast{position:fixed;left:50%;bottom:16vh;transform:translateX(-50%);z-index:99997;background:rgba(20,15,10,.92);color:var(--ink);border:1px solid var(--gold-dim);padding:12px 22px;border-radius:50px;font-size:13px;letter-spacing:.1em;opacity:0;transition:opacity .3s;pointer-events:none;}
   .toast.show{opacity:1;}
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;}}
 </style>
@@ -580,9 +587,41 @@
 
   function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
   function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
-  function loadH2C(){return window.html2canvas?Promise.resolve():loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');}
   function loadQR(){return window.QRCode?Promise.resolve():loadScript('https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js');}
-  $('#saveBtn').addEventListener('click',async()=>{try{toast('正在生成…');await loadH2C();const cv=await html2canvas($('#polacard'),{backgroundColor:null,scale:2,logging:false,useCORS:true});const a=document.createElement('a');a.download=`来过${NAME?'_'+NAME:''}.png`;a.href=cv.toDataURL('image/png');a.click();toast('已保存 ✓');}catch(e){toast('长按卡片截图保存');}});
+  /* 拍立得纪念卡 → 本地 canvas 直接生成 PNG（不依赖外部库）*/
+  async function drawKeepsake(){
+    const sc=3, W=340, pad=14, photo=W-2*pad, capH=124, H=pad+photo+capH;
+    const cv=document.createElement('canvas');cv.width=W*sc;cv.height=H*sc;const x=cv.getContext('2d');x.scale(sc,sc);
+    try{await document.fonts.load('400 34px "Ma Shan Zheng"');await document.fonts.load('700 104px "Songti SC"');await document.fonts.ready;}catch(e){}
+    x.fillStyle='#fdfaf3';x.fillRect(0,0,W,H);
+    const px=pad,py=pad,pw=photo,ph=photo;
+    const g=x.createRadialGradient(px+pw*0.5,py+ph*0.34,8,px+pw*0.5,py+ph*0.34,pw*0.82);
+    g.addColorStop(0,'#3a2c16');g.addColorStop(0.5,'#241c10');g.addColorStop(1,'#13100b');
+    x.fillStyle=g;x.fillRect(px,py,pw,ph);
+    x.strokeStyle='rgba(212,168,85,.45)';x.lineWidth=1;x.strokeRect(px+.5,py+.5,pw-1,ph-1);
+    x.fillStyle='#ecd79a';x.textAlign='center';x.textBaseline='middle';
+    x.font='700 104px "Songti SC","STSong",serif';x.shadowColor='rgba(212,168,85,.5)';x.shadowBlur=22;
+    x.fillText('来过',px+pw/2,py+ph/2+4);x.shadowBlur=0;
+    const stx=px+pw-34,sty=py+34;x.save();x.translate(stx,sty);x.rotate(-12*Math.PI/180);
+    x.strokeStyle='rgba(212,168,85,.75)';x.lineWidth=2;x.beginPath();x.arc(0,0,24,0,Math.PI*2);x.stroke();
+    x.fillStyle='#ecd79a';x.font='600 11px "Courier New",monospace';x.fillText(META_.cardDate||'2026.06',0,0);x.restore();
+    x.fillStyle='#2a2118';x.textBaseline='alphabetic';x.font='400 34px "Ma Shan Zheng","STKaiti","KaiTi",cursive';
+    x.fillText((NAME?NAME+' ':'')+'来过！',W/2,py+ph+58);
+    x.fillStyle='#9a8c72';x.font='400 10px "Noto Serif SC",serif';x.fillText(META_.cardFoot||'',W/2,py+ph+92);
+    return cv.toDataURL('image/png');
+  }
+  function showSave(url){
+    let m=$('#saveModal');
+    if(!m){m=document.createElement('div');m.id='saveModal';
+      m.innerHTML=`<img alt="来过 纪念卡"><div class="sm-tip">长按图片保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;
+      document.body.appendChild(m);
+      m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));
+      m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});
+    }
+    m.querySelector('img').src=url;const dl=m.querySelector('.sm-dl');dl.href=url;dl.download=`来过${NAME?'_'+NAME:''}.png`;
+    m.classList.add('show');
+  }
+  $('#saveBtn').addEventListener('click',async()=>{try{toast('正在生成…');const url=await drawKeepsake();showSave(url);}catch(e){toast('生成失败，长按卡片截图');}});
 
   let lbItems=[],lbCur=0;const lbTrack=$('#lbTrack'),lbStage=$('#lbStage');
   function openLB(items,idx){lbItems=items;lbTrack.innerHTML='';items.forEach(it=>{const s=document.createElement('div');s.className='lb-slide';s.innerHTML=hasImg(it)?`<img alt="">`:`<div class="lb-frame">${PHO}</div>`;if(it.caption)s.innerHTML+=`<div class="lb-cap">${esc(it.caption)}</div>`;const im=s.querySelector('img');if(im){im.dataset.src=it.src;im.addEventListener('load',()=>im.classList.add('loaded'));}lbTrack.appendChild(s);});$('#lb').classList.add('active');document.body.style.overflow='hidden';lbGo(idx,true);}
