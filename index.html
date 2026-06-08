@@ -232,9 +232,8 @@
   #people{background:var(--bg);padding:clamp(40px,8vh,80px) 20px clamp(40px,8vh,70px);}
   .people-title{text-align:center;font-size:clamp(22px,6vw,32px);letter-spacing:.3em;text-indent:.3em;color:var(--ink);margin-bottom:clamp(14px,3vh,22px);font-weight:500;}
   .people-hint{text-align:center;color:var(--ink-faint);font-size:12px;letter-spacing:.22em;text-indent:.22em;margin-bottom:clamp(40px,8vh,68px);}
-  .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
-  @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:22px;}}
-  @media(min-width:860px){.grid{grid-template-columns:repeat(4,1fr);}}
+  .grid{max-width:880px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:24px;}}
   .pcard{position:relative;aspect-ratio:3/4;border-radius:9px;cursor:pointer;perspective:1000px;opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s var(--ease);}
   .pcard.in{opacity:1;transform:translateY(0);}
   .pcard-in{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.45,.05,.3,1);transform-style:preserve-3d;}
@@ -262,6 +261,13 @@
   .finale-stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
   .wall{position:absolute;inset:0;z-index:1;transform-origin:center;will-change:transform,filter;}
   .finale-flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;mix-blend-mode:screen;background:radial-gradient(circle at 50% 46%,rgba(255,245,220,.9),transparent 56%);}
+  .confetti{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden;}
+  .confetti i{position:absolute;top:-8%;border-radius:1px;opacity:0;animation:confFall linear forwards;}
+  @keyframes confFall{0%{opacity:0;transform:translateY(0) translateX(0) rotate(0)}8%{opacity:1}100%{opacity:.85;transform:translateY(116vh) translateX(var(--x,0)) rotate(760deg)}}
+  .back-top{position:absolute;top:max(62px,calc(env(safe-area-inset-top) + 54px));right:16px;z-index:7;background:rgba(20,15,10,.4);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--gold-dim);color:var(--gold-dim);font-family:inherit;font-size:11px;letter-spacing:.14em;padding:7px 14px;border-radius:50px;cursor:pointer;opacity:0;transition:opacity .6s,color .3s,border-color .3s;pointer-events:none;}
+  .back-top.show{opacity:1;pointer-events:auto;} .back-top:hover{color:var(--gold);border-color:var(--gold);}
+  .finale-chibi.show img{animation:chibiBob 3.2s ease-in-out infinite;}
+  @keyframes chibiBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
   .finale-chibi{position:absolute;left:50%;bottom:22vh;transform:translateX(-50%) translateY(14px);height:16vh;max-height:130px;color:var(--gold);opacity:0;transition:opacity .9s ease .2s,transform .9s var(--ease) .2s;z-index:5;pointer-events:none;filter:drop-shadow(0 0 8px rgba(212,168,85,.4));}
   .finale-chibi svg,.finale-chibi img{height:100%;width:auto;display:block;} .finale-chibi.show{opacity:.95;transform:translateX(-50%) translateY(0);}
   .finale-foot{position:absolute;left:0;right:0;bottom:3.5vh;z-index:6;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px;opacity:0;transition:opacity .8s ease;}
@@ -399,6 +405,8 @@
     <div class="finale-stick">
       <div class="wall" id="wall"></div>
       <div class="finale-flash" id="finaleFlash"></div>
+      <div class="confetti" id="confetti"></div>
+      <button class="back-top" id="backTop">↑ 回到开头</button>
       <div class="polacard" id="polacard">
         <div class="pola-photo"><div class="pw">来过</div><div class="pola-stamp" id="polaStamp"></div></div>
         <div class="pola-cap"><div class="pola-name" id="polaName"></div><div class="pola-row"><div class="pola-foot" id="polaFoot"></div><div class="pola-qr" id="polaQR"></div></div></div>
@@ -639,7 +647,8 @@
   })();
 
   /* 结尾 */
-  let TILES=[],glyphReady=false;const POOL=PPL.filter(hasImg).map(p=>p.src);
+  let TILES=[],glyphReady=false,confettiFired=false;const POOL=PPL.filter(hasImg).map(p=>p.src);
+  function spawnConfetti(){const box=$('#confetti');if(!box)return;const cols=['#f3e2ab','#d4a855','#e7b85a','#bb8f3e','#f6efd8','#caa14e'];for(let i=0;i<38;i++){const c=document.createElement('i');c.style.background=cols[i%cols.length];const w=5+Math.random()*7;c.style.width=w+'px';c.style.height=(w*0.45+2)+'px';c.style.left=(Math.random()*100)+'%';c.style.setProperty('--x',((Math.random()-.5)*170)+'px');c.style.animationDuration=(2.8+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(c);setTimeout(()=>c.remove(),6200);}}
   function buildGlyphTargets(text){const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 112px "Songti SC","STSong",serif';x.fillText(text,W/2,H/2+4);const d=x.getImageData(0,0,W,H).data,pts=[],step=8;for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}return {pts,ratio:W/H};}
   function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来过');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
     pts.forEach((pt)=>{const t=document.createElement('div');t.className='tile';t.style.width=TS+'px';t.style.height=TS+'px';
@@ -670,6 +679,8 @@
     $('#saveBtn').classList.toggle('show',btn>0.5);
     $('#finaleFoot').classList.toggle('show',btn>0.5);
     $('#finaleChibi').classList.toggle('show',card>0.55);
+    $('#backTop').classList.toggle('show',btn>0.5);
+    if(card>0.5&&!confettiFired){confettiFired=true;spawnConfetti();}
   }
 
   const scenes=$$('[data-scene]');const heads=$$('.ch-head');let ticking=false;
@@ -745,6 +756,8 @@
     if(!m){m=document.createElement('div');m.id='saveModal';m.innerHTML=`<img alt="来过 纪念卡"><div class="sm-tip">长按图片保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;document.body.appendChild(m);m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});}
     m.querySelector('img').src=url;const dl=m.querySelector('.sm-dl');dl.href=url;dl.download=`来过${NAME?'_'+NAME:''}.png`;m.classList.add('show');}
   $('#saveBtn').addEventListener('click',async()=>{try{toast('正在生成…');const url=await drawKeepsake();showSave(url);}catch(e){toast('生成失败，长按卡片截图');}});
+  $('#polacard').addEventListener('click',spawnConfetti);
+  $('#backTop').addEventListener('click',()=>smoothTo(0));
 
   /* 灯箱（无编号，上方显示名称）*/
   let lbItems=[],lbCur=0;const lbTrack=$('#lbTrack'),lbStage=$('#lbStage');
