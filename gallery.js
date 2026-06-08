@@ -36,7 +36,7 @@ const CHAPTERS = [
   { id:"y1", era:"大一", span:"2022秋—2023春", title:"刚来，什么都是新的", desc:"那时候谁都不认识谁，先把校园走了个遍。",
     quote:null,
     spots:[
-      {place:"南门",src:""},{place:"喷泉",src:""},{place:"体育馆",src:""},{place:"操场",src:""},
+      {place:"南门",src:"photos/y1/01.jpg",pos:"center 80%"},{place:"喷泉",src:"photos/y1/02.jpg",pos:"center 55%"},{place:"体育馆",src:"photos/y1/03.jpg",pos:"center 42%"},{place:"操场",src:"photos/y1/04.jpg",pos:"center 60%"},
       {place:"一食堂（1）",src:""},{place:"一食堂（2）",src:""},{place:"学院超市",src:""},
       {place:"二食堂（1）",src:""},{place:"二食堂（2）",src:""},{place:"宿舍",src:""},
       {place:"厚德楼（1）",src:""},{place:"厚德楼（2）",src:""},{place:"厚德楼（3）",src:""},

@@ -571,7 +571,7 @@
       d.style.setProperty('--r',rots[i%rots.length]+'deg');
       d.style.transitionDelay=((i%6)*0.06)+'s';
       d.style.marginTop=((i*7)%4*13)+'px';                        // 错落，不像网格
-      d.innerHTML=`<div class="ph">${hasImg(s)?`<img data-src="${esc(s.src)}" alt="${esc(s.place)}">`:PHO}</div><div class="tag">${esc(s.place)}</div>`;
+      d.innerHTML=`<div class="ph">${hasImg(s)?`<img data-src="${esc(s.src)}" alt="${esc(s.place)}"${s.pos?` style="object-position:${esc(s.pos)}"`:''}>`:PHO}</div><div class="tag">${esc(s.place)}</div>`;
       const im=d.querySelector('img');if(im)watchImg(im);
       d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
     const ds=[SVG.map,SVG.book,SVG.star,SVG.cup,SVG.tree,SVG.plane];[[5,10],[88,14],[7,74],[91,66],[48,4],[80,88]].forEach((p,i)=>{const el=document.createElement('div');el.className='doodle';el.innerHTML=ds[i%ds.length];el.style.left=p[0]+'%';el.style.top=p[1]+'%';el.style.animationDelay=(i*0.7)+'s';$('#y1').appendChild(el);});
