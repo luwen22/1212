@@ -262,8 +262,8 @@
   .finale-stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
   .wall{position:absolute;inset:0;z-index:1;transform-origin:center;will-change:transform,filter;}
   .finale-flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;mix-blend-mode:screen;background:radial-gradient(circle at 50% 46%,rgba(255,245,220,.9),transparent 56%);}
-  .finale-chibi{position:absolute;left:50%;bottom:23vh;transform:translateX(-50%) translateY(14px);height:13vh;max-height:108px;color:var(--gold);opacity:0;transition:opacity .9s ease .2s,transform .9s var(--ease) .2s;z-index:5;pointer-events:none;filter:drop-shadow(0 0 8px rgba(212,168,85,.4));}
-  .finale-chibi svg{height:100%;width:auto;display:block;} .finale-chibi.show{opacity:.95;transform:translateX(-50%) translateY(0);}
+  .finale-chibi{position:absolute;left:50%;bottom:22vh;transform:translateX(-50%) translateY(14px);height:16vh;max-height:130px;color:var(--gold);opacity:0;transition:opacity .9s ease .2s,transform .9s var(--ease) .2s;z-index:5;pointer-events:none;filter:drop-shadow(0 0 8px rgba(212,168,85,.4));}
+  .finale-chibi svg,.finale-chibi img{height:100%;width:auto;display:block;} .finale-chibi.show{opacity:.95;transform:translateX(-50%) translateY(0);}
   .finale-foot{position:absolute;left:0;right:0;bottom:3.5vh;z-index:6;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px;opacity:0;transition:opacity .8s ease;}
   .finale-foot.show{opacity:1;}
   .ff-ip{display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.3em;text-indent:.3em;color:var(--gold);} .ff-ip .ico{font-size:16px;}
@@ -652,7 +652,7 @@
     $('#polaName').textContent=(NAME?NAME+' ':'')+'来过！';
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
-    $('#finaleChibi').innerHTML=CHIBI;
+    $('#finaleChibi').innerHTML='<img src="photos/avatar.png" alt="立文">';
     $('#finaleFoot').innerHTML=`<div class="ff-ip">© 立文之家</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div><div class="ff-note">毕业快乐！</div>`;
     if(META_.qrUrl){loadQR().then(()=>{const box=$('#polaQR');box.innerHTML='';box.classList.add('on');new QRCode(box,{text:META_.qrUrl,width:52,height:52,colorDark:'#2a2118',colorLight:'#fdfaf3'});}).catch(()=>{});}
   }
@@ -697,11 +697,12 @@
   function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
   function loadQR(){return window.QRCode?Promise.resolve():loadScript('https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js');}
   function svgToImg(svg){return new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src='data:image/svg+xml;charset=utf8,'+encodeURIComponent(svg.replace(/currentColor/g,'#d4a855'));});}
+  function loadImg(src){return new Promise(res=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>res(im);im.onerror=()=>res(null);im.src=src;});}
   async function drawKeepsake(){
     const sc=3, W=360, pad=16, photo=W-2*pad, capH=150, H=pad+photo+capH;
     const cv=document.createElement('canvas');cv.width=W*sc;cv.height=H*sc;const x=cv.getContext('2d');x.scale(sc,sc);
     try{await document.fonts.load('500 30px "Noto Serif SC"');await document.fonts.load('700 100px "Songti SC"');await document.fonts.ready;}catch(e){}
-    let faceImg=null;try{faceImg=await svgToImg(CHIBI_FACE);}catch(e){}
+    let faceImg=null;try{faceImg=await loadImg('photos/avatar.png');if(!faceImg)faceImg=await svgToImg(CHIBI_FACE);}catch(e){}
     const px=pad,py=pad,pw=photo,ph=photo,cy=py+ph;
     // 卡纸
     x.fillStyle='#fdfaf3';x.fillRect(0,0,W,H);
