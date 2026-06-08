@@ -108,9 +108,11 @@
   .pre-chibi svg{width:100%;height:auto;display:block;}
   .pt-face{display:inline-flex;width:1.05em;height:1.05em;color:var(--gold);vertical-align:-.12em;margin-right:.18em;}
   .pt-face svg{width:100%;height:100%;}
-  .scroll-cue{position:absolute;bottom:24vh;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink-faint);font-size:12px;letter-spacing:.3em;text-indent:.3em;opacity:0;transition:opacity 1.4s ease;}
-  .scroll-cue.in{opacity:1;}
-  .scroll-cue .ar{font-size:16px;animation:bob 1.8s ease-in-out infinite;}
+  .scroll-cue{position:absolute;bottom:20vh;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:11px;color:var(--gold);font-size:14.5px;font-weight:500;letter-spacing:.34em;text-indent:.34em;text-shadow:0 0 16px rgba(212,168,85,.5);opacity:0;transition:opacity 1.4s ease;}
+  .scroll-cue.in{opacity:1;animation:cueBreath 2.6s ease-in-out infinite;}
+  @keyframes cueBreath{0%,100%{text-shadow:0 0 14px rgba(212,168,85,.35)}50%{text-shadow:0 0 26px rgba(212,168,85,.85)}}
+  .scroll-cue .ar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold-dim);box-shadow:0 0 18px rgba(212,168,85,.28);animation:bob 1.6s ease-in-out infinite;}
+  .scroll-cue .ar .ico,.scroll-cue .ar svg{width:18px;height:18px;}
   @keyframes bob{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(7px);opacity:1}}
 
   /* ===================================================== 章节通用 */
@@ -346,6 +348,11 @@
   #saveModal .sm-dl:hover,#saveModal .sm-close:hover{background:rgba(212,168,85,.14);color:var(--ink);}
   .toast{position:fixed;left:50%;bottom:16vh;transform:translateX(-50%);z-index:99997;background:rgba(20,15,10,.92);color:var(--ink);border:1px solid var(--gold-dim);padding:12px 22px;border-radius:50px;font-size:13px;letter-spacing:.1em;opacity:0;transition:opacity .3s;pointer-events:none;}
   .toast.show{opacity:1;}
+  .photo-hint{position:fixed;left:50%;bottom:11vh;transform:translateX(-50%) translateY(14px);z-index:99995;display:flex;align-items:center;gap:9px;padding:11px 20px;border-radius:50px;background:rgba(20,15,10,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--gold-dim);box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 22px rgba(212,168,85,.16);color:var(--ink);font-size:13px;letter-spacing:.14em;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .7s ease,transform .7s var(--ease);}
+  .photo-hint.show{opacity:1;transform:translateX(-50%) translateY(0);animation:phPulse 2.4s ease-in-out 1.2s infinite;}
+  .photo-hint .ph-ico{width:18px;height:18px;color:var(--gold);display:inline-flex;}
+  .photo-hint .ph-ico svg{width:18px;height:18px;}
+  @keyframes phPulse{0%,100%{box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 18px rgba(212,168,85,.14)}50%{box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 30px rgba(212,168,85,.4)}}
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;}}
 </style>
 </head>
@@ -450,6 +457,7 @@
   <div class="lb-stage" id="lbStage"><button class="lb-nav p" id="lbPrev">‹</button><button class="lb-nav n" id="lbNext">›</button><div class="lb-track" id="lbTrack"></div></div>
 </section>
 <div class="toast" id="toast"></div>
+<div class="photo-hint" id="photoHint"><span class="ph-ico"></span><span class="ph-tx">轻点照片 · 放大查看</span></div>
 
 <script src="gallery.js"></script>
 <script>
@@ -481,7 +489,8 @@
     cup:ic('<path d="M6 8h11v4a5 5 0 01-5 5H11a5 5 0 01-5-5z"/><path d="M17 9h2.2a1.8 1.8 0 010 3.6H17"/><path d="M8 4v2M11 3v2M14 4v2"/>'),
     tree:ic('<path d="M12 3l5 7h-3l3 5H7l3-5H7z"/><path d="M12 15v5"/>'),
     chevron:ic('<path d="M6 9l6 6 6-6"/>'),
-    compass:ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><path d="M15 9l-2.2 4.8L8 16l2.2-4.8z" fill="currentColor" stroke="none"/>')
+    compass:ic('<circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><path d="M15 9l-2.2 4.8L8 16l2.2-4.8z" fill="currentColor" stroke="none"/>'),
+    zoom:ic('<circle cx="10.5" cy="10.5" r="6"/><path d="M10.5 8v5M8 10.5h5"/><path d="M20 20l-5-5"/>')
   };
   const PHO=`<span class="ico" style="font-size:1em">${SVG.cam}</span>`;
   /* 立文 Q版金线小人（中分发·眨眼·笑·竖大拇指）*/
@@ -575,6 +584,18 @@
       const im=d.querySelector('img');if(im)watchImg(im);
       d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
     const ds=[SVG.map,SVG.book,SVG.star,SVG.cup,SVG.tree,SVG.plane];[[5,10],[88,14],[7,74],[91,66],[48,4],[80,88]].forEach((p,i)=>{const el=document.createElement('div');el.className='doodle';el.innerHTML=ds[i%ds.length];el.style.left=p[0]+'%';el.style.top=p[1]+'%';el.style.animationDelay=(i*0.7)+'s';$('#y1').appendChild(el);});
+  })();
+
+  /* 首张照片处「轻点放大」提示：进入大一时出现一次，几秒后自隐，点照片即收 */
+  (function(){const hint=$('#photoHint'),ico=hint&&hint.querySelector('.ph-ico');if(!hint)return;if(ico)ico.innerHTML=SVG.zoom;
+    let shown=false,hideTmr=0;const hide=()=>hint.classList.remove('show');
+    const show=()=>{if(shown)return;shown=true;hint.classList.add('show');hideTmr=setTimeout(hide,5200);};
+    const dismiss=()=>{clearTimeout(hideTmr);hide();};
+    function check(){const r=$('#y1').getBoundingClientRect();
+      if(!shown){if(r.top<innerHeight*0.5&&r.bottom>innerHeight*0.35)show();}
+      else if(r.bottom<innerHeight*0.25){dismiss();removeEventListener('scroll',check);}}
+    addEventListener('scroll',check,{passive:true});setTimeout(check,400);
+    $('#y1scatter').addEventListener('click',dismiss,{once:true});
   })();
 
   /* 大二 活动：档案墙 */
