@@ -42,8 +42,8 @@ const CHAPTERS = [
       {place:"厚德楼（1）",src:"photos/y1/11.jpg",pos:"center 38%"},{place:"厚德楼（2）",src:"photos/y1/12.jpg",pos:"center 48%"},{place:"厚德楼（3）",src:"photos/y1/13.jpg",pos:"center 52%"},
       {place:"蜜雪冰城",src:"photos/y1/14.jpg",pos:"center 28%"},{place:"明德广场",src:"photos/y1/15.jpg",pos:"center 42%"},{place:"后山（1）",src:"photos/y1/16.jpg",pos:"center 40%"},
       {place:"后山（2）",src:"photos/y1/17.jpg",pos:"center 52%"},{place:"后山（3）",src:"photos/y1/18.jpg",pos:"center 48%"},{place:"宽也楼",src:"photos/y1/19.jpg",pos:"center 45%"},
-      {place:"图书馆（1）",src:""},{place:"图书馆（2）",src:""},{place:"图书馆（3）",src:""},
-      {place:"图书馆（4）",src:""},{place:"博学楼（1）",src:""},{place:"博学楼（2）",src:""},
+      {place:"图书馆（1）",src:"photos/y1/20.jpg",pos:"center 42%"},{place:"图书馆（2）",src:"photos/y1/21.jpg",pos:"center 38%"},{place:"图书馆（3）",src:"photos/y1/22.jpg",pos:"center 45%"},
+      {place:"图书馆（4）",src:"photos/y1/23.jpg",pos:"center 45%"},{place:"博学楼（1）",src:"photos/y1/24.jpg",pos:"center 58%"},{place:"博学楼（2）",src:""},
       {place:"博学楼（3）",src:""},{place:"博学楼（4）",src:""},{place:"北门",src:""}
     ] },
   { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"后来认识了你。",
