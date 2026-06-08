@@ -22,6 +22,8 @@ const META = {
   cardDate:   "2026.06",
   cardFoot:   "怀化学院 · 2026 · 立文之家",
   savePrompt: "保存这一刻",
+  qrUrl:      "",                 // 填你的公众号链接，填了结尾纪念卡就会显示二维码
+  qrLabel:    "扫一扫 · 立文之家",
   peopleTitle:"那些人",
   nav: [
     { id:"preface", label:"序" }, { id:"y1", label:"初见" }, { id:"y2", label:"忙碌" },
