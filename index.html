@@ -96,7 +96,8 @@
   .copyright{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
 
   /* ===================================================== 序章 */
-  #preface{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:clamp(24vh,30vh,34vh) 24px 60px;gap:28px;position:relative;}
+  #preface{height:180vh;position:relative;}
+  .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;gap:28px;overflow:hidden;}
   .pre-fx{opacity:0;transform:translateY(22px);transition:opacity 1.7s ease,transform 1.7s var(--ease);}
   .pre-fx.in{opacity:1;transform:none;}
   .pre-present{font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--gold);}
@@ -373,10 +374,12 @@
 
 <main id="story">
   <section id="preface">
-    <div class="pre-present pre-fx" id="prePresent"></div>
-    <div class="pre-word pre-fx">来过</div>
-    <div class="pre-rule pre-fx"></div>
-    <div class="scroll-cue" id="scrollCue"><span>向下滑动</span><span class="ar" id="cueAr"></span></div>
+    <div class="preface-stick">
+      <div class="pre-present pre-fx" id="prePresent"></div>
+      <div class="pre-word pre-fx">来过</div>
+      <div class="pre-rule pre-fx"></div>
+      <div class="scroll-cue" id="scrollCue"><span>向下滑动</span><span class="ar" id="cueAr"></span></div>
+    </div>
   </section>
 
   <section class="chapter" id="y1">
@@ -716,7 +719,7 @@
   const scrollCueEl=$('#scrollCue');
   function frame(){updateTopbar();const vh=innerHeight;
     if(!reduce){for(const hd of heads){const r=hd.getBoundingClientRect();if(r.bottom<0||r.top>vh)continue;const d=clamp(((r.top+r.height/2)-vh/2)/vh,-1,1);hd.style.transform=`translateY(${(-d*14).toFixed(1)}px)`;}}
-    if(prefaceEl&&preWord){const r=prefaceEl.getBoundingClientRect();const prog=clamp((-r.top)/(vh*0.72),0,1);
+    if(prefaceEl&&preWord){const r=prefaceEl.getBoundingClientRect();const prog=clamp((-r.top)/(vh*0.78),0,1);
       if(prog>0.003){const s=(1+prog*3.4).toFixed(3),o=(1-prog).toFixed(3);preWord.style.transform=`scale(${s})`;preWord.style.opacity=o;preWord.style.filter=`blur(${(prog*7).toFixed(1)}px)`;if(preRule){preRule.style.opacity=o;}if(prePres){prePres.style.opacity=o;}if(scrollCueEl)scrollCueEl.style.opacity=clamp(1-prog*2.4,0,1);}
       else{preWord.style.transform='';preWord.style.opacity='';preWord.style.filter='';if(preRule)preRule.style.opacity='';if(prePres)prePres.style.opacity='';if(scrollCueEl)scrollCueEl.style.opacity='';}}
     if(!reduce){
