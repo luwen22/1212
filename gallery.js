@@ -13,14 +13,14 @@ const POEM = [
 
 /* 全站文案 */
 const META = {
-  coverPlace: "怀化学院 · 2026",
+  coverPlace: "2022 — 2026",
   copyright:  "© 立文之家 版权所有",
   namePlaceholder: "写下你的名字",
   enter:      "来了",
   present:    "立文之家 出品",
   endingWord: "来过",
   cardDate:   "2026.06",
-  cardFoot:   "怀化学院 · 2026 · 立文之家",
+  cardFoot:   "2022 — 2026 · 立文之家",
   savePrompt: "保存这一刻",
   qrUrl:      "",                 // 填你的公众号链接，填了结尾纪念卡就会显示二维码
   qrLabel:    "扫一扫 · 立文之家",
