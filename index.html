@@ -207,8 +207,8 @@
   .sthumb2 img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s;} .sthumb2 img.loaded{opacity:1;}
   .splace2{font-family:var(--f-hand);font-size:clamp(13px,3.6vw,16px);color:#e7d8b8;letter-spacing:.04em;text-align:center;line-height:1.2;}
 
-  /* 大四 合照（放映机）*/
-  #y4{background:#0a0907;}
+  /* 大四（放映机·最后一程）*/
+  #y4{background:#0a0907;padding-bottom:clamp(24px,5vh,48px);}
   .proj{position:absolute;top:-1%;left:50%;width:64px;height:64px;border-radius:50%;transform:translateX(-50%) scale(0);background:radial-gradient(circle,rgba(255,242,205,.95),rgba(255,220,150,.3) 50%,transparent 72%);opacity:0;z-index:2;}
   #y4.lit .proj{animation:projFlare 1.5s ease forwards;}
   @keyframes projFlare{0%{transform:translateX(-50%) scale(0);opacity:0}24%{transform:translateX(-50%) scale(1.5);opacity:1}100%{transform:translateX(-50%) scale(.55);opacity:.5}}
@@ -229,7 +229,7 @@
   .groupcard .glabel{text-align:center;font-family:var(--f-hand);color:rgba(255,235,190,.72);font-size:14px;margin-top:10px;letter-spacing:.1em;}
 
   /* 那些人（翻卡）*/
-  #people{background:var(--bg);padding:clamp(70px,14vh,130px) 20px clamp(40px,8vh,70px);}
+  #people{background:var(--bg);padding:clamp(40px,8vh,80px) 20px clamp(40px,8vh,70px);}
   .people-title{text-align:center;font-size:clamp(22px,6vw,32px);letter-spacing:.3em;text-indent:.3em;color:var(--ink);margin-bottom:clamp(14px,3vh,22px);font-weight:500;}
   .people-hint{text-align:center;color:var(--ink-faint);font-size:12px;letter-spacing:.22em;text-indent:.22em;margin-bottom:clamp(40px,8vh,68px);}
   .grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
@@ -353,7 +353,6 @@
     <div class="pre-present pre-fx" id="prePresent"></div>
     <div class="pre-word pre-fx">来过</div>
     <div class="pre-rule pre-fx"></div>
-    <div class="pre-chibi pre-fx" id="preChibi"></div>
     <div class="scroll-cue" id="scrollCue"><span>向下滑动</span><span class="ar" id="cueAr"></span></div>
   </section>
 
@@ -524,7 +523,6 @@
   $('#enterLink').addEventListener('click',enter);
   $('#nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')enter();});
   $('#prePresent').textContent=META_.present||'';
-  $('#preChibi').innerHTML=CHIBI;
   (function(){const bx=$('#y1bokeh');if(!bx)return;for(let i=0;i<14;i++){const s=document.createElement('i');const sz=18+Math.random()*46;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(70+Math.random()*40)+'%';s.style.animationDuration=(13+Math.random()*12)+'s';s.style.animationDelay=(-Math.random()*20)+'s';bx.appendChild(s);}})();
 
   function fillHead(sec,c,typed){if(!c)return;sec.querySelector('.ch-era').textContent=c.era;const t=sec.querySelector('.ch-title');if(typed)t.dataset.text=c.title;else t.textContent=c.title;sec.querySelector('.ch-desc').textContent=c.desc;}
@@ -582,7 +580,7 @@
     REGIONS.forEach((r,i)=>{const pin=document.createElement('div');pin.className='rpin';pin.style.left=r.x+'%';pin.style.top=r.y+'%';pin.style.animationDelay=(0.3+i*0.1)+'s';
       pin.innerHTML=`<div class="rlabel">${r.l}</div><div class="ricon">${RICON[r.t]}</div><div class="rneedle"></div>`;map.appendChild(pin);});
     new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)map.classList.add('drawn');}),{threshold:.3}).observe(map);
-    $('#snakeIntro').textContent=`走过的地方 · ${TRIPS.length} 站`;
+    $('#snakeIntro').textContent='走过的地方';
     buildSnake();
     if(c3&&c3.quote)$('#y3quote').innerHTML=`<div>${esc(c3.quote[0])}</div><div class="q2">${esc(c3.quote[1])}</div>`;
   })();
@@ -622,11 +620,11 @@
   })();
 
   /* 那些人：翻卡（默认盖名字 → 接龙连续翻开 → 翻开后点看大图）*/
-  (function(){$('#peopleTitle').innerHTML=`<span class="pt-face">${CHIBI_FACE}</span>${esc(META_.peopleTitle||'')}`;
+  (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
     const ppItems=PPL.map(pp=>({src:pp.src||'',name:pp.name||''}));
     // 进入视口的卡片排队，105ms 一张连续翻开，像接龙
     let q=[],busy=false;
-    function pump(){if(busy)return;const c=q.shift();if(!c)return;busy=true;c.classList.add('flipped');setTimeout(()=>{busy=false;pump();},105);}
+    function pump(){if(busy)return;const c=q.shift();if(!c)return;busy=true;c.classList.add('flipped');setTimeout(()=>{busy=false;pump();},240);}
     const flipObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){flipObs.unobserve(e.target);if(!e.target.classList.contains('flipped')){q.push(e.target);pump();}}}),{threshold:.4});
     const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal';card.style.transitionDelay=((i%4)*0.04)+'s';
       const pos=esc(p.pos||'center 30%');const zoomCss=p.zoom?`transform:scale(${+p.zoom});transform-origin:${pos};`:'';
@@ -655,7 +653,7 @@
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
     $('#finaleChibi').innerHTML=CHIBI;
-    $('#finaleFoot').innerHTML=`<div class="ff-ip"><span class="ico">${CHIBI_FACE}</span>立文之家</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div><div class="ff-note">谢谢你，看到这里 · 全文完</div>`;
+    $('#finaleFoot').innerHTML=`<div class="ff-ip">© 立文之家</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div><div class="ff-note">毕业快乐！</div>`;
     if(META_.qrUrl){loadQR().then(()=>{const box=$('#polaQR');box.innerHTML='';box.classList.add('on');new QRCode(box,{text:META_.qrUrl,width:52,height:52,colorDark:'#2a2118',colorLight:'#fdfaf3'});}).catch(()=>{});}
   }
   function finaleUpdate(p){
