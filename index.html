@@ -98,10 +98,10 @@
 
   /* ===================================================== 序章 */
   #preface{height:180vh;position:relative;}
-  .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;gap:28px;overflow:hidden;}
+  .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px 15vh;gap:clamp(20px,4.6vh,46px);overflow:hidden;}
   .pre-fx{opacity:0;transform:translateY(22px);transition:opacity 1.7s ease,transform 1.7s var(--ease);}
   .pre-fx.in{opacity:1;transform:none;}
-  .pre-logo{position:relative;display:none;padding:18px 26px;margin-bottom:6px;}
+  .pre-logo{position:relative;display:none;padding:14px 22px;}
   .pre-logo::before{content:'';position:absolute;inset:0;border:1px solid var(--gold-dim);pointer-events:none;}
   .pre-logo::after{content:'';position:absolute;inset:6px;border:1px solid rgba(212,168,85,.32);pointer-events:none;}
   .pre-logo .lg-corner{position:absolute;width:14px;height:14px;border:1.5px solid var(--gold);pointer-events:none;}
