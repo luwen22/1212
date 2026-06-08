@@ -524,7 +524,8 @@
 
   (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
     const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard';card.style.transitionDelay=((i%4)*0.06)+'s';
-      card.innerHTML=`<div class="ph">${PHO}</div><div class="holo"></div><div class="cap">${esc(p.caption)}</div>`;
+      const inner=hasImg(p)?`${PHO}<img loading="lazy" data-src="${esc(p.src)}" alt="${esc(p.desc||'')}">`:PHO;
+      card.innerHTML=`<div class="ph">${inner}</div><div class="holo"></div><div class="cap">${esc(p.caption)}</div>`;
       card.addEventListener('click',()=>openLB(PPL,i));
       if(!touch){card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;card.style.transform=`translateY(-8px) rotateX(${(-py*9).toFixed(2)}deg) rotateY(${(px*9).toFixed(2)}deg)`;});
         card.addEventListener('pointerleave',()=>{card.style.transform='';});}

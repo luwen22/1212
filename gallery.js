@@ -77,7 +77,7 @@ const TIMELINE = [
    tier: "gold"=重要的人(金边)  "special"=特别(陆老师等)  ""=普通(白边)
    caption=卡片说明  desc=谁/在哪(仅匹配照片用，不展示)  src=照片(暂空) */
 const PEOPLE = [
-  { tier:"",        caption:"这是师哥，我熟。《等待》",            desc:"师哥+主人公（校园走廊，师哥手捧毛绒花）", src:"" },
+  { tier:"",        caption:"这是师哥，我熟。《等待》",            desc:"师哥+主人公（校园走廊，师哥手捧毛绒花）", src:"photos/people/01.jpg" },
   { tier:"",        caption:"最独立的男人来了",                    desc:"家教男生+主人公（毕业快乐黑板前）", src:"" },
   { tier:"",        caption:"楼管分会刘楼海来报道了",              desc:"刘楼海+主人公（评委红牌）", src:"" },
   { tier:"",        caption:"香味学长来临，占领无人区",            desc:"三人合影（白衬衫领带+学士服）", src:"" },
