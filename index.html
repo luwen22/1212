@@ -125,8 +125,15 @@
   .doodle svg{width:32px;height:32px;}
   @keyframes doodleFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(6deg)}}
   .scatter{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 20px;position:relative;}
-  .polaroid{background:#fff;padding:10px 10px 32px;box-shadow:0 8px 22px rgba(60,50,30,.2);cursor:pointer;position:relative;width:clamp(128px,40vw,168px);opacity:0;transform:translateY(-40px) rotate(var(--r,0deg));transition:opacity .7s ease,box-shadow .3s,transform .8s var(--ease);}
-  .polaroid.in{opacity:1;transform:translateY(0) rotate(var(--r,0deg));}
+  .polaroid{background:#fff;padding:10px 10px 32px;box-shadow:0 8px 22px rgba(60,50,30,.2);cursor:pointer;position:relative;width:clamp(128px,40vw,168px);opacity:0;transition:opacity .7s ease,box-shadow .3s,transform .95s var(--ease),filter .8s ease;}
+  .polaroid.sS{width:clamp(98px,30vw,134px);} .polaroid.sL{width:clamp(150px,50vw,214px);}
+  .polaroid.e1{transform:translateY(-54px) rotate(var(--r,0deg));}
+  .polaroid.e2{transform:translateX(-74px) rotate(calc(var(--r,0deg) - 9deg));}
+  .polaroid.e3{transform:translateX(74px) rotate(calc(var(--r,0deg) + 9deg));}
+  .polaroid.e4{transform:scale(.32) rotate(var(--r,0deg));}
+  .polaroid.e5{transform:translateY(66px) rotate(var(--r,0deg));}
+  .polaroid.e6{transform:scale(1.22) rotate(var(--r,0deg));filter:blur(9px);}
+  .polaroid.in{opacity:1;transform:rotate(var(--r,0deg));filter:none;}
   .polaroid:hover{transform:scale(1.12) rotate(0) !important;z-index:20;box-shadow:0 20px 44px rgba(60,50,30,.32);}
   .polaroid .ph{aspect-ratio:1/1;background:#efe7d6;display:flex;align-items:center;justify-content:center;color:#c2b596;font-size:32px;overflow:hidden;}
   .polaroid .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .polaroid .ph img.loaded{opacity:1;}
@@ -480,8 +487,14 @@
   fillHead($('#y1'),c1,false);fillHead($('#y2'),c2,true);fillHead($('#y3'),c3,false);fillHead($('#y4'),c4,false);
 
   /* 大一 校园：28 个地点拍立得 */
-  (function(){const box=$('#y1scatter');const spots=(c1&&c1.spots)||[];const items=spots.map(s=>({src:s.src||'',caption:s.place}));const rots=[3,-4,-1.5,4,-2.5,2,-3,2.5];
-    spots.forEach((s,i)=>{const d=document.createElement('div');d.className='polaroid';d.style.setProperty('--r',rots[i%rots.length]+'deg');d.style.transitionDelay=((i%6)*0.05)+'s';
+  (function(){const box=$('#y1scatter');const spots=(c1&&c1.spots)||[];const items=spots.map(s=>({src:s.src||'',caption:s.place}));const rots=[3,-4,-1.5,4,-2.5,2,-3,2.5,-2,1.5];
+    spots.forEach((s,i)=>{const d=document.createElement('div');
+      const ent='e'+((i*3+ (i%5))%6 + 1);                         // 入场动画各不相同
+      const size=(i%5===0)?'sL':(i%7===3?'sS':'');                // 尺寸有大有小
+      d.className='polaroid '+ent+(size?' '+size:'');
+      d.style.setProperty('--r',rots[i%rots.length]+'deg');
+      d.style.transitionDelay=((i%6)*0.06)+'s';
+      d.style.marginTop=((i*7)%4*13)+'px';                        // 错落，不像网格
       d.innerHTML=`<div class="ph">${hasImg(s)?`<img data-src="${esc(s.src)}" alt="${esc(s.place)}">`:PHO}</div><div class="tag">${esc(s.place)}</div>`;
       const im=d.querySelector('img');if(im)watchImg(im);
       d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
@@ -564,8 +577,10 @@
     const cnt=$('#y4count');let k=0;setInterval(()=>{const seq=['…3…2…1…','…READY…','…ROLL…'];cnt.textContent=seq[k++%seq.length];},2200);
   })();
 
-  /* 那些人：翻卡（正面照片，翻面那句话）*/
+  /* 那些人：翻卡（默认盖名字，滑到后静置自动逐张翻开露脸）*/
   (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
+    // 滑到后静置约 1.8 秒，脸一个一个翻开（随机微错落形成连续翻面感）
+    const flipObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const c=e.target;flipObs.unobserve(c);setTimeout(()=>{if(!c.dataset.tapped)c.classList.add('flipped');},1800+Math.random()*900);}}),{threshold:.5});
     const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal';card.style.transitionDelay=((i%4)*0.05)+'s';
       const pos=esc(p.pos||'center 30%');const zoomCss=p.zoom?`transform:scale(${+p.zoom});transform-origin:${pos};`:'';
       const photo=hasImg(p)?`<img data-src="${esc(p.src)}" alt="${esc(p.name||'')}" style="object-position:${pos};${zoomCss}">`:PHO;
@@ -574,10 +589,8 @@
         <div class="pcard-face pcard-cover"><div class="holo"></div>${p.group?'<div class="pgroup-badge">合影</div>':''}<div class="pc-name">${esc(p.name||'')}</div><div class="pc-rule"></div>${desc?`<div class="pc-desc">${esc(desc)}</div>`:''}<div class="pc-hint">轻点看照片</div></div>
         <div class="pcard-face pcard-photo"><div class="ph">${photo}</div><div class="pname">${esc(p.name||'')}</div></div></div>`;
       const im=card.querySelector('img');if(im)watchImg(im);
-      card.addEventListener('click',()=>card.classList.toggle('flipped'));
-      grid.appendChild(card);watch(card);});
-    // 进入视口后翻第一张做演示，再翻回
-    new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){const first=$('#grid .pcard');if(first){setTimeout(()=>first.classList.add('flipped'),900);setTimeout(()=>first.classList.remove('flipped'),2700);}ob.disconnect();}}),{threshold:.25}).observe($('#people'));
+      card.addEventListener('click',()=>{card.dataset.tapped='1';card.classList.toggle('flipped');});
+      grid.appendChild(card);watch(card);flipObs.observe(card);});
   })();
 
   /* 结尾 */
