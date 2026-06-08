@@ -296,6 +296,7 @@
   .finale-foot.show{opacity:1;}
   .ff-ip{display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.3em;text-indent:.3em;color:var(--gold);} .ff-ip .ico{font-size:16px;}
   .ff-date{font-size:11px;letter-spacing:.26em;color:var(--gold-dim);}
+  .ff-by{font-size:10.5px;letter-spacing:.18em;color:var(--gold-dim);}
   .ff-note{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
   .tile{position:absolute;will-change:transform,opacity;border:1px solid rgba(255,235,200,.12);overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.4);}
   .tile img{width:100%;height:100%;object-fit:cover;}
@@ -725,7 +726,7 @@
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
     $('#finaleChibi').innerHTML='<img src="photos/avatar.png" alt="立文">';
-    $('#finaleFoot').innerHTML=`<div class="ff-ip">© 立文之家</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div><div class="ff-note">毕业快乐！</div>`;
+    $('#finaleFoot').innerHTML=`<div class="ff-ip">© 立文之家</div><div class="ff-by">Made by 沈立文 · 沈一鸣 · 鲁文</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div><div class="ff-note">毕业快乐！</div>`;
     if(META_.qrUrl){loadQR().then(()=>{const box=$('#polaQR');box.innerHTML='';box.classList.add('on');new QRCode(box,{text:META_.qrUrl,width:52,height:52,colorDark:'#2a2118',colorLight:'#fdfaf3'});}).catch(()=>{});}
   }
   function finaleUpdate(p){
