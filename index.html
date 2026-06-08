@@ -834,7 +834,7 @@
     return cv.toDataURL('image/png');
   }
   function showSave(url){let m=$('#saveModal');
-    if(!m){m=document.createElement('div');m.id='saveModal';m.innerHTML=`<img alt="来过 纪念卡"><div class="sm-tip">长按图片保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;document.body.appendChild(m);m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});}
+    if(!m){m=document.createElement('div');m.id='saveModal';m.innerHTML=`<img alt="来过 纪念卡"><div class="sm-tip">点击下载保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;document.body.appendChild(m);m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});}
     m.querySelector('img').src=url;const dl=m.querySelector('.sm-dl');dl.href=url;dl.download=`来过${NAME?'_'+NAME:''}.png`;m.classList.add('show');}
   $('#saveBtn').addEventListener('click',async()=>{try{toast('正在生成…');const url=await drawKeepsake();showSave(url);}catch(e){toast('生成失败，长按卡片截图');}});
   $('#polacard').addEventListener('click',()=>{spawnConfetti();const pc=$('#polacard');pc.classList.remove('shine');void pc.offsetWidth;pc.classList.add('shine');});
