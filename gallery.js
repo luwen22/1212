@@ -85,32 +85,24 @@ const TIMELINE = [
   { date:"2026.06", place:"毕业",       note:"你也在",                  era:4 }
 ];
 
-/* 人物集换卡（24）
-   tier: "gold"=重要的人(金边)  "special"=特别(陆老师等)  ""=普通(白边)
-   caption=卡片说明  desc=谁/在哪(仅匹配照片用，不展示)  src=照片(暂空) */
+/* 那些人（集换翻卡）—— 共 61 人
+   name=姓名   group:true=只在合照里出现（取合照特写，仅一次）；不标=有单独照片(可能多张)
+   src=照片路径   pos="x% y%"=取景焦点   zoom=放大倍数   note=可选那句话
+   多张照片的人，之后可加成多张卡（src 各不同）。 */
 const PEOPLE = [
-  { tier:"",        caption:"这是师哥，我熟。《等待》",            desc:"师哥+主人公（校园走廊，师哥手捧毛绒花）", src:"photos/people/01.jpg", pos:"38% 50%" },
-  { tier:"",        caption:"最独立的男人来了",                    desc:"家教男生+主人公（毕业快乐黑板前）", src:"" },
-  { tier:"",        caption:"楼管分会刘楼海来报道了",              desc:"刘楼海+主人公（评委红牌）", src:"" },
-  { tier:"",        caption:"香味学长来临，占领无人区",            desc:"三人合影（白衬衫领带+学士服）", src:"" },
-  { tier:"gold",    caption:"鲁文来了，全体起立",                  desc:"主人公一人（END黑板）", src:"" },
-  { tier:"",        caption:"不是还要读三年吗",                    desc:"尋不读（两人互动）", src:"" },
-  { tier:"",        caption:"令人羡慕的三人组",                    desc:"T501三人（草坪）", src:"" },
-  { tier:"",        caption:"班委院干集结，所有人上岸",            desc:"班委大合照", src:"" },
-  { tier:"",        caption:"照片是模糊的，回忆是清醒的",          desc:"饭局合照", src:"" },
-  { tier:"special", caption:"陆老师笑起来好温柔，谢谢关照",        desc:"陆老师+主人公", src:"" },
-  { tier:"",        caption:"沈立文印×1，学弟手艺绝绝子",          desc:"富得流油学弟+主人公", src:"" },
-  { tier:"",        caption:"小马宝莉本人到场，素拓部の马部长",    desc:"小马宝莉+主人公", src:"" },
-  { tier:"",        caption:"还有很多人，但永远都在",              desc:"楼管分会像素楼全家福", src:"" },
-  { tier:"",        caption:"社团部来了，这个小姐姐跳舞很厉害",    desc:"社团部女生+主人公", src:"" },
-  { tier:"gold",    caption:"亚文来了，最好的搭档",                desc:"亚文拍立得", src:"" },
-  { tier:"",        caption:"宣传部来了，不用再写稿子了",          desc:"宣传部女生+主人公", src:"" },
-  { tier:"",        caption:"把我骗来的北门，一苇湖边",            desc:"北门钓鱼", src:"" },
-  { tier:"",        caption:"黄帝和小洪来临，这个向日葵好好看",    desc:"组织部大合照", src:"" },
-  { tier:"",        caption:"好复古，感觉这条路小时候抱过我",      desc:"团办拍立得", src:"" },
-  { tier:"gold",    caption:"华安来了，《破笼》",                  desc:"华安握手", src:"" },
-  { tier:"",        caption:"鲁文怎么睡了，立文最装谢谢",          desc:"上课睡觉", src:"" },
-  { tier:"gold",    caption:"我们终将再逢",                        desc:"毕业END大合照", src:"" },
-  { tier:"",        caption:"走廊，2026",                          desc:"走廊回眸（两人学士服）", src:"" },
-  { tier:"",        caption:"学办部长，通道，麻将",                desc:"向柯（学办部长）", src:"" }
+  {name:"周雅文"},{name:"王华安"},{name:"辜武椿"},{name:"刘旭涛",group:true},
+  {name:"杨清尘",group:true},{name:"张朔语",group:true},{name:"赵羿钧",group:true},
+  {name:"李静茹"},{name:"彭思雨"},{name:"樊子怡"},{name:"罗茵",group:true},
+  {name:"张雨佳",group:true},{name:"杨倩"},{name:"贺子璐",group:true},{name:"刘承文"},
+  {name:"师健晟"},{name:"盛文杰",group:true},{name:"万江溢"},{name:"胡颖",group:true},
+  {name:"佘雨馨",group:true},{name:"刘逸凡",group:true},{name:"石果"},{name:"彭海蓉"},
+  {name:"张黄阳"},{name:"苏子媛"},{name:"何婷",group:true},{name:"舒利",group:true},
+  {name:"李焱",group:true},{name:"康雨彤"},{name:"程佳怡",group:true},{name:"刘宇涵",group:true},
+  {name:"郝宇佳",group:true},{name:"黄梦华"},{name:"向柯"},{name:"刘楼海"},{name:"陈铭蕊"},
+  {name:"李琳"},{name:"李咨蓉"},{name:"李佳怡"},{name:"秦耀华"},{name:"顾炜源"},{name:"陆垚"},
+  {name:"李康波",group:true},{name:"张艳艳",group:true},{name:"罗为",group:true},{name:"洪宇琴"},
+  {name:"于小雅",group:true},{name:"樊梦禹"},{name:"朱秋洁",group:true},{name:"徐星宇"},
+  {name:"程祖云"},{name:"黄豪"},{name:"马杨玲"},{name:"孙碧雲"},{name:"王帅龙",group:true},
+  {name:"邬晴宇",group:true},{name:"邢宇嫣",group:true},{name:"许江南",group:true},
+  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"肖媛"}
 ];
