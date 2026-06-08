@@ -101,6 +101,15 @@
   .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;gap:28px;overflow:hidden;}
   .pre-fx{opacity:0;transform:translateY(22px);transition:opacity 1.7s ease,transform 1.7s var(--ease);}
   .pre-fx.in{opacity:1;transform:none;}
+  .pre-logo{position:relative;display:none;padding:18px 26px;margin-bottom:6px;}
+  .pre-logo::before{content:'';position:absolute;inset:0;border:1px solid var(--gold-dim);pointer-events:none;}
+  .pre-logo::after{content:'';position:absolute;inset:6px;border:1px solid rgba(212,168,85,.32);pointer-events:none;}
+  .pre-logo .lg-corner{position:absolute;width:14px;height:14px;border:1.5px solid var(--gold);pointer-events:none;}
+  .pre-logo .lg-corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .pre-logo .lg-corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+  .pre-logo .lg-corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+  .pre-logo .lg-corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+  .pre-logo img{display:block;width:clamp(220px,56vw,420px);height:auto;filter:drop-shadow(0 0 14px rgba(212,168,85,.28));}
   .pre-present{font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--gold);}
   .pre-word{font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(64px,20vw,140px);letter-spacing:.14em;color:var(--ink);animation:preGlow 5s ease-in-out infinite;}
   @keyframes preGlow{0%,100%{text-shadow:0 0 34px rgba(212,168,85,.14)}50%{text-shadow:0 0 66px rgba(212,168,85,.32)}}
@@ -387,6 +396,7 @@
 <main id="story">
   <section id="preface">
     <div class="preface-stick">
+      <div class="pre-logo pre-fx" id="preLogo"><span class="lg-corner tl"></span><span class="lg-corner tr"></span><span class="lg-corner bl"></span><span class="lg-corner br"></span><img id="preLogoImg" alt="立文之家"></div>
       <div class="pre-present pre-fx" id="prePresent"></div>
       <div class="pre-word pre-fx">来过</div>
       <div class="pre-rule pre-fx"></div>
@@ -570,6 +580,8 @@
   function magnetic(el,str){if(touch||reduce||!el)return;el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${((e.clientX-(r.left+r.width/2))*str).toFixed(1)}px,${((e.clientY-(r.top+r.height/2))*str).toFixed(1)}px)`;});el.addEventListener('pointerleave',()=>{el.style.transform='';});}
   magnetic($('#enterLink'),0.22);
   $('#prePresent').textContent=META_.present||'';
+  /* 序章 logo：放到 photos/logo.png（透明镂空），加载成功才显示，描金边框 */
+  (function(){const lg=$('#preLogo'),im=$('#preLogoImg');if(!lg||!im)return;im.onload=()=>{lg.style.display='block';};im.onerror=()=>{lg.style.display='none';};im.src=(typeof META_!=='undefined'&&META_.logo)||'photos/logo.png';})();
   (function(){const bx=$('#y1bokeh');if(!bx)return;for(let i=0;i<14;i++){const s=document.createElement('i');const sz=18+Math.random()*46;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(70+Math.random()*40)+'%';s.style.animationDuration=(13+Math.random()*12)+'s';s.style.animationDelay=(-Math.random()*20)+'s';bx.appendChild(s);}})();
 
   function fillHead(sec,c,typed){if(!c)return;sec.querySelector('.ch-era').textContent=c.era;const t=sec.querySelector('.ch-title');if(typed)t.dataset.text=c.title;else t.textContent=c.title;sec.querySelector('.ch-desc').textContent=c.desc;}
@@ -735,7 +747,7 @@
     if(card>0.5&&!confettiFired){confettiFired=true;spawnConfetti();}
   }
 
-  const scenes=$$('[data-scene]');const heads=$$('.ch-head');const prefaceEl=$('#preface'),preWord=$('#preface .pre-word'),preRule=$('#preface .pre-rule'),prePres=$('#prePresent');let ticking=false;
+  const scenes=$$('[data-scene]');const heads=$$('.ch-head');const prefaceEl=$('#preface'),preWord=$('#preface .pre-word'),preRule=$('#preface .pre-rule'),prePres=$('#prePresent'),preLogo=$('#preLogo');let ticking=false;
   /* —— 滚动驱动的视差与显影 —— */
   const PX=[{el:$('#y1bokeh'),k:-0.07},{el:$('#y2frags'),k:0.09},{el:$('#beamDust'),k:-0.06},{el:$('#y3map .terrain'),k:0.05}].filter(o=>o.el);
   const chBodies=$$('.chapter .ch-body');
@@ -746,8 +758,8 @@
   function frame(){updateTopbar();const vh=innerHeight;
     if(!reduce){for(const hd of heads){const r=hd.getBoundingClientRect();if(r.bottom<0||r.top>vh)continue;const d=clamp(((r.top+r.height/2)-vh/2)/vh,-1,1);hd.style.transform=`translateY(${(-d*14).toFixed(1)}px)`;}}
     if(prefaceEl&&preWord){const r=prefaceEl.getBoundingClientRect();const prog=clamp((-r.top)/(vh*0.78),0,1);
-      if(prog>0.003){const s=(1+prog*3.4).toFixed(3),o=(1-prog).toFixed(3);preWord.style.transform=`scale(${s})`;preWord.style.opacity=o;preWord.style.filter=`blur(${(prog*7).toFixed(1)}px)`;if(preRule){preRule.style.opacity=o;}if(prePres){prePres.style.opacity=o;}if(scrollCueEl)scrollCueEl.style.opacity=clamp(1-prog*2.4,0,1);}
-      else{preWord.style.transform='';preWord.style.opacity='';preWord.style.filter='';if(preRule)preRule.style.opacity='';if(prePres)prePres.style.opacity='';if(scrollCueEl)scrollCueEl.style.opacity='';}}
+      if(prog>0.003){const s=(1+prog*3.4).toFixed(3),o=(1-prog).toFixed(3);preWord.style.transform=`scale(${s})`;preWord.style.opacity=o;preWord.style.filter=`blur(${(prog*7).toFixed(1)}px)`;if(preRule){preRule.style.opacity=o;}if(prePres){prePres.style.opacity=o;}if(preLogo){preLogo.style.opacity=o;}if(scrollCueEl)scrollCueEl.style.opacity=clamp(1-prog*2.4,0,1);}
+      else{preWord.style.transform='';preWord.style.opacity='';preWord.style.filter='';if(preRule)preRule.style.opacity='';if(prePres)prePres.style.opacity='';if(preLogo)preLogo.style.opacity='';if(scrollCueEl)scrollCueEl.style.opacity='';}}
     if(!reduce){
       for(const o of PX){const r=o.el.getBoundingClientRect();if(r.bottom<-60||r.top>vh+60)continue;const c=(r.top+r.height/2)-vh/2;o.el.style.transform=`translate3d(0,${(c*o.k).toFixed(1)}px,0)`;}
       for(const b of chBodies){const r=b.getBoundingClientRect();if(r.bottom<0||r.top>vh)continue;const d=clamp(((r.top+r.height/2)-vh/2)/vh,-1,1);b.style.transform=`translateY(${(d*18).toFixed(1)}px)`;}
