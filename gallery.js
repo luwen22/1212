@@ -40,12 +40,13 @@ const CHAPTERS = [
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"] },
   { id:"y3", era:"大三", span:"2024秋—2025春", title:"出去看看", desc:"侗锦，挑花，古商城，北部湾。有些东西，走了才看见。",
     quote:["走过的地方，","有你在就记得了。"], photos:8,
-    places:["赴约沈从文","珊瑚北部湾","吹皱了河水吹散了云堆"],
-    pins:[
-      { place:"成都·侗锦",   note:"侧耳倾听，丝线交织",     x:20, y:24, src:"" },
-      { place:"洪江古商城",  note:"吹皱了河水吹散了云堆",   x:50, y:34, src:"" },
-      { place:"凤凰古城",    note:"赴约沈从文",            x:33, y:52, src:"" },
-      { place:"北海·涠洲岛", note:"珊瑚北部湾",            x:46, y:82, src:"" }
+    trips:[
+      {place:"怀化",src:""},{place:"长沙",src:""},{place:"南昌",src:""},{place:"重庆",src:""},
+      {place:"武汉",src:""},{place:"合肥",src:""},{place:"吉首",src:""},{place:"湘西",src:""},
+      {place:"贵阳",src:""},{place:"铜仁",src:""},{place:"麻阳县",src:""},{place:"南京",src:""},
+      {place:"成都",src:""},{place:"新晃县",src:""},{place:"溆浦县",src:""},{place:"通道县",src:""},
+      {place:"北海",src:""},{place:"武冈",src:""},{place:"娄底",src:""},{place:"上海",src:""},
+      {place:"开封",src:""},{place:"洛阳",src:""},{place:"张家界",src:""},{place:"芷江县",src:""}
     ] },
   { id:"y4", era:"大四", span:"2025秋—2026春", title:"最后一程", desc:"坐在高中里又考了个大学。然后毕业。",
     quote:null, photos:6 }
@@ -77,7 +78,7 @@ const TIMELINE = [
    tier: "gold"=重要的人(金边)  "special"=特别(陆老师等)  ""=普通(白边)
    caption=卡片说明  desc=谁/在哪(仅匹配照片用，不展示)  src=照片(暂空) */
 const PEOPLE = [
-  { tier:"",        caption:"这是师哥，我熟。《等待》",            desc:"师哥+主人公（校园走廊，师哥手捧毛绒花）", src:"photos/people/01.jpg" },
+  { tier:"",        caption:"这是师哥，我熟。《等待》",            desc:"师哥+主人公（校园走廊，师哥手捧毛绒花）", src:"photos/people/01.jpg", pos:"38% 50%" },
   { tier:"",        caption:"最独立的男人来了",                    desc:"家教男生+主人公（毕业快乐黑板前）", src:"" },
   { tier:"",        caption:"楼管分会刘楼海来报道了",              desc:"刘楼海+主人公（评委红牌）", src:"" },
   { tier:"",        caption:"香味学长来临，占领无人区",            desc:"三人合影（白衬衫领带+学士服）", src:"" },
