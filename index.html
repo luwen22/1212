@@ -227,6 +227,8 @@
   .pcard-back{transform:rotateY(180deg);display:flex;align-items:center;justify-content:center;padding:18px;background:#16110b;}
   .pback-text{color:var(--ink);font-size:clamp(13px,3.6vw,15px);line-height:2;text-align:center;letter-spacing:.06em;}
   .pflip-mark{position:absolute;top:8px;right:10px;z-index:6;font-size:11px;color:var(--gold-dim);opacity:.7;}
+  .pgroup-badge{position:absolute;top:8px;left:8px;z-index:6;font-size:10px;letter-spacing:.1em;color:#1a1206;background:rgba(212,168,85,.85);padding:2px 8px;border-radius:50px;}
+  .pback-note{margin-top:12px;font-size:10px;letter-spacing:.1em;color:var(--ink-faint);}
   .down-cue{text-align:center;padding:clamp(40px,9vh,80px) 20px clamp(20px,5vh,40px);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--ink-faint);font-size:12px;letter-spacing:.34em;text-indent:.34em;}
   .down-cue .ar{font-size:16px;color:var(--gold-dim);animation:bob 1.8s ease-in-out infinite;}
 
@@ -547,11 +549,12 @@
   /* 那些人：翻卡（正面照片，翻面那句话）*/
   (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
     const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal';card.style.transitionDelay=((i%4)*0.05)+'s';
-      const front=hasImg(p)?`<img data-src="${esc(p.src)}" alt="${esc(p.desc||'')}" style="object-position:${esc(p.pos||'center 30%')}">`:PHO;
+      const pos=esc(p.pos||'center 30%');const zoomCss=p.zoom?`transform:scale(${+p.zoom});transform-origin:${pos};`:'';
+      const front=hasImg(p)?`<img data-src="${esc(p.src)}" alt="${esc(p.desc||'')}" style="object-position:${pos};${zoomCss}">`:PHO;
       const label=p.name||p.caption||'';
       card.innerHTML=`<div class="pcard-in">
-        <div class="pcard-face pcard-front"><div class="ph">${front}</div><div class="holo"></div>${p.name?`<div class="pname">${esc(p.name)}</div>`:''}<div class="pflip-mark">↻</div></div>
-        <div class="pcard-face pcard-back"><div class="pback-text">${esc(label)}</div></div></div>`;
+        <div class="pcard-face pcard-front"><div class="ph">${front}</div><div class="holo"></div>${p.group?'<div class="pgroup-badge">合影</div>':''}${p.name?`<div class="pname">${esc(p.name)}</div>`:''}<div class="pflip-mark">↻</div></div>
+        <div class="pcard-face pcard-back"><div class="pback-text">${esc(label)}</div>${p.group?'<div class="pback-note">同一张合照里的他</div>':''}</div></div>`;
       const im=card.querySelector('img');if(im)watchImg(im);
       card.addEventListener('click',()=>card.classList.toggle('flipped'));
       grid.appendChild(card);watch(card);});
