@@ -90,7 +90,8 @@
   .enter-link:hover{color:#1a140c;background:var(--gold);border-color:var(--gold);}
   .enter-link:active{transform:scale(.97);}
   @keyframes enterPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,85,0)}50%{box-shadow:0 0 22px 0 rgba(212,168,85,.28)}}
-  .enter-hint{font-size:11px;letter-spacing:.16em;color:var(--ink-faint);opacity:.75;}
+  .enter-hint{font-size:13px;font-weight:500;letter-spacing:.2em;color:var(--gold);opacity:.96;text-shadow:0 0 14px rgba(212,168,85,.4);animation:hintBreath 2.8s ease-in-out infinite;}
+  @keyframes hintBreath{0%,100%{text-shadow:0 0 12px rgba(212,168,85,.3)}50%{text-shadow:0 0 22px rgba(212,168,85,.75)}}
   .cover-foot{position:absolute;left:0;right:0;bottom:clamp(26px,5vh,48px);z-index:3;text-align:center;display:flex;flex-direction:column;gap:7px;opacity:0;transition:opacity 1.6s ease;}
   .cover-place{font-size:12px;letter-spacing:.34em;text-indent:.34em;color:var(--gold-dim);}
   .copyright{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
@@ -313,7 +314,11 @@
   #lb{position:fixed;inset:0;z-index:9994;background:#0a0807;display:none;flex-direction:column;}
   #lb.active{display:flex;animation:fadeIn .3s ease;}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-  .lb-top{display:flex;align-items:center;justify-content:center;padding:max(18px,env(safe-area-inset-top)) 56px 8px;}
+  .lb-top{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:max(18px,env(safe-area-inset-top)) 56px 8px;}
+  .lb-hint{font-size:12px;letter-spacing:.16em;color:var(--gold-dim);display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .4s ease,opacity .4s ease;animation:lbHintBreath 2.6s ease-in-out infinite;}
+  .lb-hint .lh-ar{color:var(--gold);font-size:15px;line-height:1;}
+  .lb-hint.end{color:var(--gold);text-shadow:0 0 14px rgba(212,168,85,.5);}
+  @keyframes lbHintBreath{0%,100%{opacity:.7}50%{opacity:1}}
   .lb-title{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-hand);font-size:clamp(16px,4.4vw,20px);letter-spacing:.08em;color:var(--gold);text-align:center;}
   .lb-mono{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1px solid var(--gold-dim);font-size:13px;color:var(--gold);flex:0 0 auto;}
   .lb-close{position:absolute;top:max(12px,env(safe-area-inset-top));right:16px;z-index:7;width:46px;height:46px;border-radius:50%;background:rgba(20,15,10,.55);border:1px solid var(--gold-dim);color:var(--ink);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s;}
@@ -452,7 +457,7 @@
   <div class="lb-glow"></div>
   <div class="lb-particles" id="lbParticles"></div>
   <span class="lb-corner tl"></span><span class="lb-corner tr"></span><span class="lb-corner bl"></span><span class="lb-corner br"></span>
-  <div class="lb-top"><div class="lb-title" id="lbTitle"></div></div>
+  <div class="lb-top"><div class="lb-title" id="lbTitle"></div><div class="lb-hint" id="lbHint"></div></div>
   <button class="lb-close" id="lbClose">✕</button>
   <div class="lb-stage" id="lbStage"><button class="lb-nav p" id="lbPrev">‹</button><button class="lb-nav n" id="lbNext">›</button><div class="lb-track" id="lbTrack"></div></div>
 </section>
@@ -827,7 +832,8 @@
   function lbParticles(){const box=$('#lbParticles');if(box.childElementCount)return;for(let i=0;i<16;i++){const s=document.createElement('i');const sz=2+Math.random()*3;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(70+Math.random()*40)+'%';s.style.animationDuration=(8+Math.random()*10)+'s';s.style.animationDelay=(-Math.random()*12)+'s';box.appendChild(s);}}
   function openLB(items,idx){lbParticles();lbItems=items;lbTrack.innerHTML='';items.forEach(it=>{const s=document.createElement('div');s.className='lb-slide';s.innerHTML=hasImg(it)?`<img alt="">`:`<div class="lb-frame">${PHO}</div>`;const im=s.querySelector('img');if(im){im.dataset.src=it.src;im.addEventListener('load',()=>im.classList.add('loaded'));}lbTrack.appendChild(s);});$('#lb').classList.add('active');document.body.style.overflow='hidden';lbGo(idx,true);}
   function lbLoad(i){[i-1,i,i+1].forEach(k=>{const s=lbTrack.children[k];if(!s)return;const im=s.querySelector('img');if(im&&im.dataset.src&&!im.src)im.src=im.dataset.src;});}
-  function lbGo(i,instant){if(!lbItems.length)return;lbCur=clamp(i,0,lbItems.length-1);if(instant){lbTrack.style.transition='none';requestAnimationFrame(()=>lbTrack.style.transition='');}lbTrack.style.transform=`translateX(${-lbCur*100}%)`;lbLoad(lbCur);const _lab=(lbItems[lbCur]&&(lbItems[lbCur].name||lbItems[lbCur].caption))||'';$('#lbTitle').innerHTML=_lab?`<span class="lb-mono">${esc([..._lab][0]||'')}</span><span>${esc(_lab)}</span>`:'';$('#lbPrev').classList.toggle('hidden',lbCur===0);$('#lbNext').classList.toggle('hidden',lbCur===lbItems.length-1);}
+  function lbGo(i,instant){if(!lbItems.length)return;lbCur=clamp(i,0,lbItems.length-1);if(instant){lbTrack.style.transition='none';requestAnimationFrame(()=>lbTrack.style.transition='');}lbTrack.style.transform=`translateX(${-lbCur*100}%)`;lbLoad(lbCur);const _lab=(lbItems[lbCur]&&(lbItems[lbCur].name||lbItems[lbCur].caption))||'';$('#lbTitle').innerHTML=_lab?`<span class="lb-mono">${esc([..._lab][0]||'')}</span><span>${esc(_lab)}</span>`:'';$('#lbPrev').classList.toggle('hidden',lbCur===0);$('#lbNext').classList.toggle('hidden',lbCur===lbItems.length-1);
+    const _n=lbItems.length,_h=$('#lbHint');if(_h){if(_n<=1){_h.innerHTML='<span>仅此一张 · 点 ✕ 退出，看看别的部分</span>';_h.classList.add('end');}else if(lbCur>=_n-1){_h.innerHTML='<span>已是最后一张 · 点 ✕ 退出，看看别的部分</span>';_h.classList.add('end');}else{_h.innerHTML=`<span class="lh-ar">‹</span><span>左右滑动 · 查看本部分照片（${lbCur+1}/${_n}）</span><span class="lh-ar">›</span>`;_h.classList.remove('end');}}}
   function lbClose(){$('#lb').classList.remove('active');document.body.style.overflow='';}
   $('#lbClose').addEventListener('click',lbClose);$('#lbPrev').addEventListener('click',()=>lbGo(lbCur-1));$('#lbNext').addEventListener('click',()=>lbGo(lbCur+1));
   addEventListener('keydown',e=>{if(!$('#lb').classList.contains('active'))return;if(e.key==='ArrowLeft')lbGo(lbCur-1);else if(e.key==='ArrowRight')lbGo(lbCur+1);else if(e.key==='Escape')lbClose();});
