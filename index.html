@@ -279,7 +279,7 @@
   .down-cue .ar{font-size:16px;color:var(--gold-dim);animation:bob 1.8s ease-in-out infinite;}
 
   /* ===================================================== 结尾 · 拍立得 */
-  #finale{position:relative;height:380vh;background:var(--bg);}
+  #finale{position:relative;height:320vh;background:var(--bg);}
   .finale-stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;}
   .wall{position:absolute;inset:0;z-index:1;transform-origin:center;will-change:transform,filter;}
   .finale-flash{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;mix-blend-mode:screen;background:radial-gradient(circle at 50% 46%,rgba(255,245,220,.9),transparent 56%);}
@@ -740,10 +740,10 @@
     const pc=$('#polacard');pc.classList.toggle('show',card>0.02);pc.style.opacity=card;
     if(card>0.985){if(!pc.classList.contains('settled')){pc.classList.add('settled');pc.style.transform='';}}
     else{pc.classList.remove('settled');pc.style.transform=`translate(-50%,-50%) rotate(-2deg) scale(${lerp(.86,1,easeIO(card))})`;}
-    $('#saveBtn').classList.toggle('show',btn>0.5);
-    $('#finaleFoot').classList.toggle('show',btn>0.5);
+    $('#saveBtn').classList.toggle('show',card>0.45);
+    $('#finaleFoot').classList.toggle('show',card>0.45);
     $('#finaleChibi').classList.toggle('show',card>0.55);
-    $('#backTop').classList.toggle('show',btn>0.5);
+    $('#backTop').classList.toggle('show',card>0.45);
     if(card>0.5&&!confettiFired){confettiFired=true;spawnConfetti();}
   }
 
