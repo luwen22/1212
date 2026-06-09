@@ -117,5 +117,5 @@ const PEOPLE = [
   {name:"于小雅",group:true},{name:"樊梦禹"},{name:"朱秋洁",group:true},{name:"徐星宇"},
   {name:"程祖云"},{name:"黄豪"},{name:"马杨玲"},{name:"孙碧雲"},{name:"王帅龙",group:true},
   {name:"邬晴宇",group:true},{name:"邢宇嫣",group:true},{name:"许江南",group:true},
-  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"胡杨"},{name:"吴慧涛"},{name:"谭潇"}
+  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"贺婧姝"},{name:"吴慧涛"},{name:"谭潇"},{name:"谢芷妍"},{name:"黄慧婷"}
 ];
