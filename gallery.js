@@ -113,7 +113,7 @@ const PEOPLE = [
   {name:"李焱",group:true},{name:"康雨彤"},{name:"程佳怡",group:true},{name:"刘宇涵",group:true},
   {name:"郝宇佳",group:true},{name:"黄梦华"},{name:"向柯"},{name:"刘楼海"},{name:"陈铭蕊"},
   {name:"李琳"},{name:"李咨蓉"},{name:"李佳怡"},{name:"秦耀华"},{name:"顾炜源"},{name:"陆垚"},
-  {name:"李康波",group:true},{name:"张艳艳",group:true},{name:"罗为",group:true},{name:"洪宇琴"},
+  {name:"李康波",group:true},{name:"张艳艳",group:true},{name:"罗为",group:true},{name:"洪语琴"},
   {name:"于小雅",group:true},{name:"樊梦禹"},{name:"朱秋洁",group:true},{name:"徐星宇"},
   {name:"程祖云"},{name:"黄豪"},{name:"马杨玲"},{name:"孙碧雲"},{name:"王帅龙",group:true},
   {name:"邬晴宇",group:true},{name:"邢宇嫣",group:true},{name:"许江南",group:true},
