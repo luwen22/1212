@@ -51,9 +51,9 @@ const CHAPTERS = [
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"],
     /* 活动：name=活动名  src=照片  pos="x% y%"=取景焦点。可无限追加，照片到位填 src 即可。 */
     activities:[
-      {name:"头顶手机壳军训",src:""},{name:"重生宿管分钥匙",src:""},
-      {name:"疯狂运动会（一）",src:""},{name:"疯狂运动会（二）",src:""},
-      {name:"23级送老迎新",src:""},{name:"后山最炫民族风",src:""},
+      {name:"头顶手机壳军训",src:"photos/y2/01.jpg",pos:"center 30%"},{name:"重生宿管分钥匙",src:"photos/y2/02.jpg",pos:"center 50%"},
+      {name:"疯狂运动会（一）",src:"photos/y2/03.jpg",pos:"center 40%"},{name:"疯狂运动会（二）",src:"photos/y2/04.jpg",pos:"center 38%"},
+      {name:"23级送老迎新",src:"photos/y2/05.jpg",pos:"center 32%"},{name:"后山最炫民族风",src:""},
       {name:"猫捉不到的老鼠",src:""},{name:"为了不存在的活动",src:""},
       {name:"最好的毕业晚会（一）",src:""},{name:"最好的毕业晚会（二）",src:""},
       {name:"参会是为了茶歇",src:""},
