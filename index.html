@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>来过</title>
+<title>来了</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -374,7 +374,7 @@
 </style>
 </head>
 <body class="locked">
-<div id="loader"><div class="loader-mark">来过</div></div>
+<div id="loader"><div class="loader-mark">来了</div></div>
 <div class="grain"></div><div class="vignette"></div>
 <div class="dust" id="dust"></div>
 <div class="leak a"></div><div class="leak b"></div>
@@ -401,7 +401,7 @@
     <div class="preface-stick">
       <div class="pre-logo pre-fx" id="preLogo"><span class="lg-corner tl"></span><span class="lg-corner tr"></span><span class="lg-corner bl"></span><span class="lg-corner br"></span><img id="preLogoImg" alt="立文之家"></div>
       <div class="pre-present pre-fx" id="prePresent"></div>
-      <div class="pre-word pre-fx">来过</div>
+      <div class="pre-word pre-fx">来了</div>
       <div class="pre-rule pre-fx"></div>
       <div class="scroll-cue" id="scrollCue"><span>向下滑动</span><span class="ar" id="cueAr"></span></div>
     </div>
@@ -456,7 +456,7 @@
       <button class="back-top" id="backTop">↑ 回到开头</button>
       <div class="polacard" id="polacard">
         <div class="pola-shine"></div>
-        <div class="pola-photo"><div class="pw">来过</div><div class="pola-stamp" id="polaStamp"></div></div>
+        <div class="pola-photo"><div class="pw">来了</div><div class="pola-stamp" id="polaStamp"></div></div>
         <div class="pola-cap"><div class="pola-name" id="polaName"></div><div class="pola-row"><div class="pola-foot" id="polaFoot"></div><div class="pola-qr" id="polaQR"></div></div></div>
       </div>
       <div class="finale-poem" id="finalePoem"></div>
@@ -716,7 +716,7 @@
   let TILES=[],glyphReady=false,confettiFired=false;const POOL=PPL.filter(hasImg).map(p=>p.src);
   function spawnConfetti(){const box=$('#confetti');if(!box)return;const cols=['#f3e2ab','#d4a855','#e7b85a','#bb8f3e','#f6efd8','#caa14e'];for(let i=0;i<38;i++){const c=document.createElement('i');c.style.background=cols[i%cols.length];const w=5+Math.random()*7;c.style.width=w+'px';c.style.height=(w*0.45+2)+'px';c.style.left=(Math.random()*100)+'%';c.style.setProperty('--x',((Math.random()-.5)*170)+'px');c.style.animationDuration=(2.8+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(c);setTimeout(()=>c.remove(),6200);}}
   function buildGlyphTargets(text){const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 112px "Songti SC","STSong",serif';x.fillText(text,W/2,H/2+4);const d=x.getImageData(0,0,W,H).data,pts=[],step=8;for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}return {pts,ratio:W/H};}
-  function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来过');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
+  function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来了');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
     pts.forEach((pt)=>{const t=document.createElement('div');t.className='tile';t.style.width=TS+'px';t.style.height=TS+'px';
       if(POOL.length){const im=document.createElement('img');im.src=POOL[Math.floor(Math.random()*POOL.length)];t.appendChild(im);}else{t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;}
       const gx=50+(pt[0]-0.5)*(dispW/vw*100),gy=46+(pt[1]-0.5)*(dispH/vh*100);const ang=Math.random()*6.28,dist=70+Math.random()*120;
@@ -724,7 +724,7 @@
       wall.appendChild(t);TILES.push(t);});glyphReady=true;}
   function buildCard(){
     $('#polaStamp').innerHTML=`<span>${esc(META_.cardDate||'2026.06')}</span>`;
-    $('#polaName').textContent=(NAME?NAME+' ':'')+'来过！';
+    $('#polaName').textContent=(NAME?NAME+' ':'')+'来了！';
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
     (function(){const ph=(POEM_||[]).map(l=>(l.t||'').replace(/[，,。.\s]+$/,''));
@@ -819,11 +819,11 @@
     // 双层金框
     x.strokeStyle='rgba(212,168,85,.55)';x.lineWidth=1;x.strokeRect(px+10.5,py+10.5,pw-21,ph-21);
     x.strokeStyle='rgba(212,168,85,.25)';x.strokeRect(px+14.5,py+14.5,pw-29,ph-29);
-    // 来过（暖金渐变）
+    // 来了（暖金渐变）
     x.textAlign='center';x.textBaseline='middle';x.font='700 100px "Songti SC","STSong",serif';
     const tg=x.createLinearGradient(px,py+ph*.3,px+pw,py+ph*.62);tg.addColorStop(0,'#f6e6b4');tg.addColorStop(.5,'#e7ca77');tg.addColorStop(1,'#c89f4c');
     x.fillStyle=tg;x.shadowColor='rgba(0,0,0,.55)';x.shadowBlur=18;x.shadowOffsetY=3;
-    x.fillText('来过',px+pw/2,py+ph*.45);x.shadowBlur=0;x.shadowOffsetY=0;
+    x.fillText('来了',px+pw/2,py+ph*.45);x.shadowBlur=0;x.shadowOffsetY=0;
     // 日期邮戳
     x.save();x.translate(px+pw-38,py+38);x.rotate(-12*Math.PI/180);
     x.strokeStyle='rgba(212,168,85,.7)';x.lineWidth=1.5;x.beginPath();x.arc(0,0,24,0,Math.PI*2);x.stroke();
@@ -833,15 +833,15 @@
     if(faceImg)x.drawImage(faceImg,px+11,py+ph-44,34,34);
     // 落款区
     x.fillStyle='#2a2118';x.textBaseline='alphabetic';x.font='500 30px "Noto Serif SC","Songti SC",serif';
-    x.fillText((NAME?NAME+' ':'')+'来过！',W/2,cy+52);
+    x.fillText((NAME?NAME+' ':'')+'来了！',W/2,cy+52);
     x.strokeStyle='rgba(180,150,90,.5)';x.lineWidth=1;x.beginPath();x.moveTo(W/2-26,cy+72);x.lineTo(W/2+26,cy+72);x.stroke();
     x.fillStyle='#9a8c72';x.textBaseline='middle';x.font='400 11px "Noto Serif SC",serif';x.fillText(META_.cardFoot||'2022 — 2026 · 立文之家',W/2,cy+92);
-    x.fillStyle='#b9ac8f';x.font='400 9px "Courier New",monospace';x.fillText('来  过  ·  纪  念',W/2,cy+116);
+    x.fillStyle='#b9ac8f';x.font='400 9px "Courier New",monospace';x.fillText('来  了  ·  纪  念',W/2,cy+116);
     return cv.toDataURL('image/png');
   }
   function showSave(url){let m=$('#saveModal');
-    if(!m){m=document.createElement('div');m.id='saveModal';m.innerHTML=`<img alt="来过 纪念卡"><div class="sm-tip">点击下载保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;document.body.appendChild(m);m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});}
-    m.querySelector('img').src=url;const dl=m.querySelector('.sm-dl');dl.href=url;dl.download=`来过${NAME?'_'+NAME:''}.png`;m.classList.add('show');}
+    if(!m){m=document.createElement('div');m.id='saveModal';m.innerHTML=`<img alt="来了 纪念卡"><div class="sm-tip">点击下载保存到相册</div><div class="sm-btns"><a class="sm-dl">下载</a><button class="sm-close">关闭</button></div>`;document.body.appendChild(m);m.querySelector('.sm-close').addEventListener('click',()=>m.classList.remove('show'));m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});}
+    m.querySelector('img').src=url;const dl=m.querySelector('.sm-dl');dl.href=url;dl.download=`来了${NAME?'_'+NAME:''}.png`;m.classList.add('show');}
   $('#saveBtn').addEventListener('click',async()=>{try{toast('正在生成…');const url=await drawKeepsake();showSave(url);}catch(e){toast('生成失败，长按卡片截图');}});
   $('#polacard').addEventListener('click',()=>{spawnConfetti();const pc=$('#polacard');pc.classList.remove('shine');void pc.offsetWidth;pc.classList.add('shine');});
   $('#backTop').addEventListener('click',()=>smoothTo(0));

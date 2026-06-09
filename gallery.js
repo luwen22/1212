@@ -1,5 +1,5 @@
 /* =========================================================================
-   「来过」叙事长卷 —— 数据与文案（唯一需要经常编辑的文件）
+   「来了」叙事长卷 —— 数据与文案（唯一需要经常编辑的文件）
    预览模式：照片 src 暂留空 ""，显示占位框；真实照片到位后填路径即可。
    ========================================================================= */
 
@@ -18,7 +18,7 @@ const META = {
   namePlaceholder: "写下你的名字",
   enter:      "来了",
   present:    "立文之家 出品",
-  endingWord: "来过",
+  endingWord: "来了",
   cardDate:   "2026.06",
   cardFoot:   "2022 — 2026 · 立文之家",
   savePrompt: "保存这一刻",
@@ -27,7 +27,7 @@ const META = {
   peopleTitle:"那些人",
   nav: [
     { id:"preface", label:"序" }, { id:"y1", label:"初见" }, { id:"y2", label:"忙碌" },
-    { id:"y3", label:"远行" }, { id:"y4", label:"散场" }, { id:"people", label:"他们" }, { id:"finale", label:"来过" }
+    { id:"y3", label:"远行" }, { id:"y4", label:"散场" }, { id:"people", label:"他们" }, { id:"finale", label:"来了" }
   ]
 };
 
