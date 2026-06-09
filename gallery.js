@@ -57,8 +57,8 @@ const CHAPTERS = [
       {name:"猫捉不到的老鼠",src:"photos/y2/07.jpg",pos:"center 44%"},{name:"为了不存在的活动",src:"photos/y2/08.jpg",pos:"center 48%"},
       {name:"最好的毕业晚会（一）",src:"photos/y2/09.jpg",pos:"center 45%"},{name:"最好的毕业晚会（二）",src:"photos/y2/10.jpg",pos:"center 42%"},
       {name:"参会是为了茶歇",src:"photos/y2/11.jpg",pos:"center 45%"},
-      {name:"小白勇闯三下乡（一）",src:"photos/y2/12.jpg",pos:"center 45%"},{name:"小白勇闯三下乡（二）",src:""},
-      {name:"24级送老迎新（一）",src:""},{name:"24级送老迎新（二）",src:""},
+      {name:"小白勇闯三下乡（一）",src:"photos/y2/12.jpg",pos:"center 45%"},{name:"小白勇闯三下乡（二）",src:"photos/y2/13.jpg",pos:"center 65%"},
+      {name:"24级送老迎新（一）",src:"photos/y2/14.jpg",pos:"center 50%"},{name:"24级送老迎新（二）",src:"photos/y2/15.jpg",pos:"center 55%"},
       {name:"一场超长的售后",src:""},
       {name:"一粒种子的结尾（一）",src:""},{name:"一粒种子的结尾（二）",src:""}
     ] },
