@@ -190,7 +190,9 @@
   .acard:hover{transform:translateY(-9px) rotate(0) !important;box-shadow:0 28px 54px rgba(0,0,0,.6);}
   .acard .aph{aspect-ratio:4/5;background:#cdbf9f;display:flex;align-items:center;justify-content:center;color:#a89773;font-size:34px;overflow:hidden;}
   .acard .aph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .acard .aph img.loaded{opacity:1;}
-  .acard .alabel{font-family:var(--f-type);font-size:11px;color:#4a4031;margin-top:9px;display:flex;justify-content:space-between;letter-spacing:.05em;}
+  .acard .alabel{font-family:var(--f-type);margin-top:9px;display:flex;flex-direction:column;gap:2px;letter-spacing:.04em;}
+  .acard .alabel .a-no{font-size:9px;color:#8a7d63;letter-spacing:.12em;}
+  .acard .alabel .a-name{font-size:12.5px;color:#39301f;font-weight:500;line-height:1.3;}
   .acard .stamp{position:absolute;top:14px;right:14px;font-family:var(--f-type);font-size:9px;color:var(--seal);border:1.5px solid var(--seal);padding:2px 5px;transform:rotate(-9deg);opacity:.85;letter-spacing:.1em;border-radius:2px;}
   .acard .apin{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0b060,#b07020);box-shadow:0 2px 4px rgba(0,0,0,.5);z-index:2;}
 
@@ -622,7 +624,7 @@
   (function(){const box=$('#y2archive');const acts=(c2&&c2.activities)||[];const items=acts.map(a=>({src:a.src||'',caption:a.name,pos:a.pos}));
     acts.forEach((a,i)=>{const no=String(i+1).padStart(3,'0');const d=document.createElement('div');d.className='acard';const dir=i%2?1:-1;
       d.style.setProperty('--fx',(dir*120)+'px');d.style.setProperty('--fr',(dir*8)+'deg');d.style.setProperty('--rr',((i%3-1)*1.3)+'deg');d.style.transitionDelay=((i%6)*0.07)+'s';
-      d.innerHTML=`<div class="apin"></div><div class="stamp">已归档</div><div class="aph">${hasImg(a)?`<img data-src="${esc(a.src)}" alt="${esc(a.name)}"${a.pos?` style="object-position:${esc(a.pos)}"`:''}>`:PHO}</div><div class="alabel"><span>NO.B-${no}</span><span>${esc(a.name||'')}</span></div>`;
+      d.innerHTML=`<div class="apin"></div><div class="stamp">已归档</div><div class="aph">${hasImg(a)?`<img data-src="${esc(a.src)}" alt="${esc(a.name)}"${a.pos?` style="object-position:${esc(a.pos)}"`:''}>`:PHO}</div><div class="alabel"><span class="a-no">NO.B-${no}</span><span class="a-name">${esc(a.name||'')}</span></div>`;
       const im=d.querySelector('img');if(im)watchImg(im);
       d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
     if(c2&&c2.quote)$('#y2quote').innerHTML=`<div>${esc(c2.quote[0])}</div><div class="q2">${esc(c2.quote[1])}</div>`;
