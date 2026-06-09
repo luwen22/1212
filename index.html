@@ -618,11 +618,13 @@
     $('#y1scatter').addEventListener('click',dismiss,{once:true});
   })();
 
-  /* 大二 活动：档案墙 */
-  (function(){const box=$('#y2archive');const n=(c2&&c2.photos)||6;const labels=['学生会','检查卫生','宣传部','素拓部','团委','迎新'];const items=[];
-    for(let i=0;i<n;i++){const it={src:'',caption:labels[i]||'活动'};items.push(it);const no=String(i+1).padStart(3,'0');const d=document.createElement('div');d.className='acard';const dir=i%2?1:-1;d.style.setProperty('--fx',(dir*120)+'px');d.style.setProperty('--fr',(dir*8)+'deg');d.style.setProperty('--rr',((i%3-1)*1.3)+'deg');d.style.transitionDelay=(i*0.07)+'s';
-      d.innerHTML=`<div class="apin"></div><div class="stamp">已归档</div><div class="aph">${PHO}</div><div class="alabel"><span>NO.B-${no}</span><span>${esc(labels[i]||'')}</span></div>`;
-      d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);}
+  /* 大二 活动：档案墙（数据驱动，可无限追加，点开放大左右滑）*/
+  (function(){const box=$('#y2archive');const acts=(c2&&c2.activities)||[];const items=acts.map(a=>({src:a.src||'',caption:a.name,pos:a.pos}));
+    acts.forEach((a,i)=>{const no=String(i+1).padStart(3,'0');const d=document.createElement('div');d.className='acard';const dir=i%2?1:-1;
+      d.style.setProperty('--fx',(dir*120)+'px');d.style.setProperty('--fr',(dir*8)+'deg');d.style.setProperty('--rr',((i%3-1)*1.3)+'deg');d.style.transitionDelay=((i%6)*0.07)+'s';
+      d.innerHTML=`<div class="apin"></div><div class="stamp">已归档</div><div class="aph">${hasImg(a)?`<img data-src="${esc(a.src)}" alt="${esc(a.name)}"${a.pos?` style="object-position:${esc(a.pos)}"`:''}>`:PHO}</div><div class="alabel"><span>NO.B-${no}</span><span>${esc(a.name||'')}</span></div>`;
+      const im=d.querySelector('img');if(im)watchImg(im);
+      d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
     if(c2&&c2.quote)$('#y2quote').innerHTML=`<div>${esc(c2.quote[0])}</div><div class="q2">${esc(c2.quote[1])}</div>`;
     const f=$('#y2frags');((c2&&c2.fragments)||[]).forEach((t,i)=>{const b=document.createElement('b');b.textContent=t;b.style.top=(8+(i*15)%80)+'%';b.style.animationDelay=(i*2.4)+'s';f.appendChild(b);});
     const t=$('#y2 .type-title');const text=t.dataset.text||'';const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){let i=0;(function st(){t.textContent=text.slice(0,i++);if(i<=text.length)setTimeout(st,90);else t.classList.add('done');})();obs.disconnect();}}),{threshold:.4});obs.observe(t);

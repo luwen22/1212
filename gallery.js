@@ -47,8 +47,14 @@ const CHAPTERS = [
       {place:"博学楼（3）",src:"photos/y1/26.jpg",pos:"center 45%"},{place:"博学楼（4）",src:"photos/y1/27.jpg",pos:"center 40%"},{place:"北门",src:"photos/y1/28.jpg",pos:"center 45%"}
     ] },
   { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"后来认识了你。",
-    quote:["那些年做了很多不是自己想做的事，","但你是真的。"], photos:8,
-    fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"] },
+    quote:["那些年做了很多不是自己想做的事，","但你是真的。"],
+    fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"],
+    /* 活动：name=活动名  src=照片  pos="x% y%"=取景焦点。可无限追加，照片到位填 src 即可。 */
+    activities:[
+      {name:"学生会",src:""},{name:"楼管分会",src:""},{name:"检查卫生",src:""},
+      {name:"宣传部",src:""},{name:"素拓部",src:""},{name:"团委",src:""},
+      {name:"迎新",src:""},{name:"三下乡",src:""}
+    ] },
   { id:"y3", era:"大三", span:"2024秋—2025春", title:"出去看看", desc:"侗锦，挑花，古商城，北部湾。有些东西，走了才看见。",
     quote:["走过的地方，","有你在就记得了。"], photos:8,
     trips:[
