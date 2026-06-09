@@ -59,8 +59,8 @@ const CHAPTERS = [
       {name:"参会是为了茶歇",src:"photos/y2/11.jpg",pos:"center 45%"},
       {name:"小白勇闯三下乡（一）",src:"photos/y2/12.jpg",pos:"center 45%"},{name:"小白勇闯三下乡（二）",src:"photos/y2/13.jpg",pos:"center 65%"},
       {name:"24级送老迎新（一）",src:"photos/y2/14.jpg",pos:"center 50%"},{name:"24级送老迎新（二）",src:"photos/y2/15.jpg",pos:"center 55%"},
-      {name:"一场超长的售后",src:""},
-      {name:"一粒种子的结尾（一）",src:""},{name:"一粒种子的结尾（二）",src:""}
+      {name:"一场超长的售后",src:"photos/y2/16.jpg",pos:"center 45%"},
+      {name:"一粒种子的结尾（一）",src:"photos/y2/17.jpg",pos:"center 40%"},{name:"一粒种子的结尾（二）",src:"photos/y2/18.jpg",pos:"center 35%"}
     ] },
   { id:"y3", era:"大三", span:"2024秋—2025春", title:"出去看看", desc:"侗锦，挑花，古商城，北部湾。有些东西，走了才看见。",
     quote:["走过的地方，","有你在就记得了。"], photos:8,
