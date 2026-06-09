@@ -290,8 +290,10 @@
   .back-top.show{opacity:1;pointer-events:auto;} .back-top:hover{color:var(--gold);border-color:var(--gold);}
   .polacard.settled{animation:cardSway 5.5s ease-in-out infinite;}
   @keyframes cardSway{0%,100%{transform:translate(-50%,-50%) rotate(-2.6deg)}50%{transform:translate(-50%,-53%) rotate(-1deg)}}
-  .finale-chibi{position:absolute;left:50%;bottom:22vh;transform:translateX(-50%) translateY(14px);height:16vh;max-height:130px;color:var(--gold);opacity:0;transition:opacity .9s ease .2s,transform .9s var(--ease) .2s;z-index:5;pointer-events:none;filter:drop-shadow(0 0 8px rgba(212,168,85,.4));}
-  .finale-chibi svg,.finale-chibi img{height:100%;width:auto;display:block;} .finale-chibi.show{opacity:.95;transform:translateX(-50%) translateY(0);}
+  .finale-poem{position:absolute;left:50%;bottom:24vh;transform:translateX(-50%) translateY(16px);width:90%;max-width:560px;text-align:center;z-index:5;pointer-events:none;display:flex;flex-direction:column;gap:11px;opacity:0;transition:opacity .9s ease .2s,transform .9s var(--ease) .2s;}
+  .finale-poem.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .finale-poem .fp-line{font-family:var(--f-serif);font-weight:400;font-size:clamp(13px,4vw,18px);letter-spacing:.1em;text-indent:.1em;color:var(--ink);line-height:1.5;white-space:nowrap;}
+  .finale-poem .fp-line.gold{color:var(--gold);text-shadow:0 0 16px rgba(212,168,85,.4);}
   .finale-foot{position:absolute;left:0;right:0;bottom:3vh;z-index:6;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity .8s ease;}
   .finale-foot.show{opacity:1;}
   .ff-ip{display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.3em;text-indent:.3em;color:var(--gold);} .ff-ip .ico{font-size:16px;}
@@ -457,7 +459,7 @@
         <div class="pola-photo"><div class="pw">来过</div><div class="pola-stamp" id="polaStamp"></div></div>
         <div class="pola-cap"><div class="pola-name" id="polaName"></div><div class="pola-row"><div class="pola-foot" id="polaFoot"></div><div class="pola-qr" id="polaQR"></div></div></div>
       </div>
-      <div class="finale-chibi" id="finaleChibi"></div>
+      <div class="finale-poem" id="finalePoem"></div>
       <button class="save-btn" id="saveBtn"></button>
       <div class="finale-foot" id="finaleFoot"></div>
     </div>
@@ -725,7 +727,11 @@
     $('#polaName').textContent=(NAME?NAME+' ':'')+'来过！';
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
-    $('#finaleChibi').innerHTML='<img src="photos/avatar.png" alt="立文">';
+    (function(){const ph=(POEM_||[]).map(l=>(l.t||'').replace(/[，,。.\s]+$/,''));
+      let l1='',l2='';
+      if(ph.length>=4){l1=ph[0]+'，'+ph[1]+'。';l2=ph[2]+'，'+ph[3]+'。';}
+      else if(ph.length){l1=ph.join('，')+'。';}
+      $('#finalePoem').innerHTML=(l1?`<div class="fp-line">${esc(l1)}</div>`:'')+(l2?`<div class="fp-line gold">${esc(l2)}</div>`:'');})();
     $('#finaleFoot').innerHTML=`<div class="ff-ip">© 立文之家</div><div class="ff-by">Made by 沈立文 · 沈一鸣 · 鲁文</div><div class="ff-date">${esc(META_.coverPlace||'2022 — 2026')}</div>`;
     if(META_.qrUrl){loadQR().then(()=>{const box=$('#polaQR');box.innerHTML='';box.classList.add('on');new QRCode(box,{text:META_.qrUrl,width:52,height:52,colorDark:'#2a2118',colorLight:'#fdfaf3'});}).catch(()=>{});}
   }
@@ -743,7 +749,7 @@
     else{pc.classList.remove('settled');pc.style.transform=`translate(-50%,-50%) rotate(-2deg) scale(${lerp(.86,1,easeIO(card))})`;}
     $('#saveBtn').classList.toggle('show',card>0.45);
     $('#finaleFoot').classList.toggle('show',card>0.45);
-    $('#finaleChibi').classList.toggle('show',card>0.55);
+    $('#finalePoem').classList.toggle('show',card>0.45);
     $('#backTop').classList.toggle('show',card>0.45);
     if(card>0.5&&!confettiFired){confettiFired=true;spawnConfetti();}
   }
