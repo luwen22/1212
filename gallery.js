@@ -103,7 +103,7 @@ const TIMELINE = [
    src=照片路径   pos="x% y%"=取景焦点   zoom=放大倍数   note=可选那句话
    多张照片的人，之后可加成多张卡（src 各不同）。 */
 const PEOPLE = [
-  {name:"周雅文"},{name:"王华安"},{name:"辜武椿"},{name:"刘旭涛",group:true},
+  {name:"周雅文"},{name:"王华安"},{name:"张湘伟"},{name:"刘丰华"},{name:"阳诗曼"},{name:"辜武椿"},{name:"刘旭涛",group:true},
   {name:"杨清尘",group:true},{name:"张朔语",group:true},{name:"赵羿钧",group:true},
   {name:"李静茹"},{name:"彭思雨"},{name:"樊子怡"},{name:"罗茵",group:true},
   {name:"张雨佳",group:true},{name:"杨倩"},{name:"贺子璐",group:true},{name:"刘承文"},
@@ -117,5 +117,5 @@ const PEOPLE = [
   {name:"于小雅",group:true},{name:"樊梦禹"},{name:"朱秋洁",group:true},{name:"徐星宇"},
   {name:"程祖云"},{name:"黄豪"},{name:"马杨玲"},{name:"孙碧雲"},{name:"王帅龙",group:true},
   {name:"邬晴宇",group:true},{name:"邢宇嫣",group:true},{name:"许江南",group:true},
-  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"肖媛"}
+  {name:"王铭娜"},{name:"周汨祯",group:true}
 ];

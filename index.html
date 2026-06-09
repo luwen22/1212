@@ -611,7 +611,7 @@
   /* 首张照片处「轻点放大」提示：进入大一时出现一次，几秒后自隐，点照片即收 */
   (function(){const hint=$('#photoHint'),ico=hint&&hint.querySelector('.ph-ico');if(!hint)return;if(ico)ico.innerHTML=SVG.zoom;
     let shown=false,hideTmr=0;const hide=()=>hint.classList.remove('show');
-    const show=()=>{if(shown)return;shown=true;hint.classList.add('show');hideTmr=setTimeout(hide,5200);};
+    const show=()=>{if(shown)return;shown=true;hint.classList.add('show');hideTmr=setTimeout(hide,10000);};
     const dismiss=()=>{clearTimeout(hideTmr);hide();};
     function check(){const r=$('#y1').getBoundingClientRect();
       if(!shown){if(r.top<innerHeight*0.5&&r.bottom>innerHeight*0.35)show();}
