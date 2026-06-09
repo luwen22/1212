@@ -107,7 +107,7 @@ const PEOPLE = [
   {name:"杨QC",group:true},{name:"张SY",group:true},{name:"赵YJ",group:true},
   {name:"李JR"},{name:"彭SY"},{name:"樊ZY"},{name:"罗Y",group:true},
   {name:"张YJ",group:true},{name:"杨Q"},{name:"贺ZL",group:true},{name:"刘CW"},
-  {name:"师JC"},{name:"盛WJ",group:true},{name:"万JY"},{name:"胡Y",group:true},
+  {name:"师JS"},{name:"盛WJ",group:true},{name:"万JY"},{name:"胡Y",group:true},
   {name:"佘YX",group:true},{name:"刘YF",group:true},{name:"石G"},{name:"彭HR"},
   {name:"张HY"},{name:"苏ZY"},{name:"何T",group:true},{name:"舒L",group:true},
   {name:"李Y",group:true},{name:"康YT"},{name:"程JY",group:true},{name:"刘YH",group:true},
@@ -117,5 +117,5 @@ const PEOPLE = [
   {name:"于XY",group:true},{name:"樊MY"},{name:"朱QJ",group:true},{name:"徐XY"},
   {name:"程ZY"},{name:"黄H"},{name:"马YL"},{name:"孙BY"},{name:"王SL",group:true},
   {name:"邬QY",group:true},{name:"邢YY",group:true},{name:"许JN",group:true},
-  {name:"王MN"},{name:"周MZ",group:true},{name:"贺JS"},{name:"吴HT"},{name:"谭X"},{name:"谢ZY"},{name:"黄HT"}
+  {name:"王MN"},{name:"周MZ",group:true},{name:"贺JS"},{name:"吴HT"},{name:"谭X"},{name:"谢ZY"},{name:"黄HT"},{name:"邱ZY"}
 ];
