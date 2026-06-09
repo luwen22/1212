@@ -53,9 +53,9 @@ const CHAPTERS = [
     activities:[
       {name:"头顶手机壳军训",src:"photos/y2/01.jpg",pos:"center 30%"},{name:"重生宿管分钥匙",src:"photos/y2/02.jpg",pos:"center 50%"},
       {name:"疯狂运动会（一）",src:"photos/y2/03.jpg",pos:"center 40%"},{name:"疯狂运动会（二）",src:"photos/y2/04.jpg",pos:"center 38%"},
-      {name:"23级送老迎新",src:"photos/y2/05.jpg",pos:"center 32%"},{name:"后山最炫民族风",src:""},
-      {name:"猫捉不到的老鼠",src:""},{name:"为了不存在的活动",src:""},
-      {name:"最好的毕业晚会（一）",src:""},{name:"最好的毕业晚会（二）",src:""},
+      {name:"23级送老迎新",src:"photos/y2/05.jpg",pos:"center 32%"},{name:"后山最炫民族风",src:"photos/y2/06.jpg",pos:"center 42%"},
+      {name:"猫捉不到的老鼠",src:"photos/y2/07.jpg",pos:"center 44%"},{name:"为了不存在的活动",src:"photos/y2/08.jpg",pos:"center 48%"},
+      {name:"最好的毕业晚会（一）",src:"photos/y2/09.jpg",pos:"center 45%"},{name:"最好的毕业晚会（二）",src:"photos/y2/10.jpg",pos:"center 42%"},
       {name:"参会是为了茶歇",src:""},
       {name:"小白勇闯三下乡（一）",src:""},{name:"小白勇闯三下乡（二）",src:""},
       {name:"24级送老迎新（一）",src:""},{name:"24级送老迎新（二）",src:""},
