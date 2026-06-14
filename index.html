@@ -150,20 +150,31 @@
   .doodle{position:absolute;color:#c9923a;opacity:.4;pointer-events:none;animation:doodleFloat 7s ease-in-out infinite;}
   .doodle svg{width:32px;height:32px;}
   @keyframes doodleFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(6deg)}}
-  .scatter{max-width:920px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 20px;position:relative;}
-  .polaroid{background:#fff;padding:10px 10px 32px;box-shadow:0 8px 22px rgba(60,50,30,.2);cursor:pointer;position:relative;width:clamp(128px,40vw,168px);opacity:0;transition:opacity .7s ease,box-shadow .3s,transform .95s var(--ease),filter .8s ease;}
-  .polaroid.sS{width:clamp(98px,30vw,134px);} .polaroid.sL{width:clamp(150px,50vw,214px);}
-  .polaroid.e1{transform:translateY(-54px) rotate(var(--r,0deg));}
-  .polaroid.e2{transform:translateX(-74px) rotate(calc(var(--r,0deg) - 9deg));}
-  .polaroid.e3{transform:translateX(74px) rotate(calc(var(--r,0deg) + 9deg));}
-  .polaroid.e4{transform:scale(.32) rotate(var(--r,0deg));}
-  .polaroid.e5{transform:translateY(66px) rotate(var(--r,0deg));}
-  .polaroid.e6{transform:scale(1.22) rotate(var(--r,0deg));filter:blur(9px);}
-  .polaroid.in{opacity:1;transform:rotate(var(--r,0deg));filter:none;}
-  .polaroid:hover{transform:scale(1.12) rotate(0) !important;z-index:20;box-shadow:0 20px 44px rgba(60,50,30,.32);}
-  .polaroid .ph{aspect-ratio:1/1;background:#efe7d6;display:flex;align-items:center;justify-content:center;color:#c2b596;font-size:32px;overflow:hidden;}
-  .polaroid .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .polaroid .ph img.loaded{opacity:1;}
-  .polaroid .tag{font-family:var(--f-hand);text-align:center;margin-top:9px;font-size:14px;color:#5a5040;}
+  /* —— 大一 校园探索 游戏手柄 —— */
+  .game-wrap{display:flex;flex-direction:column;align-items:center;max-width:500px;margin:0 auto;}
+  .game-screen{width:100%;aspect-ratio:16/10;position:relative;border-radius:14px 14px 0 0;overflow:hidden;background:#0d0a06;box-shadow:0 0 0 2px rgba(200,160,60,.4),0 24px 60px rgba(0,0,0,.6);}
+  .game-screen::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.055) 2px,rgba(0,0,0,.055) 3px);pointer-events:none;z-index:10;}
+  .g-inner{position:absolute;inset:0;}
+  .g-inner img{width:100%;height:100%;object-fit:cover;transition:opacity .4s ease,transform .5s var(--ease);}
+  .g-inner.fade img{opacity:0;transform:scale(1.07);}
+  .g-hud{position:absolute;inset:0;z-index:11;pointer-events:none;padding:10px 12px 12px;display:flex;flex-direction:column;justify-content:space-between;}
+  .g-hud-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .g-chip{background:rgba(12,8,3,.8);border:1px solid rgba(200,155,55,.45);border-radius:4px;padding:4px 9px;font-family:var(--f-type);font-size:10.5px;letter-spacing:.1em;color:#e0c070;line-height:1.4;backdrop-filter:blur(4px);}
+  .g-pbar-col{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+  .g-pbar{width:68px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;border:1px solid rgba(200,155,55,.3);}
+  .g-pbar-fill{height:100%;background:linear-gradient(90deg,#c9923a,#f0c060);border-radius:3px;transition:width .4s ease;}
+  .g-hud-bot{display:flex;justify-content:flex-end;}
+  .g-hint-chip{background:rgba(12,8,3,.62);border:1px solid rgba(200,155,55,.28);border-radius:3px;padding:3px 7px;font-size:9.5px;color:rgba(220,185,100,.55);font-family:var(--f-type);letter-spacing:.12em;}
+  .game-ctrl{width:100%;background:linear-gradient(180deg,#1c1509,#110d05);border-radius:0 0 14px 14px;border:2px solid rgba(200,160,60,.4);border-top:none;padding:clamp(12px,3vh,20px) clamp(14px,5vw,28px);display:flex;align-items:center;justify-content:space-between;}
+  .ctrl-dpad{display:flex;gap:clamp(8px,2.5vw,14px);}
+  .g-btn{width:clamp(52px,15vw,68px);height:clamp(52px,15vw,68px);border-radius:50%;border:2px solid rgba(200,155,55,.5);background:radial-gradient(circle at 38% 32%,#2a1d0c,#150e04);color:#c9923a;font-size:clamp(18px,5vw,24px);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 0 #090603,0 6px 18px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,210,120,.1);-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .08s,box-shadow .08s,background .08s;position:relative;}
+  .g-btn:before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 38% 26%,rgba(255,210,100,.12),transparent 58%);pointer-events:none;}
+  .g-btn:active,.g-btn.on{transform:translateY(3px) scale(.93);box-shadow:0 1px 0 #090603,0 2px 8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,210,120,.08);background:radial-gradient(circle at 38% 32%,#3a280f,#1a1006);}
+  .g-btn-a{width:clamp(62px,17vw,80px);height:clamp(62px,17vw,80px);border-color:rgba(220,175,65,.6);box-shadow:0 4px 0 #090603,0 8px 24px rgba(200,150,40,.22),inset 0 1px 0 rgba(255,210,120,.12);}
+  .g-btn-a:active,.g-btn-a.on{box-shadow:0 1px 0 #090603,0 2px 10px rgba(200,150,40,.2),inset 0 1px 0 rgba(255,210,120,.08);}
+  .g-col{display:flex;flex-direction:column;align-items:center;gap:5px;}
+  .g-lbl{font-family:var(--f-type);font-size:8.5px;color:rgba(190,150,55,.4);letter-spacing:.22em;}
+  .g-divider{width:1px;height:40px;background:rgba(200,155,55,.18);align-self:center;}
 
   .tear{position:relative;height:64px;background:var(--bg);}
   .tear::before{content:'';position:absolute;top:-1px;left:0;right:0;height:30px;background:var(--paper);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;}
@@ -593,18 +604,69 @@
   const c1=CH[0],c2=CH[1],c3=CH[2],c4=CH[3];
   fillHead($('#y1'),c1,false);fillHead($('#y2'),c2,true);fillHead($('#y3'),c3,false);fillHead($('#y4'),c4,false);
 
-  /* 大一 校园：28 个地点拍立得 */
-  (function(){const box=$('#y1scatter');const spots=(c1&&c1.spots)||[];const items=spots.map(s=>({src:s.src||'',caption:s.place}));const rots=[3,-4,-1.5,4,-2.5,2,-3,2.5,-2,1.5];
-    spots.forEach((s,i)=>{const d=document.createElement('div');
-      const ent='e'+((i*3+ (i%5))%6 + 1);                         // 入场动画各不相同
-      const size=(i%5===0)?'sL':(i%7===3?'sS':'');                // 尺寸有大有小
-      d.className='polaroid '+ent+(size?' '+size:'');
-      d.style.setProperty('--r',rots[i%rots.length]+'deg');
-      d.style.transitionDelay=((i%6)*0.06)+'s';
-      d.style.marginTop=((i*7)%4*13)+'px';                        // 错落，不像网格
-      d.innerHTML=`<div class="ph">${hasImg(s)?`<img data-src="${esc(s.src)}" alt="${esc(s.place)}"${s.pos?` style="object-position:${esc(s.pos)}"`:''}>`:PHO}</div><div class="tag">${esc(s.place)}</div>`;
-      const im=d.querySelector('img');if(im)watchImg(im);
-      d.addEventListener('click',()=>openLB(items,i));box.appendChild(d);watch(d);});
+  /* 大一 校园：游戏手柄探索模式 */
+  (function(){
+    const box=$('#y1scatter');const spots=(c1&&c1.spots)||[];if(!box||!spots.length)return;
+    const items=spots.map(s=>({src:s.src||'',caption:s.place,pos:s.pos}));
+    box.className='game-wrap';
+    box.innerHTML=`
+      <div class="game-screen">
+        <div class="g-inner" id="gInner"><img id="gImg" alt=""></div>
+        <div class="g-hud">
+          <div class="g-hud-top">
+            <div class="g-chip" id="gLoc">—</div>
+            <div class="g-pbar-col">
+              <div class="g-chip" id="gNum">01 / ${spots.length}</div>
+              <div class="g-pbar"><div class="g-pbar-fill" id="gBar" style="width:${(1/spots.length*100).toFixed(1)}%"></div></div>
+            </div>
+          </div>
+          <div class="g-hud-bot"><div class="g-hint-chip">Ⓐ 放大查看</div></div>
+        </div>
+      </div>
+      <div class="game-ctrl">
+        <div class="ctrl-dpad">
+          <div class="g-col"><button class="g-btn" id="gPrev">◀</button><div class="g-lbl">PREV</div></div>
+          <div class="g-col"><button class="g-btn" id="gNext">▶</button><div class="g-lbl">NEXT</div></div>
+        </div>
+        <div class="g-divider"></div>
+        <div class="g-col"><button class="g-btn g-btn-a" id="gAct">Ⓐ</button><div class="g-lbl">VIEW</div></div>
+      </div>`;
+    let cur=0;
+    const gInner=$('#gInner'),gImg=$('#gImg'),gLoc=$('#gLoc'),gNum=$('#gNum'),gBar=$('#gBar');
+    function goTo(idx){
+      idx=Math.max(0,Math.min(spots.length-1,idx));
+      if(idx===cur&&gImg.src)return;
+      cur=idx;const s=spots[cur];
+      gInner.classList.add('fade');
+      setTimeout(()=>{
+        if(s.src){gImg.src=s.src;gImg.style.objectPosition=s.pos||'center 45%';
+          gImg.onload=()=>gInner.classList.remove('fade');
+          gImg.onerror=()=>gInner.classList.remove('fade');}
+        else{gImg.src='';gInner.classList.remove('fade');}
+        gLoc.textContent=s.place||'—';
+        gNum.textContent=String(cur+1).padStart(2,'0')+' / '+spots.length;
+        gBar.style.width=((cur+1)/spots.length*100).toFixed(1)+'%';
+      },220);
+    }
+    goTo(0);
+    function mkBtn(el,fn){
+      let hold=null,rep=null;
+      function press(){el.classList.add('on');fn();hold=setTimeout(()=>{rep=setInterval(fn,220);},500);}
+      function release(){el.classList.remove('on');clearTimeout(hold);clearInterval(rep);}
+      el.addEventListener('pointerdown',e=>{e.preventDefault();press();});
+      el.addEventListener('pointerup',release);el.addEventListener('pointerleave',release);el.addEventListener('pointercancel',release);
+    }
+    mkBtn($('#gPrev'),()=>goTo(cur-1));
+    mkBtn($('#gNext'),()=>goTo(cur+1));
+    $('#gAct').addEventListener('click',()=>openLB(items,cur));
+    $('#gAct').addEventListener('pointerdown',()=>$('#gAct').classList.add('on'));
+    $('#gAct').addEventListener('pointerup',()=>$('#gAct').classList.remove('on'));
+    document.addEventListener('keydown',e=>{
+      if(!y1El)return;const r=y1El.getBoundingClientRect();if(r.top>innerHeight||r.bottom<0)return;
+      if(e.key==='ArrowLeft')goTo(cur-1);
+      else if(e.key==='ArrowRight')goTo(cur+1);
+      else if(e.key==='Enter'||e.key===' '){e.preventDefault();openLB(items,cur);}
+    });
     const ds=[SVG.map,SVG.book,SVG.star,SVG.cup,SVG.tree,SVG.plane];[[5,10],[88,14],[7,74],[91,66],[48,4],[80,88]].forEach((p,i)=>{const el=document.createElement('div');el.className='doodle';el.innerHTML=ds[i%ds.length];el.style.left=p[0]+'%';el.style.top=p[1]+'%';el.style.animationDelay=(i*0.7)+'s';$('#y1').appendChild(el);});
   })();
 
@@ -617,7 +679,7 @@
       if(!shown){if(r.top<innerHeight*0.5&&r.bottom>innerHeight*0.35)show();}
       else if(r.bottom<innerHeight*0.25){dismiss();removeEventListener('scroll',check);}}
     addEventListener('scroll',check,{passive:true});setTimeout(check,400);
-    $('#y1scatter').addEventListener('click',dismiss,{once:true});
+    $('#gAct')&&$('#gAct').addEventListener('click',dismiss,{once:true});
   })();
 
   /* 大二 活动：档案墙（数据驱动，可无限追加，点开放大左右滑）*/
