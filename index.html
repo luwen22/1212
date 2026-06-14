@@ -175,6 +175,20 @@
   .g-col{display:flex;flex-direction:column;align-items:center;gap:5px;}
   .g-lbl{font-family:var(--f-type);font-size:8.5px;color:rgba(190,150,55,.4);letter-spacing:.22em;}
   .g-divider{width:1px;height:40px;background:rgba(200,155,55,.18);align-self:center;}
+  /* —— 大一地点解锁清单 —— */
+  .c-panel{width:100%;opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s var(--ease);margin-top:clamp(18px,3.5vh,32px);}
+  .c-panel.in{opacity:1;transform:none;}
+  .c-title{font-family:var(--f-hand);text-align:center;color:#c9923a;font-size:13px;letter-spacing:.32em;margin-bottom:14px;position:relative;}
+  .c-title::before,.c-title::after{content:'';position:absolute;top:50%;width:18%;height:1px;background:linear-gradient(to right,transparent,rgba(200,155,55,.45));transform:translateY(-50%);}
+  .c-title::before{left:0;} .c-title::after{right:0;transform:translateY(-50%) scaleX(-1);}
+  .c-count{font-family:var(--f-type);font-size:10px;color:rgba(200,155,55,.5);letter-spacing:.18em;text-align:center;margin-bottom:16px;}
+  .c-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(7px,2vw,13px);}
+  .c-badge{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;opacity:0;transform:scale(.4) translateY(18px);transition:opacity .42s ease,transform .42s var(--ease);}
+  .c-badge.in{opacity:1;transform:none;}
+  .c-badge:hover .c-ico{transform:scale(1.2) rotate(-6deg);box-shadow:0 8px 24px rgba(0,0,0,.55),0 0 18px rgba(200,150,40,.4);}
+  .c-ico{width:clamp(42px,11vw,56px);height:clamp(42px,11vw,56px);border-radius:50%;background:radial-gradient(circle at 38% 30%,#2e200e,#160e05);border:1.5px solid rgba(200,155,55,.5);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.5),0 0 10px rgba(200,150,40,.14);transition:transform .3s var(--ease),box-shadow .3s;color:#c9923a;}
+  .c-ico svg{width:52%;height:52%;}
+  .c-lbl{font-family:var(--f-hand);font-size:clamp(9px,2.2vw,11px);color:#9a7a3a;letter-spacing:.04em;text-align:center;line-height:1.25;max-width:56px;}
 
   .tear{position:relative;height:64px;background:var(--bg);}
   .tear::before{content:'';position:absolute;top:-1px;left:0;right:0;height:30px;background:var(--paper);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='30' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H1200 V8 L1160 20 1120 6 1080 22 1040 8 1000 24 960 6 920 20 880 8 840 23 800 7 760 21 720 6 680 22 640 9 600 24 560 7 520 20 480 8 440 23 400 6 360 21 320 9 280 22 240 7 200 20 160 9 120 23 80 7 40 20 0 9 Z' fill='black'/%3E%3C/svg%3E") no-repeat center/100% 100%;}
@@ -633,6 +647,41 @@
       </div>`;
     let cur=0;
     const gInner=$('#gInner'),gImg=$('#gImg'),gLoc=$('#gLoc'),gNum=$('#gNum'),gBar=$('#gBar');
+    /* ---- 地点图标映射 ---- */
+    const PICO={
+      gate:'<path d="M3 21V7l9-5 9 5v14h-5v-7H8v7z" stroke-width="1.5"/>',
+      water:'<path d="M12 3C8 3 5 8 5 12a7 7 0 0014 0C19 8 16 3 12 3z"/><path d="M9.5 14a3.5 3.5 0 005 0" stroke-width="1.5"/>',
+      sport:'<circle cx="6" cy="12" r="2.5" stroke-width="1.5"/><circle cx="18" cy="12" r="2.5" stroke-width="1.5"/><path d="M8.5 12h7M6 9.5V10m12-.5V10" stroke-width="1.5"/>',
+      track:'<ellipse cx="12" cy="12" rx="9" ry="5.5" stroke-width="1.5"/><ellipse cx="12" cy="12" rx="5" ry="2.5" stroke-width="1.5"/>',
+      food:'<path d="M8 3v7M11 3v4a3 3 0 003 3h1V3" stroke-width="1.5"/><path d="M12 10v11" stroke-width="1.5"/>',
+      shop:'<path d="M5 3l-2 6h18L19 3z" stroke-width="1.5"/><path d="M3 9v12h18V9" stroke-width="1.5"/><path d="M9 9v3a3 3 0 006 0V9" stroke-width="1.5"/>',
+      house:'<path d="M3 11l9-7 9 7v10H3z" stroke-width="1.5"/><path d="M9 21v-6h6v6" stroke-width="1.5"/>',
+      ice:'<path d="M12 2v20M2.6 7l18.8 10M21.4 7L2.6 17" stroke-width="1.5"/><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/>',
+      plaza:'<rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+      mountain:'<path d="M2 21l5.5-10 3.5 5.5L15.5 6 22 21z" stroke-width="1.5" stroke-linejoin="round"/>',
+      book:'<path d="M4 5.5A2.5 2.5 0 016.5 3H12v18H6.5A2.5 2.5 0 014 18.5zm8-2.5h5.5A2.5 2.5 0 0120 5.5v13a2.5 2.5 0 01-2.5 2.5H12z" stroke-width="1.5"/>',
+      building:'<rect x="4" y="7" width="16" height="14" stroke-width="1.5"/><path d="M4 7l8-4 8 4" stroke-width="1.5"/><path d="M9 21v-5h6v5M9 13h2M13 13h2M9 10h2M13 10h2" stroke-width="1.5"/>',
+    };
+    function pico(name){if(/门/.test(name))return PICO.gate;if(/泉/.test(name))return PICO.water;if(/体育/.test(name))return PICO.sport;if(/操场/.test(name))return PICO.track;if(/食堂/.test(name))return PICO.food;if(/超市/.test(name))return PICO.shop;if(/宿舍/.test(name))return PICO.house;if(/蜜雪/.test(name))return PICO.ice;if(/广场/.test(name))return PICO.plaza;if(/后山|山/.test(name))return PICO.mountain;if(/图书/.test(name))return PICO.book;return PICO.building;}
+    function shortN(n){return n.replace(/（\d+）/g,'').replace(/\(\d+\)/g,'');}
+    let collectShown=false;
+    function showCollect(){
+      if(collectShown)return;collectShown=true;
+      const panel=document.createElement('div');panel.className='c-panel';
+      panel.innerHTML=`<div class="c-title">全部解锁</div><div class="c-count">28 / 28 LOCATIONS</div><div class="c-grid" id="cGrid"></div>`;
+      box.appendChild(panel);
+      const grid=panel.querySelector('#cGrid');
+      spots.forEach((s,i)=>{
+        const b=document.createElement('div');b.className='c-badge';b.style.transitionDelay=(i*32)+'ms';
+        b.innerHTML=`<div class="c-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${pico(s.place)}</svg></div><div class="c-lbl">${esc(shortN(s.place))}</div>`;
+        b.addEventListener('click',()=>{goTo(i);box.scrollIntoView({behavior:'smooth',block:'start'});});
+        grid.appendChild(b);
+      });
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        panel.classList.add('in');
+        panel.querySelectorAll('.c-badge').forEach(b=>b.classList.add('in'));
+      }));
+    }
     function goTo(idx){
       idx=Math.max(0,Math.min(spots.length-1,idx));
       if(idx===cur&&gImg.src)return;
@@ -646,6 +695,7 @@
         gLoc.textContent=s.place||'—';
         gNum.textContent=String(cur+1).padStart(2,'0')+' / '+spots.length;
         gBar.style.width=((cur+1)/spots.length*100).toFixed(1)+'%';
+        if(cur===spots.length-1)setTimeout(showCollect,700);
       },220);
     }
     goTo(0);
