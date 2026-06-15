@@ -430,6 +430,10 @@
   .pola-photo{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 34%,rgba(212,168,85,.32),transparent 60%),linear-gradient(160deg,#251c10,#13100b 72%);box-shadow:inset 0 0 0 1px rgba(212,168,85,.35),inset 0 0 44px rgba(0,0,0,.55);}
   .pola-photo::before{content:'';position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");}
   .pola-photo .pw{position:relative;z-index:2;font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(64px,18vw,108px);letter-spacing:.1em;color:#ecd79a;text-shadow:0 4px 22px rgba(0,0,0,.6),0 0 30px rgba(212,168,85,.45);}
+  .pola-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;z-index:1;display:none;}
+  .pola-photo.has-photo .pola-img{display:block;}
+  .pola-photo.has-photo .pw{display:none;}
+  .pola-photo.has-photo::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(212,168,85,.55),inset 0 0 42px rgba(0,0,0,.5);}
   .pola-shine{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden;}
   .pola-shine::before{content:'';position:absolute;top:-30%;left:-70%;width:55%;height:160%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);opacity:0;}
   .polacard.shine .pola-shine::before{animation:shineSweep .85s ease;}
@@ -630,7 +634,7 @@
       <button class="back-top" id="backTop">↑ 回到开头</button>
       <div class="polacard" id="polacard">
         <div class="pola-shine"></div>
-        <div class="pola-photo"><div class="pw">来了</div><div class="pola-stamp" id="polaStamp"></div></div>
+        <div class="pola-photo" id="polaPhoto"><img class="pola-img" id="polaImg" alt="我们的合照"><div class="pw">来了</div><div class="pola-stamp" id="polaStamp"></div></div>
         <div class="pola-cap"><div class="pola-name" id="polaName"></div><div class="pola-row"><div class="pola-foot" id="polaFoot"></div><div class="pola-qr" id="polaQR"></div></div></div>
       </div>
       <div class="finale-poem" id="finalePoem"></div>
@@ -1094,18 +1098,33 @@
   })();
 
   /* 结尾 */
-  let TILES=[],glyphReady=false,confettiFired=false;const POOL=PPL.filter(hasImg).map(p=>p.src);
+  let TILES=[],glyphReady=false,confettiFired=false;
+  /* 「来了」拼图的照片池：大合照(hz) + 全站各章节照片 + 那些人(若有图)，去重 */
+  function buildPhotoPool(){const out=[];
+    if(typeof GROUP_PHOTOS!=='undefined')GROUP_PHOTOS.forEach(g=>{if(g&&g.src)out.push(g.src);});
+    CH.forEach(c=>['spots','activities','trips','photos'].forEach(k=>{if(Array.isArray(c[k]))c[k].forEach(s=>{if(s&&s.src)out.push(s.src);});}));
+    PPL.forEach(p=>{if(p&&p.src)out.push(p.src);});
+    return [...new Set(out)];}
+  const POOL=buildPhotoPool();
   function spawnConfetti(){const box=$('#confetti');if(!box)return;const cols=['#f3e2ab','#d4a855','#e7b85a','#bb8f3e','#f6efd8','#caa14e'];for(let i=0;i<38;i++){const c=document.createElement('i');c.style.background=cols[i%cols.length];const w=5+Math.random()*7;c.style.width=w+'px';c.style.height=(w*0.45+2)+'px';c.style.left=(Math.random()*100)+'%';c.style.setProperty('--x',((Math.random()-.5)*170)+'px');c.style.animationDuration=(2.8+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(c);setTimeout(()=>c.remove(),6200);}}
   function buildGlyphTargets(text){const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 112px "Songti SC","STSong",serif';x.fillText(text,W/2,H/2+4);const d=x.getImageData(0,0,W,H).data,pts=[],step=8;for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}return {pts,ratio:W/H};}
   function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来了');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
+    /* 打乱后顺序取图，循环时重新打乱，保证「尽量都是不一样的照片」、相邻不扎堆 */
+    let bag=[],bi=0;const nextSrc=()=>{if(!POOL.length)return null;if(bi>=bag.length){bag=POOL.slice();for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}bi=0;}return bag[bi++];};
     pts.forEach((pt)=>{const t=document.createElement('div');t.className='tile';t.style.width=TS+'px';t.style.height=TS+'px';
-      if(POOL.length){const im=document.createElement('img');im.src=POOL[Math.floor(Math.random()*POOL.length)];t.appendChild(im);}else{t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;}
+      const src=nextSrc();
+      if(src){const im=document.createElement('img');im.src=src;t.appendChild(im);}else{t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;}
       const gx=50+(pt[0]-0.5)*(dispW/vw*100),gy=46+(pt[1]-0.5)*(dispH/vh*100);const ang=Math.random()*6.28,dist=70+Math.random()*120;
       t.dataset.gx=gx;t.dataset.gy=gy;t.dataset.sx=50+Math.cos(ang)*dist;t.dataset.sy=50+Math.sin(ang)*dist;t.dataset.rot=(Math.random()-.5)*120;t.dataset.scl=.4+Math.random()*.6;t.dataset.delay=Math.random()*.3;
       wall.appendChild(t);TILES.push(t);});glyphReady=true;}
+  function myGroupPhoto(){const gp=(typeof GROUP_PHOTOS!=='undefined')?GROUP_PHOTOS:[];const n=(NAME||'').trim();if(!n)return null;return gp.find(g=>g&&(g.name||'').trim()===n)||null;}
   function buildCard(){
     $('#polaStamp').innerHTML=`<span>${esc(META_.cardDate||'2026.06')}</span>`;
     $('#polaName').textContent=(NAME?NAME+' ':'')+'来了！';
+    /* 拍立得中心：在合照白名单里 → 端上我们的合照；否则 → 显示「来了」 */
+    (function(){const box=$('#polaPhoto'),pimg=$('#polaImg');if(!box||!pimg)return;const m=myGroupPhoto();
+      if(m&&m.src){pimg.src=m.src;box.classList.add('has-photo');}
+      else{pimg.removeAttribute('src');box.classList.remove('has-photo');}})();
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
     (function(){const ph=(POEM_||[]).map(l=>(l.t||'').replace(/[，,。.\s]+$/,''));
@@ -1206,6 +1225,8 @@
     const cv=document.createElement('canvas');cv.width=W*sc;cv.height=H*sc;const x=cv.getContext('2d');x.scale(sc,sc);
     try{await document.fonts.load('500 30px "Noto Serif SC"');await document.fonts.load('700 100px "Songti SC"');await document.fonts.ready;}catch(e){}
     let faceImg=null;try{faceImg=await loadImg('photos/avatar.png');if(!faceImg)faceImg=await svgToImg(CHIBI_FACE);}catch(e){}
+    let groupImg=null;const _mg=myGroupPhoto();if(_mg&&_mg.src){try{groupImg=await loadImg(_mg.src);}catch(e){}}
+    const drawCover=(img,dx,dy,dw,dh,oy)=>{const rr=dw/dh,ir=img.width/img.height;let sw,sh,sx,sy;if(ir>rr){sh=img.height;sw=sh*rr;sx=(img.width-sw)/2;sy=0;}else{sw=img.width;sh=sw/rr;sx=0;sy=(img.height-sh)*(oy==null?0.38:oy);}x.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);};
     const px=pad,py=pad,pw=photo,ph=photo,cy=py+ph;
     // 卡纸
     x.fillStyle='#fdfaf3';x.fillRect(0,0,W,H);
@@ -1214,6 +1235,8 @@
     const g=x.createRadialGradient(px+pw*.5,py+ph*.36,8,px+pw*.5,py+ph*.36,pw*.85);
     g.addColorStop(0,'#3c2e18');g.addColorStop(.5,'#241c10');g.addColorStop(1,'#100d09');
     x.fillStyle=g;x.fillRect(px,py,pw,ph);
+    // 合照（白名单才有）：铺满照片区，下面的颗粒/暗角/金框叠在其上，保留复古质感
+    if(groupImg){x.save();x.beginPath();x.rect(px,py,pw,ph);x.clip();drawCover(groupImg,px,py,pw,ph);x.restore();}
     // 颗粒 + 暗角
     x.save();x.beginPath();x.rect(px,py,pw,ph);x.clip();
     for(let i=0;i<460;i++){x.fillStyle=`rgba(255,232,190,${Math.random()*.05})`;x.fillRect(px+Math.random()*pw,py+Math.random()*ph,1,1);}
@@ -1224,11 +1247,11 @@
     // 双层金框
     x.strokeStyle='rgba(212,168,85,.55)';x.lineWidth=1;x.strokeRect(px+10.5,py+10.5,pw-21,ph-21);
     x.strokeStyle='rgba(212,168,85,.25)';x.strokeRect(px+14.5,py+14.5,pw-29,ph-29);
-    // 来了（暖金渐变）
-    x.textAlign='center';x.textBaseline='middle';x.font='700 100px "Songti SC","STSong",serif';
+    // 来了（暖金渐变）—— 仅无合照时显示
+    if(!groupImg){x.textAlign='center';x.textBaseline='middle';x.font='700 100px "Songti SC","STSong",serif';
     const tg=x.createLinearGradient(px,py+ph*.3,px+pw,py+ph*.62);tg.addColorStop(0,'#f6e6b4');tg.addColorStop(.5,'#e7ca77');tg.addColorStop(1,'#c89f4c');
     x.fillStyle=tg;x.shadowColor='rgba(0,0,0,.55)';x.shadowBlur=18;x.shadowOffsetY=3;
-    x.fillText('来了',px+pw/2,py+ph*.45);x.shadowBlur=0;x.shadowOffsetY=0;
+    x.fillText('来了',px+pw/2,py+ph*.45);x.shadowBlur=0;x.shadowOffsetY=0;}
     // 日期邮戳
     x.save();x.translate(px+pw-38,py+38);x.rotate(-12*Math.PI/180);
     x.strokeStyle='rgba(212,168,85,.7)';x.lineWidth=1.5;x.beginPath();x.arc(0,0,24,0,Math.PI*2);x.stroke();
