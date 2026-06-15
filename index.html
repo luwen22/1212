@@ -234,7 +234,7 @@
   .tv-photo img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .65s ease;}
   .tv-photo img.loaded{opacity:1;}
   .tv-photo-fade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,20,.2) 0%,transparent 18%,transparent 60%,rgba(0,0,0,.22) 78%,rgba(0,0,0,.55) 100%);}
-  .tv-topbar{position:absolute;top:0;left:0;right:0;z-index:10;padding:clamp(4px,1vw,8px) clamp(8px,1.8vw,14px);background:linear-gradient(to right,#0f1a5c,#1835b0 50%,#0f1a5c);display:flex;align-items:center;gap:clamp(4px,1vw,8px);}
+  .tv-topbar{position:absolute;top:0;left:0;right:0;z-index:10;padding:clamp(4px,1vw,8px) clamp(8px,1.8vw,14px);background:linear-gradient(to right,#0f1a5c,#1835b0 50%,#0f1a5c);display:flex;align-items:center;gap:clamp(4px,1vw,8px);pointer-events:none;}
   .tv-live-dot{width:5px;height:5px;border-radius:50%;background:#f00;flex-shrink:0;animation:liveDot .9s ease-in-out infinite;}
   .tv-logo{font-family:var(--f-type);font-size:clamp(7px,1.6vw,11px);color:#fff;font-weight:700;letter-spacing:.14em;}
   .tv-divider{width:1px;height:9px;background:rgba(255,255,255,.24);}
@@ -278,7 +278,8 @@
   .tv-feet{display:flex;justify-content:space-between;width:clamp(85px,16vw,135px);}
   .tv-foot{height:clamp(3px,0.6vw,5px);width:clamp(14px,3vw,25px);background:linear-gradient(to right,#444,#888 50%,#444);border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.5);}
   .tv-ch-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(3px,0.8vw,6px);padding:clamp(8px,1.5vw,12px) 0 clamp(4px,1vw,6px);}
-  .tv-ch-item{display:flex;align-items:center;gap:clamp(4px,1vw,7px);cursor:pointer;padding:clamp(4px,0.8vw,6px) clamp(6px,1.3vw,10px);border:1px solid rgba(200,155,55,.12);border-radius:4px;background:rgba(255,255,255,.02);transition:background .25s,border-color .25s;-webkit-tap-highlight-color:transparent;}
+  .tv-ch-item{display:flex;align-items:center;gap:clamp(4px,1vw,7px);cursor:pointer;padding:clamp(4px,0.8vw,6px) clamp(6px,1.3vw,10px);border:1px solid rgba(200,155,55,.12);border-radius:4px;background:rgba(255,255,255,.02);opacity:0;transform:translateX(-6px);transition:opacity .4s ease,transform .4s ease,background .25s,border-color .25s;pointer-events:none;-webkit-tap-highlight-color:transparent;}
+  .tv-ch-item.revealed{opacity:1;transform:none;pointer-events:auto;}
   .tv-ch-item.active{background:rgba(212,168,85,.1);border-color:rgba(212,168,85,.4);}
   .tv-ch-item:hover{background:rgba(212,168,85,.07);border-color:rgba(212,168,85,.25);}
   .tv-ch-code{font-family:var(--f-type);font-size:clamp(7px,1.4vw,9.5px);color:rgba(200,155,55,.5);letter-spacing:.06em;flex-shrink:0;min-width:clamp(40px,7.5vw,58px);}
@@ -840,6 +841,7 @@
       if(tvHlNo)tvHlNo.textContent='NO.'+String(idx+1).padStart(3,'0');
       if(tvHlTxt)tvHlTxt.textContent=act?act.name:'—';
       if(tvChNum)tvChNum.textContent='SLWTV '+(idx+1);
+      const gi=document.querySelectorAll('#tvChGrid .tv-ch-item');if(gi[idx])gi[idx].classList.add('revealed');
       updateChGrid();
     }
     function render(anim){
