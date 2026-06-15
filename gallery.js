@@ -117,5 +117,7 @@ const PEOPLE = [
   {name:"于小雅",group:true},{name:"樊梦禹"},{name:"朱秋洁",group:true},{name:"徐星宇"},
   {name:"程祖云"},{name:"黄豪"},{name:"马杨玲"},{name:"孙碧雲"},{name:"王帅龙",group:true},
   {name:"邬晴宇",group:true},{name:"邢宇嫣",group:true},{name:"许江南",group:true},
-  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"贺婧姝"},{name:"吴慧涛"},{name:"谭潇"},{name:"谢芷妍"},{name:"黄慧婷"},{name:"邱振宇"}
+  {name:"王铭娜"},{name:"周汨祯",group:true},{name:"贺婧姝"},{name:"吴慧涛"},{name:"谭潇"},{name:"谢芷妍"},{name:"黄慧婷"},{name:"邱振宇"},
+  /* 追加鸣谢 */
+  {name:"黄皓轩"},{name:"黄诚"},{name:"阳慧"},{name:"肖媛"},{name:"向玉"},{name:"张寒冰"},{name:"田聪"},{name:"刘子扬"},{name:"崔冠杨"},{name:"龚美芝"},{name:"韩玲"},{name:"余依琳"},{name:"肖雅兰"},{name:"胡杨"},{name:"义晴"},{name:"谭长运"},{name:"黄馨慧"},{name:"刘柄南"},{name:"毛清华"},{name:"张启敏"},{name:"潘晟"},{name:"孙琳"},{name:"唐搏"},{name:"邓承宏"},{name:"杨琨"},{name:"尹元妹"},{name:"赵梦博"},{name:"邹洋阳"},{name:"唐歆雨"},{name:"卢山林"},{name:"易子皓"},{name:"肖南"},{name:"杨秋露"},{name:"张有玲"},{name:"杨荣栋"},{name:"侯婷"},{name:"梧桐"}
 ];

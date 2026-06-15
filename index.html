@@ -360,7 +360,9 @@
   .cr-title{font-family:var(--f-serif);font-size:clamp(20px,5.6vw,27px);letter-spacing:.34em;text-indent:.34em;color:var(--gold);}
   .cr-sub{font-size:11px;letter-spacing:.24em;color:var(--gold-dim);margin-bottom:clamp(18px,4vh,30px);}
   .cr-lead{font-size:clamp(12px,3.4vw,15px);line-height:2.1;color:var(--ink-faint);letter-spacing:.1em;margin-bottom:clamp(20px,5vh,40px);}
-  .credit-name{font-family:var(--f-serif);font-size:clamp(13px,3.6vw,17px);letter-spacing:.16em;text-indent:.16em;color:var(--ink-dim);}
+  .cr-names{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,2.2vh,16px) clamp(6px,2.4vw,18px);width:100%;max-width:460px;}
+  .credit-name{font-family:var(--f-serif);font-size:clamp(13px,3.6vw,16px);letter-spacing:.1em;text-align:center;color:var(--ink-dim);}
+  .cr-note{margin-top:clamp(18px,4vh,30px);font-size:11px;letter-spacing:.14em;color:var(--ink-faint);}
   .credit-name.me{color:#fff6e2;animation:meGlow 2.4s ease-in-out infinite;}
   @keyframes meGlow{0%,100%{text-shadow:0 0 10px rgba(243,226,171,.85),0 0 22px rgba(231,184,90,.5)}50%{text-shadow:0 0 18px rgba(255,245,210,1),0 0 40px rgba(231,184,90,.85)}}
   .cr-end{margin-top:clamp(24px,6vh,48px);font-family:var(--f-serif);font-size:clamp(14px,4vw,18px);line-height:2.1;letter-spacing:.14em;color:var(--gold);}
@@ -648,7 +650,7 @@
 </section>
 <div class="toast" id="toast"></div>
 
-<script src="gallery.js?v=20260615b"></script>
+<script src="gallery.js?v=20260615c"></script>
 <script>
 (function(){
   "use strict";
@@ -1058,20 +1060,29 @@
     const cnt=$('#y4count');let k=0;setInterval(()=>{const seq=['…3…2…1…','…READY…','…ROLL…'];cnt.textContent=seq[k++%seq.length];},2200);
   })();
 
-  /* 那些人：电影片尾式「特别鸣谢」自动向上滚动（本人姓名经过时彩色发光；可手动滚页面）*/
+  /* 那些人：电影片尾式「特别鸣谢」自动向上滚动；按姓氏笔画排序；本人姓名经过时彩色发光；可手动滚页面 */
   (function(){
     const view=$('#grid');if(!view)return;view.className='credits';
     const hint=document.querySelector('#people .people-hint');if(hint)hint.remove();
     const pt=$('#peopleTitle');if(pt)pt.remove();
+    /* 姓氏（首字）笔画表，缺失的排最后 */
+    const STROKE={'义':3,'于':3,'万':3,'马':3,'王':4,'尹':4,'邓':4,'毛':4,'卢':5,'田':5,'石':5,'师':6,'阳':6,'向':6,'刘':6,'孙':6,'朱':6,'邢':6,'邬':6,'许':6,'吴':7,'李':7,'杨':7,'张':7,'陈':7,'陆':7,'何':7,'苏':7,'佘':7,'余':7,'邹':7,'邱':7,'肖':7,'罗':8,'周':8,'易':8,'侯':9,'赵':9,'贺':9,'胡':9,'郝':9,'洪':9,'秦':10,'顾':10,'徐':10,'唐':10,'盛':11,'康':11,'黄':11,'崔':11,'龚':11,'梧':11,'辜':12,'彭':12,'舒':12,'程':12,'谢':12,'韩':12,'谭':14,'樊':15,'潘':15};
+    const norm=s=>(s||'').trim();
+    const seen=new Set(),names=[];
+    PPL.forEach(p=>{const n=norm(p.name);if(n&&!seen.has(n)){seen.add(n);names.push(n);}});
+    names.sort((a,b)=>((STROKE[a[0]]||99)-(STROKE[b[0]]||99))||a.localeCompare(b,'zh'));
     const roll=document.createElement('div');roll.className='credits-roll';
     roll.innerHTML=`<div class="cr-title">特别鸣谢</div><div class="cr-sub">SPECIAL THANKS · 立文之家 2022–2026</div><div class="cr-lead">四年，一群人。<br>有人一直在，有人只路过，<br>都算数，也都谢谢。</div>`;
-    PPL.forEach(p=>{const el=document.createElement('div');el.className='credit-name';el.dataset.n=p.name||'';el.textContent=p.name||'';roll.appendChild(el);});
-    const end=document.createElement('div');end.className='cr-end';end.innerHTML='山高水长<br>我们后会有期';
-    roll.appendChild(end);view.appendChild(roll);
-    const norm=s=>(s||'').trim();let started=false;
+    const box=document.createElement('div');box.className='cr-names';
+    names.forEach(n=>{const el=document.createElement('div');el.className='credit-name';el.dataset.n=n;el.textContent=n;box.appendChild(el);});
+    roll.appendChild(box);
+    const note=document.createElement('div');note.className='cr-note';note.textContent='排名不分先后 · 按姓名笔画排序';roll.appendChild(note);
+    const end=document.createElement('div');end.className='cr-end';end.innerHTML='山高水长<br>我们后会有期';roll.appendChild(end);
+    view.appendChild(roll);
+    let started=false;
     function start(){
       if(started)return;started=true;
-      if(norm(NAME))roll.querySelectorAll('.credit-name').forEach(el=>{if(norm(el.dataset.n)===norm(NAME))el.classList.add('me');});
+      if(norm(NAME))box.querySelectorAll('.credit-name').forEach(el=>{if(norm(el.dataset.n)===norm(NAME))el.classList.add('me');});
       if(reduce){view.style.overflow='auto';roll.style.position='relative';return;}
       const vh=view.clientHeight,rh=roll.scrollHeight,dist=vh+rh,dur=Math.max(12000,dist/80*1000);
       let t0=null;
