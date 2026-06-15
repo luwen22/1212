@@ -33,7 +33,7 @@ const META = {
 
 /* 四个章节 */
 const CHAPTERS = [
-  { id:"y1", era:"大一", span:"2022秋—2023春", title:"刚来，什么都是新的", desc:"那时候谁都不认识谁，先把校园走了个遍。",
+  { id:"y1", era:"大一", span:"2022秋—2023春", title:"刚来，什么都是新的", desc:"操作游戏手柄，游览校园。",
     quote:null,
     spots:[
       {place:"南门",src:"photos/y1/01.jpg",pos:"center 80%"},{place:"喷泉",src:"photos/y1/02.jpg",pos:"center 55%"},{place:"体育馆",src:"photos/y1/03.jpg",pos:"center 42%"},{place:"操场",src:"photos/y1/04.jpg",pos:"center 60%"},
@@ -46,7 +46,7 @@ const CHAPTERS = [
       {place:"图书馆（4）",src:"photos/y1/23.jpg",pos:"center 45%"},{place:"博学楼（1）",src:"photos/y1/24.jpg",pos:"center 58%"},{place:"博学楼（2）",src:"photos/y1/25.jpg",pos:"center 45%"},
       {place:"博学楼（3）",src:"photos/y1/26.jpg",pos:"center 45%"},{place:"博学楼（4）",src:"photos/y1/27.jpg",pos:"center 40%"},{place:"北门",src:"photos/y1/28.jpg",pos:"center 45%"}
     ] },
-  { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"后来认识了你。",
+  { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"每件事都是新闻头条",
     quote:["那些年做了很多不是自己想做的事，","但你是真的。"],
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"],
     /* 活动：name=活动名  src=照片  pos="x% y%"=取景焦点。可无限追加，照片到位填 src 即可。 */
