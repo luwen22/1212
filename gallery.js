@@ -63,7 +63,7 @@ const CHAPTERS = [
       {name:"一粒种子的结尾（一）",src:"photos/y2/17.jpg",pos:"center 40%"},{name:"一粒种子的结尾（二）",src:"photos/y2/18.jpg",pos:"center 35%"}
     ] },
   { id:"y3", era:"大三", span:"2024秋—2025春", title:"出去看看", desc:"侗锦，挑花，古商城，北部湾。有些东西，走了才看见。",
-    quote:["走过的地方，","有你在就记得了。"], photos:8,
+    quote:["一起去看过的山和海，","后来都成了想念的形状。"], photos:8,
     trips:[
       {place:"怀化",src:"photos/y3/01.jpg"},{place:"长沙",src:"photos/y3/02.jpg"},{place:"南昌",src:"photos/y3/03.jpg"},{place:"重庆",src:"photos/y3/04.jpg"},
       {place:"武汉",src:"photos/y3/05.jpg"},{place:"合肥",src:"photos/y3/06.jpg"},{place:"吉首",src:"photos/y3/07.jpg"},{place:"湘西",src:"photos/y3/08.jpg"},
