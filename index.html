@@ -894,10 +894,6 @@
     }
     new IntersectionObserver(es=>{if(es[0].isIntersecting)setTimeout(tvStartup,300);},{threshold:.38}).observe(box);
     box.addEventListener('click',tvStartup,{once:true});
-    /* ---- 悬停暂停（仅鼠标设备，避免触屏误触导致永久停播）---- */
-    const isFine=()=>matchMedia('(pointer:fine)').matches;
-    box.addEventListener('mouseenter',()=>{if(!isFine())return;clearAuto();if(tvProg)tvProg.style.transition='none';if(tvNH)tvNH.classList.remove('show');});
-    box.addEventListener('mouseleave',()=>{if(!isFine())return;if(tvOn)startAuto();});
     /* ---- 查看大图按钮 ---- */
     const tvViewBtn=document.getElementById('tvViewBtn');
     if(tvViewBtn)tvViewBtn.addEventListener('click',()=>{if(tvOn)openLB(items,ci);});
