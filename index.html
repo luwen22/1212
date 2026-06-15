@@ -536,6 +536,18 @@
   .photo-hint .ph-ico{width:18px;height:18px;color:var(--gold);display:inline-flex;}
   .photo-hint .ph-ico svg{width:18px;height:18px;}
   @keyframes phPulse{0%,100%{box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 18px rgba(212,168,85,.14)}50%{box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 30px rgba(212,168,85,.4)}}
+  /* ===================================================== 背景音乐控件（左上角）*/
+  .bgm-ctrl{position:fixed;top:max(14px,calc(env(safe-area-inset-top) + 8px));left:14px;z-index:9993;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .6s ease;}
+  .bgm-ctrl.show{opacity:1;pointer-events:auto;}
+  .bgm-btn{flex:none;width:40px;height:40px;border-radius:50%;background:rgba(20,15,10,.46);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:color .3s,border-color .3s;}
+  .bgm-btn:hover{color:#fff6e2;border-color:var(--gold);}
+  .bgm-bars{display:flex;align-items:flex-end;gap:2.5px;height:14px;}
+  .bgm-bars i{width:2.5px;height:100%;background:currentColor;border-radius:1px;transform-origin:bottom;animation:bgmBar 1s ease-in-out infinite;}
+  .bgm-bars i:nth-child(2){animation-delay:.22s;} .bgm-bars i:nth-child(3){animation-delay:.44s;}
+  @keyframes bgmBar{0%,100%{transform:scaleY(.32)}50%{transform:scaleY(1)}}
+  .bgm-ctrl.paused .bgm-bars i{animation-play-state:paused;transform:scaleY(.4);}
+  .bgm-hint{font-size:11px;letter-spacing:.12em;color:var(--gold-dim);background:rgba(20,15,10,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:6px 12px;border-radius:50px;white-space:nowrap;border:1px solid rgba(212,168,85,.2);opacity:0;transform:translateX(-6px);transition:opacity .5s ease,transform .5s ease;}
+  .bgm-ctrl.hint .bgm-hint{opacity:1;transform:translateX(0);}
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;}}
 </style>
 </head>
@@ -547,6 +559,11 @@
 <div class="progress" id="progress"></div>
 <nav id="nav"></nav>
 <div class="cursor" id="cursor"></div><div class="cursor-dot" id="cursorDot"></div>
+<div class="bgm-ctrl" id="bgmCtrl" aria-hidden="true">
+  <button class="bgm-btn" id="bgmBtn" type="button" aria-label="音乐开关"><span class="bgm-bars"><i></i><i></i><i></i></span></button>
+  <span class="bgm-hint" id="bgmHint">点击关闭音乐</span>
+</div>
+<audio id="bgm" loop preload="auto"></audio>
 
 <section id="cover">
   <div class="lightshaft"></div><div class="shaft-glow"></div><div class="shoot"></div>
@@ -654,7 +671,7 @@
 </section>
 <div class="toast" id="toast"></div>
 
-<script src="gallery.js?v=20260615f"></script>
+<script src="gallery.js?v=20260615g"></script>
 <script>
 (function(){
   "use strict";
@@ -669,6 +686,7 @@
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const touch=matchMedia('(pointer:coarse)').matches;
   let NAME='';
+  let bgmStart=()=>{};
 
   function hideLoader(){const l=$('#loader');if(!l)return;l.classList.add('hide');setTimeout(()=>l.remove(),900);}
   if(document.readyState==='complete')hideLoader();else addEventListener('load',hideLoader);
@@ -750,6 +768,7 @@
 
   function enter(){
     NAME=($('#nameInput').value||'').trim().slice(0,12);buildCard();
+    bgmStart();
     $('#cover').classList.add('leaving');
     document.body.classList.remove('locked');window.scrollTo(0,0);
     setTimeout(()=>{$$('#preface .pre-fx').forEach((e,i)=>setTimeout(()=>e.classList.add('in'),i*240));$('#scrollCue').classList.add('in');},700);
@@ -762,6 +781,21 @@
   $('#prePresent').textContent=META_.present||'';
   /* 序章 logo：放到 photos/logo.png（透明镂空），加载成功才显示，描金边框 */
   (function(){const lg=$('#preLogo'),im=$('#preLogoImg');if(!lg||!im)return;im.onload=()=>{lg.style.display='block';};im.onerror=()=>{lg.style.display='none';};im.src=(typeof META_!=='undefined'&&META_.logo)||'photos/logo.png';})();
+  /* 背景音乐：输入名字点「来了」后开始播放；左上角控件；提示「点击关闭音乐」约 10 秒后自动隐藏，音乐继续 */
+  (function(){const ctrl=$('#bgmCtrl'),btn=$('#bgmBtn'),audio=$('#bgm');if(!ctrl||!btn||!audio)return;
+    const src=(META_&&META_.bgm)||'';if(!src){return;}            // 没配音乐就不显示控件
+    const VOL=clamp((META_.bgmVolume!=null?META_.bgmVolume:0.7),0,1);
+    audio.src=src;audio.loop=true;audio.volume=0;
+    let hintTimer=null,started=false,rafv=0;
+    const fadeTo=(target,ms)=>{cancelAnimationFrame(rafv);const from=audio.volume,t0=performance.now();const st=t=>{const k=Math.min((t-t0)/Math.max(ms,1),1);audio.volume=clamp(from+(target-from)*k,0,1);if(k<1)rafv=requestAnimationFrame(st);};rafv=requestAnimationFrame(st);};
+    const showHint=()=>{ctrl.classList.add('hint');clearTimeout(hintTimer);hintTimer=setTimeout(()=>ctrl.classList.remove('hint'),10000);};
+    bgmStart=()=>{if(started)return;started=true;ctrl.classList.add('show');ctrl.setAttribute('aria-hidden','false');
+      audio.play().then(()=>{ctrl.classList.remove('paused');fadeTo(VOL,1600);showHint();}).catch(()=>{ctrl.classList.add('paused');showHint();});};
+    btn.addEventListener('click',()=>{ctrl.classList.remove('hint');clearTimeout(hintTimer);
+      if(audio.paused){audio.play().then(()=>{ctrl.classList.remove('paused');fadeTo(VOL,800);}).catch(()=>{});}
+      else{audio.pause();ctrl.classList.add('paused');}});
+    audio.addEventListener('play',()=>ctrl.classList.remove('paused'));
+    audio.addEventListener('pause',()=>ctrl.classList.add('paused'));})();
   (function(){const bx=$('#y1bokeh');if(!bx)return;for(let i=0;i<14;i++){const s=document.createElement('i');const sz=18+Math.random()*46;s.style.width=s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.top=(70+Math.random()*40)+'%';s.style.animationDuration=(13+Math.random()*12)+'s';s.style.animationDelay=(-Math.random()*20)+'s';bx.appendChild(s);}})();
 
   function fillHead(sec,c,typed){if(!c)return;sec.querySelector('.ch-era').textContent=c.era;const t=sec.querySelector('.ch-title');if(typed)t.dataset.text=c.title;else t.textContent=c.title;sec.querySelector('.ch-desc').textContent=c.desc;}
