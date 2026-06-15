@@ -654,7 +654,7 @@
 </section>
 <div class="toast" id="toast"></div>
 
-<script src="gallery.js?v=20260615d"></script>
+<script src="gallery.js?v=20260615e"></script>
 <script>
 (function(){
   "use strict";
@@ -1070,7 +1070,7 @@
     const hint=document.querySelector('#people .people-hint');if(hint)hint.remove();
     const pt=$('#peopleTitle');if(pt)pt.remove();
     /* 姓氏（首字）笔画表，缺失的排最后 */
-    const STROKE={'义':3,'于':3,'万':3,'马':3,'王':4,'尹':4,'邓':4,'毛':4,'卢':5,'田':5,'石':5,'师':6,'阳':6,'向':6,'刘':6,'孙':6,'朱':6,'邢':6,'邬':6,'许':6,'吴':7,'李':7,'杨':7,'张':7,'陈':7,'陆':7,'何':7,'苏':7,'佘':7,'余':7,'邹':7,'邱':7,'肖':7,'罗':8,'周':8,'易':8,'侯':9,'赵':9,'贺':9,'胡':9,'郝':9,'洪':9,'秦':10,'顾':10,'徐':10,'唐':10,'盛':11,'康':11,'黄':11,'崔':11,'龚':11,'梧':11,'辜':12,'彭':12,'舒':12,'程':12,'谢':12,'韩':12,'谭':14,'樊':15,'潘':15};
+    const STROKE={'义':3,'于':3,'万':3,'马':3,'王':4,'尹':4,'邓':4,'毛':4,'卢':5,'田':5,'石':5,'师':6,'阳':6,'向':6,'刘':6,'孙':6,'朱':6,'邢':6,'邬':6,'许':6,'吴':7,'李':7,'杨':7,'张':7,'陈':7,'陆':7,'何':7,'苏':7,'佘':7,'余':7,'邹':7,'邱':7,'肖':7,'罗':8,'周':8,'易':8,'侯':9,'赵':9,'贺':9,'胡':9,'郝':9,'洪':9,'秦':10,'顾':10,'徐':10,'唐':10,'盛':11,'康':11,'黄':11,'崔':11,'龚':11,'梧':11,'辜':12,'彭':12,'舒':12,'程':12,'谢':12,'韩':12,'谭':14,'樊':15,'潘':15,'宗':8,'聂':10,'郭':10};
     const norm=s=>(s||'').trim();
     const seen=new Set(),names=[];
     PPL.forEach(p=>{const n=norm(p.name);if(n&&!seen.has(n)){seen.add(n);names.push(n);}});
@@ -1105,15 +1105,18 @@
     CH.forEach(c=>['spots','activities','trips','photos'].forEach(k=>{if(Array.isArray(c[k]))c[k].forEach(s=>{if(s&&s.src)out.push(s.src);});}));
     PPL.forEach(p=>{if(p&&p.src)out.push(p.src);});
     return [...new Set(out)];}
-  const POOL=buildPhotoPool();
+  /* 洗牌后取有限张数循环复用：手机端避免一次解码上百张大图导致拼图空白（同一 src 只解码一次）*/
+  const POOL=(()=>{const a=buildPhotoPool();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(a.length,30));})();
   function spawnConfetti(){const box=$('#confetti');if(!box)return;const cols=['#f3e2ab','#d4a855','#e7b85a','#bb8f3e','#f6efd8','#caa14e'];for(let i=0;i<38;i++){const c=document.createElement('i');c.style.background=cols[i%cols.length];const w=5+Math.random()*7;c.style.width=w+'px';c.style.height=(w*0.45+2)+'px';c.style.left=(Math.random()*100)+'%';c.style.setProperty('--x',((Math.random()-.5)*170)+'px');c.style.animationDuration=(2.8+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(c);setTimeout(()=>c.remove(),6200);}}
   function buildGlyphTargets(text){const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 112px "Songti SC","STSong",serif';x.fillText(text,W/2,H/2+4);const d=x.getImageData(0,0,W,H).data,pts=[],step=8;for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}return {pts,ratio:W/H};}
   function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来了');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
     /* 打乱后顺序取图，循环时重新打乱，保证「尽量都是不一样的照片」、相邻不扎堆 */
     let bag=[],bi=0;const nextSrc=()=>{if(!POOL.length)return null;if(bi>=bag.length){bag=POOL.slice();for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}bi=0;}return bag[bi++];};
     pts.forEach((pt)=>{const t=document.createElement('div');t.className='tile';t.style.width=TS+'px';t.style.height=TS+'px';
+      /* 永远先铺金色底，保证「来了」即时可见；照片加载后覆盖其上，失败/慢则保留金底 */
+      t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;
       const src=nextSrc();
-      if(src){const im=document.createElement('img');im.src=src;t.appendChild(im);}else{t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;}
+      if(src){const im=document.createElement('img');im.decoding='async';im.onerror=()=>im.remove();im.src=src;t.appendChild(im);}
       const gx=50+(pt[0]-0.5)*(dispW/vw*100),gy=46+(pt[1]-0.5)*(dispH/vh*100);const ang=Math.random()*6.28,dist=70+Math.random()*120;
       t.dataset.gx=gx;t.dataset.gy=gy;t.dataset.sx=50+Math.cos(ang)*dist;t.dataset.sy=50+Math.sin(ang)*dist;t.dataset.rot=(Math.random()-.5)*120;t.dataset.scl=.4+Math.random()*.6;t.dataset.delay=Math.random()*.3;
       wall.appendChild(t);TILES.push(t);});glyphReady=true;}
@@ -1123,7 +1126,7 @@
     $('#polaName').textContent=(NAME?NAME+' ':'')+'来了！';
     /* 拍立得中心：在合照白名单里 → 端上我们的合照；否则 → 显示「来了」 */
     (function(){const box=$('#polaPhoto'),pimg=$('#polaImg');if(!box||!pimg)return;const m=myGroupPhoto();
-      if(m&&m.src){pimg.src=m.src;box.classList.add('has-photo');}
+      if(m&&m.src){pimg.onerror=()=>box.classList.remove('has-photo');pimg.src=m.src;box.classList.add('has-photo');}
       else{pimg.removeAttribute('src');box.classList.remove('has-photo');}})();
     $('#polaFoot').textContent=META_.cardFoot||'';
     $('#saveBtn').textContent=META_.savePrompt||'保存这一刻';
