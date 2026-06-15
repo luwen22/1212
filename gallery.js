@@ -102,6 +102,31 @@ const TIMELINE = [
    name=姓名   group:true=只在合照里出现（取合照特写，仅一次）；不标=有单独照片(可能多张)
    src=照片路径   pos="x% y%"=取景焦点   zoom=放大倍数   note=可选那句话
    多张照片的人，之后可加成多张卡（src 各不同）。 */
+/* 合照白名单：有和「沈立文」合照的人，按顺序排列。
+   照片随后按同样顺序提供，依次放到 photos/hz/01.jpg、02.jpg ……
+   规则：进入后，只有输入的姓名在这里，结尾才会出现「流星 + 合照抽卡」；
+   不在名单里的人，没有流星与合照，直接进入「来了」拍立得环节。
+   示例： {name:"周雅文", src:"photos/hz/01.jpg"}, */
+const GROUP_PHOTOS = [
+  {name:"周雅文",src:"photos/hz/01.jpg"},{name:"王华安",src:"photos/hz/02.jpg"},{name:"张湘伟",src:"photos/hz/03.jpg"},{name:"刘丰华",src:"photos/hz/04.jpg"},
+  {name:"阳诗曼",src:"photos/hz/05.jpg"},{name:"辜武椿",src:"photos/hz/06.jpg"},{name:"刘旭涛",src:"photos/hz/07.jpg"},{name:"杨清尘",src:"photos/hz/08.jpg"},
+  {name:"张朔语",src:"photos/hz/09.jpg"},{name:"赵羿钧",src:"photos/hz/10.jpg"},{name:"李静茹",src:"photos/hz/11.jpg"},{name:"彭思雨",src:"photos/hz/12.jpg"},
+  {name:"樊子怡",src:"photos/hz/13.jpg"},{name:"罗茵",src:"photos/hz/14.jpg"},{name:"张雨佳",src:"photos/hz/15.jpg"},{name:"杨倩",src:"photos/hz/16.jpg"},
+  {name:"贺子璐",src:"photos/hz/17.jpg"},{name:"刘承文",src:"photos/hz/18.jpg"},{name:"师健晟",src:"photos/hz/19.jpg"},{name:"盛文杰",src:"photos/hz/20.jpg"},
+  {name:"万江溢",src:"photos/hz/21.jpg"},{name:"胡颖",src:"photos/hz/22.jpg"},{name:"佘雨馨",src:"photos/hz/23.jpg"},{name:"刘逸凡",src:"photos/hz/24.jpg"},
+  {name:"石果",src:"photos/hz/25.jpg"},{name:"彭海蓉",src:"photos/hz/26.jpg"},{name:"张黄阳",src:"photos/hz/27.jpg"},{name:"苏子媛",src:"photos/hz/28.jpg"},
+  {name:"何婷",src:"photos/hz/29.jpg"},{name:"舒利",src:"photos/hz/30.jpg"},{name:"李焱",src:"photos/hz/31.jpg"},{name:"康雨彤",src:"photos/hz/32.jpg"},
+  {name:"程佳怡",src:"photos/hz/33.jpg"},{name:"刘宇涵",src:"photos/hz/34.jpg"},{name:"郝宇佳",src:"photos/hz/35.jpg"},{name:"黄梦华",src:"photos/hz/36.jpg"},
+  {name:"向柯",src:"photos/hz/37.jpg"},{name:"刘楼海",src:"photos/hz/38.jpg"},{name:"陈铭蕊",src:"photos/hz/39.jpg"},{name:"李琳",src:"photos/hz/40.jpg"},
+  {name:"李咨蓉",src:"photos/hz/41.jpg"},{name:"李佳怡",src:"photos/hz/42.jpg"},{name:"秦耀华",src:"photos/hz/43.jpg"},{name:"顾炜源",src:"photos/hz/44.jpg"},
+  {name:"陆垚",src:"photos/hz/45.jpg"},{name:"李康波",src:"photos/hz/46.jpg"},{name:"张艳艳",src:"photos/hz/47.jpg"},{name:"罗为",src:"photos/hz/48.jpg"},
+  {name:"洪语琴",src:"photos/hz/49.jpg"},{name:"于小雅",src:"photos/hz/50.jpg"},{name:"樊梦禹",src:"photos/hz/51.jpg"},{name:"朱秋洁",src:"photos/hz/52.jpg"},
+  {name:"徐星宇",src:"photos/hz/53.jpg"},{name:"程祖云",src:"photos/hz/54.jpg"},{name:"黄豪",src:"photos/hz/55.jpg"},{name:"马杨玲",src:"photos/hz/56.jpg"},
+  {name:"孙碧雲",src:"photos/hz/57.jpg"},{name:"邬晴宇",src:"photos/hz/58.jpg"},{name:"邢宇嫣",src:"photos/hz/59.jpg"},{name:"许江南",src:"photos/hz/60.jpg"},
+  {name:"王铭娜",src:"photos/hz/61.jpg"},{name:"周汨祯",src:"photos/hz/62.jpg"},{name:"贺婧姝",src:"photos/hz/63.jpg"},{name:"吴慧涛",src:"photos/hz/64.jpg"},
+  {name:"谭潇",src:"photos/hz/65.jpg"},{name:"谢芷妍",src:"photos/hz/66.jpg"},{name:"黄慧婷",src:"photos/hz/67.jpg"},{name:"邱振宇",src:"photos/hz/68.jpg"},
+];
+
 const PEOPLE = [
   {name:"周雅文"},{name:"王华安"},{name:"张湘伟"},{name:"刘丰华"},{name:"阳诗曼"},{name:"辜武椿"},{name:"刘旭涛",group:true},
   {name:"杨清尘",group:true},{name:"张朔语",group:true},{name:"赵羿钧",group:true},

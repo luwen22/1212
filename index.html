@@ -614,7 +614,7 @@
         <span class="gc-ring"></span>
         <div class="gc-burst"></div>
         <div class="gc-inner" id="gachaInner">
-          <div class="gc-face gc-back"><div class="gc-name">沈立文</div><div class="gc-sub">立文之家</div></div>
+          <div class="gc-face gc-back"><div class="gc-name">沈立文</div><div class="gc-sub" id="gcSub">立文之家</div></div>
           <div class="gc-face gc-front"><div class="gc-photo"><div class="gc-shine"></div><img id="gachaImg" alt="我们的合照"></div></div>
         </div>
       </div>
@@ -650,7 +650,7 @@
 </section>
 <div class="toast" id="toast"></div>
 
-<script src="gallery.js?v=20260615c"></script>
+<script src="gallery.js?v=20260615d"></script>
 <script>
 (function(){
   "use strict";
@@ -1162,15 +1162,25 @@
   let rtmr;addEventListener('resize',()=>{clearTimeout(rtmr);rtmr=setTimeout(()=>{buildTiles();buildSnake();frame();},220);});
   buildTiles();buildCard();frame();
 
-  /* 那些人 · 抽卡彩蛋：划完所有人后 → 金色流星 → 弹出沈立文卡 → 翻面亮出合照（竖横自适应）*/
-  (function(){const gacha=$('#gacha'),img=$('#gachaImg'),inner=$('#gachaInner');if(!gacha)return;
-    if(img){
-      img.addEventListener('load',()=>{if(img.naturalWidth&&img.naturalHeight&&inner){const r=img.naturalWidth/img.naturalHeight;inner.style.aspectRatio=clamp(r,0.62,1.7).toFixed(3);}gacha.classList.remove('no-photo');});
-      img.addEventListener('error',()=>{gacha.classList.add('no-photo');});
-      img.src='photos/together.jpg';
+  /* 那些人之后 · 合照抽卡：仅当输入姓名在「合照白名单」中，才有金色流星 + 弹出本人合照；否则整段隐藏，直接进入拍立得 */
+  (function(){const gacha=$('#gacha'),img=$('#gachaImg'),inner=$('#gachaInner'),sub=$('#gcSub');if(!gacha)return;
+    const GP=(typeof GROUP_PHOTOS!=='undefined')?GROUP_PHOTOS:[];
+    const norm=s=>(s||'').trim();
+    const mine=()=>GP.find(g=>norm(g.name)===norm(NAME));
+    if(img&&inner){
+      img.addEventListener('load',()=>{if(img.naturalWidth&&img.naturalHeight){inner.style.aspectRatio=clamp(img.naturalWidth/img.naturalHeight,0.62,1.7).toFixed(3);}gacha.classList.remove('no-photo');});
+      img.addEventListener('error',()=>gacha.classList.add('no-photo'));
     }
-    let played=false;
-    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!played){played=true;io.unobserve(e.target);
+    let decided=false,played=false;
+    /* 提前判定：没有合照就整段移除，直接进拍立得（提前到接近视口时决定，避免跳动）*/
+    const decideObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!decided){decided=true;decideObs.unobserve(e.target);
+      const m=mine();
+      if(!m){gacha.style.display='none';return;}
+      if(sub)sub.textContent=norm(NAME)?('× '+norm(NAME)):'立文之家';
+      if(img)img.src=m.src;}}),{rootMargin:'0px 0px 80% 0px',threshold:0});
+    decideObs.observe(gacha);
+    /* 真正进入视口再播放抽卡动画（仅白名单）*/
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!played&&mine()){played=true;io.unobserve(e.target);
       gacha.classList.add('go');
       setTimeout(()=>gacha.classList.add('pop'),1000);
       setTimeout(()=>gacha.classList.add('flip'),2100);}}),{threshold:.4});
