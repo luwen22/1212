@@ -245,10 +245,12 @@
   .tv-hl-bar{background:linear-gradient(90deg,#a00,#d81818 60%,#a00);padding:clamp(3px,0.7vw,5px) clamp(8px,1.8vw,14px);display:flex;align-items:center;gap:clamp(4px,1vw,8px);}
   .tv-hl-tag{font-family:var(--f-type);font-size:clamp(6px,1.2vw,8px);background:#fff;color:#c00;padding:1px 5px;font-weight:700;letter-spacing:.06em;border-radius:1px;flex-shrink:0;}
   .tv-hl-name{font-family:var(--f-type);font-size:clamp(7px,1.5vw,10px);color:#fff;font-weight:700;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .tv-end-screen{position:absolute;inset:0;z-index:18;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2vw,18px);opacity:0;pointer-events:none;transition:opacity .9s ease;}
-  .tv-end-screen.show{opacity:1;}
-  .tv-end-txt{font-family:var(--f-type);font-size:clamp(14px,3.5vw,24px);color:#f0f0f0;letter-spacing:.4em;text-align:center;}
-  .tv-end-sub{font-family:var(--f-type);font-size:clamp(9px,2.2vw,14px);color:rgba(212,168,85,.85);letter-spacing:.28em;text-align:center;}
+  .tv-end-screen{position:absolute;inset:0;z-index:18;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2.5vw,22px);opacity:0;pointer-events:none;transition:opacity .9s ease;}
+  .tv-end-screen.show{opacity:1;pointer-events:auto;}
+  .tv-end-txt{font-family:var(--f-type);font-size:clamp(14px,3.5vw,22px);color:rgba(255,255,255,.7);letter-spacing:.4em;text-align:center;}
+  .tv-end-sub{font-family:var(--f-type);font-size:clamp(17px,4.5vw,30px);color:rgba(212,168,85,.95);letter-spacing:.28em;text-align:center;font-weight:700;}
+  .tv-end-replay{font-family:var(--f-type);font-size:clamp(9px,2vw,13px);color:rgba(255,255,255,.4);letter-spacing:.22em;text-align:center;border:1px solid rgba(255,255,255,.18);border-radius:30px;padding:6px 18px;margin-top:4px;cursor:pointer;transition:color .25s,border-color .25s;}
+  .tv-end-replay:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.5);}
   .tv-hl-main{background:rgba(0,8,42,.95);padding:clamp(3px,0.8vw,6px) clamp(8px,1.8vw,14px) clamp(5px,1.1vw,8px);}
   .tv-hl-no{font-family:var(--f-type);font-size:clamp(5px,1.1vw,7.5px);color:rgba(255,255,255,.38);letter-spacing:.22em;margin-bottom:2px;}
   .tv-hl-txt{font-family:var(--f-type);font-size:clamp(13px,3.2vw,21px);color:#f0f0f0;font-weight:700;line-height:1.3;letter-spacing:.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
@@ -818,7 +820,7 @@
           <div class="tv-headline">
             <div class="tv-hl-bar"><span class="tv-hl-tag">头条</span><span class="tv-hl-name" id="tvHlName">—</span></div>
           </div>
-          <div class="tv-end-screen" id="tvEnd"><div class="tv-end-txt">新闻播放完毕</div><div class="tv-end-sub">请前往下一部分</div></div>
+          <div class="tv-end-screen" id="tvEnd"><div class="tv-end-txt">新闻播放完毕</div><div class="tv-end-sub">请前往下一部分</div><div class="tv-end-replay" id="tvReplay">↺ 重新播放新闻</div></div>
           <div class="tv-prog" id="tvProg"></div>
           <div class="tv-next-hint" id="tvNH"><div class="tv-nh-tag">下一条 NEXT ▶</div><div class="tv-nh-txt" id="tvNHtxt">—</div></div>
         </div>
@@ -914,6 +916,8 @@
         ci=idx;render(true);startAuto();
       });
     });
+    const tvReplay=document.getElementById('tvReplay');
+    if(tvReplay)tvReplay.addEventListener('click',e=>{e.stopPropagation();const tvEnd=document.getElementById('tvEnd');if(tvEnd)tvEnd.classList.remove('show');ci=0;render(true);startAuto();});
     tvPhoto.addEventListener('click',()=>openLB(items,ci));
     if(c2&&c2.quote)$('#y2quote').innerHTML=`<div>${esc(c2.quote[0])}</div><div class="q2">${esc(c2.quote[1])}</div>`;
     const f=$('#y2frags');((c2&&c2.fragments)||[]).forEach((t,i)=>{const b=document.createElement('b');b.textContent=t;b.style.top=(8+(i*15)%80)+'%';b.style.animationDelay=(i*2.4)+'s';f.appendChild(b);});
