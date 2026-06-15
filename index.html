@@ -1110,7 +1110,7 @@
     PPL.forEach(p=>{const n=norm(p.name);if(n&&!seen.has(n)){seen.add(n);names.push(n);}});
     names.sort((a,b)=>((STROKE[a[0]]||99)-(STROKE[b[0]]||99))||a.localeCompare(b,'zh'));
     const roll=document.createElement('div');roll.className='credits-roll';
-    roll.innerHTML=`<div class="cr-title">特别鸣谢</div><div class="cr-sub">SPECIAL THANKS · 立文之家 2022–2026</div><div class="cr-lead">四年，一群人。<br>有人一直在，有人只路过，<br>都算数，也都谢谢。</div>`;
+    roll.innerHTML=`<div class="cr-title">特别鸣谢</div><div class="cr-sub">SPECIAL THANKS · 立文之家 2022–2026</div>`;
     const box=document.createElement('div');box.className='cr-names';
     names.forEach(n=>{const el=document.createElement('div');el.className='credit-name';el.dataset.n=n;el.textContent=n;box.appendChild(el);});
     roll.appendChild(box);
