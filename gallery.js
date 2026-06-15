@@ -67,8 +67,8 @@ const CHAPTERS = [
     trips:[
       {place:"怀化",src:"photos/y3/01.jpg"},{place:"长沙",src:"photos/y3/02.jpg"},{place:"南昌",src:"photos/y3/03.jpg"},{place:"重庆",src:"photos/y3/04.jpg"},
       {place:"武汉",src:"photos/y3/05.jpg"},{place:"合肥",src:"photos/y3/06.jpg"},{place:"吉首",src:"photos/y3/07.jpg"},{place:"湘西",src:"photos/y3/08.jpg"},
-      {place:"贵阳",src:"photos/y3/09.jpg"},{place:"铜仁",src:"photos/y3/10.jpg"},{place:"麻阳县",src:""},{place:"南京",src:""},
-      {place:"成都",src:""},{place:"新晃县",src:""},{place:"溆浦县",src:""},{place:"通道县",src:""},
+      {place:"贵阳",src:"photos/y3/09.jpg"},{place:"铜仁",src:"photos/y3/10.jpg"},{place:"麻阳县",src:"photos/y3/11.jpg"},{place:"南京",src:"photos/y3/12.jpg"},
+      {place:"成都",src:"photos/y3/13.jpg"},{place:"新晃县",src:"photos/y3/14.jpg"},{place:"溆浦县",src:"photos/y3/15.jpg"},{place:"通道县",src:""},
       {place:"北海",src:""},{place:"武冈",src:""},{place:"娄底",src:""},{place:"上海",src:""},
       {place:"开封",src:""},{place:"洛阳",src:""},{place:"张家界",src:""},{place:"芷江县",src:""}
     ] },
