@@ -22,7 +22,7 @@ const META = {
   cardDate:   "2026.06",
   cardFoot:   "2022 — 2026 · 立文之家",
   savePrompt: "保存这一刻",
-  bgm:        "",                 // 背景音乐：上传后填路径，如 "bgm.mp3?v=1"；留空则不显示音乐控件
+  bgm:        "bgm.mp3?v=1",       // 背景音乐：HOYO-MiX《水仙十字安眠曲 A Narcissus Lullaby》（由 .ogg 转 mp3，全平台兼容）
   bgmVolume:  0.7,                // 音量 0~1
   qrUrl:      "",                 // 填你的公众号链接，填了结尾纪念卡就会显示二维码
   qrLabel:    "扫一扫 · 立文之家",
