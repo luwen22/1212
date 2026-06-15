@@ -46,7 +46,7 @@ const CHAPTERS = [
       {place:"图书馆（4）",src:"photos/y1/23.jpg",pos:"center 45%"},{place:"博学楼（1）",src:"photos/y1/24.jpg",pos:"center 58%"},{place:"博学楼（2）",src:"photos/y1/25.jpg",pos:"center 45%"},
       {place:"博学楼（3）",src:"photos/y1/26.jpg",pos:"center 45%"},{place:"博学楼（4）",src:"photos/y1/27.jpg",pos:"center 40%"},{place:"北门",src:"photos/y1/28.jpg",pos:"center 45%"}
     ] },
-  { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"每件事都是新闻头条",
+  { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"青春是一条条新闻",
     quote:["那些年做了很多不是自己想做的事，","但你是真的。"],
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"],
     /* 活动：name=活动名  src=照片  pos="x% y%"=取景焦点。可无限追加，照片到位填 src 即可。 */

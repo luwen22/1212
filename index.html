@@ -224,8 +224,8 @@
   @keyframes liveDot{0%,100%{opacity:1}50%{opacity:.15}}
   @keyframes ledBreath{0%,100%{opacity:.55}50%{opacity:1}}
   @keyframes tvTick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-  .tv-outer{position:relative;z-index:2;padding:clamp(6px,1.5vh,18px) clamp(2px,1vw,14px) clamp(4px,1vh,10px);}
-  .tv-wrap{max-width:min(860px,98vw);margin:0 auto;}
+  .tv-outer{position:relative;z-index:2;padding:clamp(4px,1vh,10px) 0 clamp(4px,1vh,10px);}
+  .tv-wrap{max-width:min(1040px,99vw);margin:0 auto;}
   .tv-frame{background:linear-gradient(175deg,#1e1e24 0%,#0e0e14 52%,#1e1e24 100%);border-radius:clamp(8px,1.6vw,14px) clamp(8px,1.6vw,14px) clamp(4px,0.8vw,8px) clamp(4px,0.8vw,8px);padding:clamp(10px,2vw,18px) clamp(10px,2vw,18px) clamp(8px,1.5vw,14px);box-shadow:0 0 0 1px rgba(255,255,255,.04),0 2px 0 1px rgba(255,255,255,.03),0 8px 40px rgba(0,0,0,.8),0 30px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07),inset 0 -1px 0 rgba(0,0,0,.6);position:relative;}
   .tv-frame::before{content:'';position:absolute;inset:clamp(8px,1.6vw,14px);border-radius:clamp(3px,0.6vw,6px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.6),inset 0 2px 6px rgba(0,0,0,.5);pointer-events:none;z-index:0;}
   .tv-screen-area{position:relative;aspect-ratio:16/9;background:#000;border-radius:clamp(3px,0.6vw,5px);overflow:hidden;box-shadow:inset 0 0 0 1px #000,0 0 20px rgba(100,150,255,.07);}
@@ -239,7 +239,7 @@
   .tv-logo{font-family:var(--f-type);font-size:clamp(7px,1.6vw,11px);color:#fff;font-weight:700;letter-spacing:.14em;}
   .tv-divider{width:1px;height:9px;background:rgba(255,255,255,.24);}
   .tv-ch{font-family:var(--f-type);font-size:clamp(5.5px,1.2vw,8px);color:rgba(255,255,255,.6);letter-spacing:.18em;}
-  .tv-time{margin-left:auto;font-family:var(--f-type);font-size:clamp(6px,1.3vw,9px);color:rgba(255,255,255,.5);letter-spacing:.1em;}
+  .tv-ch-num{margin-left:auto;font-family:var(--f-type);font-size:clamp(7px,1.5vw,10px);color:#fff;letter-spacing:.12em;font-weight:700;background:rgba(255,255,255,.14);padding:2px 6px;border-radius:3px;}
   .tv-headline{position:absolute;bottom:0;left:0;right:0;z-index:15;pointer-events:none;}
   .tv-hl-bar{background:linear-gradient(90deg,#a00,#d81818 60%,#a00);padding:clamp(3px,0.7vw,5px) clamp(8px,1.8vw,14px);display:flex;align-items:center;gap:clamp(4px,1vw,8px);}
   .tv-hl-tag{font-family:var(--f-type);font-size:clamp(6px,1.2vw,8px);background:#fff;color:#c00;padding:1px 5px;font-weight:700;letter-spacing:.06em;border-radius:1px;flex-shrink:0;}
@@ -255,7 +255,7 @@
   .tv-power-prompt{position:absolute;inset:0;z-index:13;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;opacity:0;transition:opacity .45s ease;pointer-events:none;}
   .tv-power-prompt.on{opacity:1;}
   .tv-pp-txt{font-family:var(--f-type);font-size:clamp(9px,2vw,13px);color:rgba(255,255,255,.55);letter-spacing:.26em;text-align:center;line-height:2;}
-  .tv-click-hint{font-family:var(--f-type);font-size:clamp(7px,1.6vw,10px);color:rgba(255,255,255,.36);letter-spacing:.16em;margin-top:4px;display:block;}
+  .tv-click-hint{display:block;text-align:center;font-family:var(--f-type);font-size:clamp(10px,2vw,13px);color:rgba(212,168,85,.7);letter-spacing:.22em;padding:10px 0 2px;}
   .tv-next-hint{position:absolute;right:clamp(8px,2vw,16px);top:38%;z-index:16;background:rgba(0,0,22,.9);border:1px solid rgba(255,210,60,.45);border-radius:5px;padding:clamp(5px,1.2vw,8px) clamp(8px,1.8vw,13px);opacity:0;transition:opacity .55s ease;pointer-events:none;text-align:center;max-width:clamp(80px,20vw,160px);}
   .tv-next-hint.show{opacity:1;}
   .tv-nh-tag{font-family:var(--f-type);font-size:clamp(5.5px,1.2vw,7.5px);color:rgba(255,210,60,.75);letter-spacing:.2em;margin-bottom:3px;}
@@ -807,11 +807,11 @@
           <div class="tv-topbar">
             <span class="tv-live-dot"></span><span class="tv-logo">新闻联播</span>
             <span class="tv-divider"></span><span class="tv-ch">今日要闻</span>
-            <span class="tv-time" id="tvTime"></span>
+            <span class="tv-ch-num" id="tvChNum">SLWTV 1</span>
           </div>
           <div class="tv-headline">
             <div class="tv-hl-bar"><span class="tv-hl-tag">头条</span><span class="tv-hl-name" id="tvHlName">—</span></div>
-            <div class="tv-hl-main"><div class="tv-hl-no" id="tvHlNo">NO.001</div><div class="tv-hl-txt" id="tvHlTxt">—</div><span class="tv-click-hint">▶ 点击屏幕查看详情</span></div>
+            <div class="tv-hl-main"><div class="tv-hl-no" id="tvHlNo">NO.001</div><div class="tv-hl-txt" id="tvHlTxt">—</div></div>
           </div>
           <div class="tv-prog" id="tvProg"></div>
           <div class="tv-next-hint" id="tvNH"><div class="tv-nh-tag">下一条 NEXT ▶</div><div class="tv-nh-txt" id="tvNHtxt">—</div></div>
@@ -824,14 +824,12 @@
         <div class="tv-legs"><div class="tv-leg"></div><div class="tv-leg"></div></div>
         <div class="tv-feet"><div class="tv-foot"></div><div class="tv-foot"></div></div>
       </div>
+      <span class="tv-click-hint">▶ 点击屏幕查看详情</span>
       <div class="tv-nav"><button class="tv-nbtn" id="tvPv">◀</button><div class="tv-ctr" id="tvCtr">01 / ${acts.length}</div><button class="tv-nbtn" id="tvNx">▶</button></div>
     </div>`;
     let ci=0;
     const tvPhoto=$('#tvPhoto'),tvImg=$('#tvImg'),tvHlName=$('#tvHlName'),tvHlNo=$('#tvHlNo'),tvHlTxt=$('#tvHlTxt'),tvProg=$('#tvProg'),tvNH=$('#tvNH'),tvNHtxt=$('#tvNHtxt'),tvCtr=$('#tvCtr');
-    const tvStatic=document.getElementById('tvStatic'),tvPP=document.getElementById('tvPP');
-    /* ---- 时钟 ---- */
-    function setTime(){const n=new Date;const s=document.getElementById('tvTime');if(s)s.textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
-    setTime();setInterval(setTime,30000);
+    const tvStatic=document.getElementById('tvStatic'),tvPP=document.getElementById('tvPP'),tvChNum=document.getElementById('tvChNum');
     /* ---- 雪花噪声 ---- */
     const cvCtx=tvStatic?tvStatic.getContext('2d'):null;let noiseId=null;
     function startNoise(){if(!cvCtx)return;clearInterval(noiseId);noiseId=setInterval(()=>{const d=cvCtx.createImageData(80,45);for(let i=0;i<d.data.length;i+=4){const v=Math.random()*255|0;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=160+Math.random()*95|0;}cvCtx.putImageData(d,0,0);},70);if(cvCtx)cvCtx.clearRect(0,0,80,45);}
@@ -845,6 +843,7 @@
       if(tvHlNo)tvHlNo.textContent='NO.'+String(idx+1).padStart(3,'0');
       if(tvHlTxt)tvHlTxt.textContent=act?act.name:'—';
       if(tvCtr)tvCtr.textContent=String(idx+1).padStart(2,'0')+' / '+acts.length;
+      if(tvChNum)tvChNum.textContent='SLWTV '+(idx+1);
     }
     function render(anim){
       if(anim){tvPhoto.style.opacity='0';setTimeout(()=>{fill(acts[ci],ci);tvPhoto.style.opacity='';},300);}
