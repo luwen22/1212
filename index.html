@@ -567,7 +567,6 @@
   <div class="lb-stage" id="lbStage"><button class="lb-nav p" id="lbPrev">‹</button><button class="lb-nav n" id="lbNext">›</button><div class="lb-track" id="lbTrack"></div></div>
 </section>
 <div class="toast" id="toast"></div>
-<div class="photo-hint" id="photoHint"><span class="ph-ico"></span><span class="ph-tx">轻点照片 · 放大查看</span></div>
 
 <script src="gallery.js"></script>
 <script>
@@ -787,17 +786,6 @@
     const ds=[SVG.map,SVG.book,SVG.star,SVG.cup,SVG.tree,SVG.plane];[[5,10],[88,14],[7,74],[91,66],[48,4],[80,88]].forEach((p,i)=>{const el=document.createElement('div');el.className='doodle';el.innerHTML=ds[i%ds.length];el.style.left=p[0]+'%';el.style.top=p[1]+'%';el.style.animationDelay=(i*0.7)+'s';$('#y1').appendChild(el);});
   })();
 
-  /* 首张照片处「轻点放大」提示：进入大一时出现一次，几秒后自隐，点照片即收 */
-  (function(){const hint=$('#photoHint'),ico=hint&&hint.querySelector('.ph-ico');if(!hint)return;if(ico)ico.innerHTML=SVG.zoom;
-    let shown=false,hideTmr=0;const hide=()=>hint.classList.remove('show');
-    const show=()=>{if(shown)return;shown=true;hint.classList.add('show');hideTmr=setTimeout(hide,10000);};
-    const dismiss=()=>{clearTimeout(hideTmr);hide();};
-    function check(){const r=$('#y1').getBoundingClientRect();
-      if(!shown){if(r.top<innerHeight*0.5&&r.bottom>innerHeight*0.35)show();}
-      else if(r.bottom<innerHeight*0.25){dismiss();removeEventListener('scroll',check);}}
-    addEventListener('scroll',check,{passive:true});setTimeout(check,400);
-    $('#gAct')&&$('#gAct').addEventListener('click',dismiss,{once:true});
-  })();
 
   /* 大二 活动：新闻播报电视机 */
   (function(){
