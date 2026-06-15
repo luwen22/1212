@@ -65,8 +65,8 @@ const CHAPTERS = [
   { id:"y3", era:"大三", span:"2024秋—2025春", title:"出去看看", desc:"侗锦，挑花，古商城，北部湾。有些东西，走了才看见。",
     quote:["走过的地方，","有你在就记得了。"], photos:8,
     trips:[
-      {place:"怀化",src:""},{place:"长沙",src:""},{place:"南昌",src:""},{place:"重庆",src:""},
-      {place:"武汉",src:""},{place:"合肥",src:""},{place:"吉首",src:""},{place:"湘西",src:""},
+      {place:"怀化",src:"photos/y3/01.jpg"},{place:"长沙",src:"photos/y3/02.jpg"},{place:"南昌",src:"photos/y3/03.jpg"},{place:"重庆",src:"photos/y3/04.jpg"},
+      {place:"武汉",src:"photos/y3/05.jpg"},{place:"合肥",src:""},{place:"吉首",src:""},{place:"湘西",src:""},
       {place:"贵阳",src:""},{place:"铜仁",src:""},{place:"麻阳县",src:""},{place:"南京",src:""},
       {place:"成都",src:""},{place:"新晃县",src:""},{place:"溆浦县",src:""},{place:"通道县",src:""},
       {place:"北海",src:""},{place:"武冈",src:""},{place:"娄底",src:""},{place:"上海",src:""},
