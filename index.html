@@ -19,7 +19,7 @@
     --f-type:'Courier New',ui-monospace,'Songti SC',monospace;
     --ease:cubic-bezier(.22,.65,.3,1);
   }
-  html{scroll-behavior:smooth;overflow-x:hidden;}
+  html{scroll-behavior:smooth;}
   body{font-family:var(--f-serif);background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
   body.locked{overflow:hidden;height:100vh;}
   img{display:block;max-width:100%;}
@@ -97,7 +97,7 @@
   .copyright{font-size:10px;letter-spacing:.2em;color:var(--ink-faint);}
 
   /* ===================================================== 序章 */
-  #preface{height:180vh;position:relative;}
+  #preface{height:120vh;position:relative;}
   .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px 15vh;gap:clamp(20px,4.6vh,46px);overflow:hidden;}
   .pre-fx{opacity:0;transform:translateY(22px);transition:opacity 1.7s ease,transform 1.7s var(--ease);}
   .pre-fx.in{opacity:1;transform:none;}
@@ -1084,7 +1084,7 @@
       if(started)return;started=true;
       if(norm(NAME))box.querySelectorAll('.credit-name').forEach(el=>{if(norm(el.dataset.n)===norm(NAME))el.classList.add('me');});
       if(reduce){view.style.overflow='auto';roll.style.position='relative';return;}
-      const vh=view.clientHeight,rh=roll.scrollHeight,dist=vh+rh,dur=Math.max(12000,dist/80*1000);
+      const vh=view.clientHeight,rh=roll.scrollHeight,endY=Math.min(0,vh-rh),dist=vh-endY,dur=Math.max(10000,dist/80*1000);
       let t0=null;
       function step(t){if(!t0)t0=t;const p=Math.min((t-t0)/dur,1);roll.style.transform=`translateY(${(vh-p*dist).toFixed(1)}px)`;if(p<1)requestAnimationFrame(step);}
       roll.style.transform=`translateY(${vh}px)`;requestAnimationFrame(step);
