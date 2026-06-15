@@ -234,9 +234,13 @@
   .tv-photo img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .65s ease;}
   .tv-photo img.loaded{opacity:1;}
   .tv-photo-fade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,20,.2) 0%,transparent 18%,transparent 60%,rgba(0,0,0,.22) 78%,rgba(0,0,0,.55) 100%);}
-  .tv-topbar{display:none;}
+  .tv-topbar{position:absolute;top:0;left:0;right:0;z-index:10;padding:clamp(4px,1vw,8px) clamp(8px,1.8vw,14px);background:linear-gradient(to right,#0f1a5c,#1835b0 50%,#0f1a5c);display:flex;align-items:center;gap:clamp(4px,1vw,8px);}
   .tv-live-dot{width:5px;height:5px;border-radius:50%;background:#f00;flex-shrink:0;animation:liveDot .9s ease-in-out infinite;}
+  .tv-logo{font-family:var(--f-type);font-size:clamp(7px,1.6vw,11px);color:#fff;font-weight:700;letter-spacing:.14em;}
+  .tv-divider{width:1px;height:9px;background:rgba(255,255,255,.24);}
+  .tv-topbar-ch{font-family:var(--f-type);font-size:clamp(5.5px,1.2vw,8px);color:rgba(255,255,255,.6);letter-spacing:.18em;}
   .tv-ch-num{margin-left:auto;font-family:var(--f-type);font-size:clamp(7px,1.5vw,10px);color:#fff;letter-spacing:.12em;font-weight:700;background:rgba(255,255,255,.14);padding:2px 6px;border-radius:3px;flex-shrink:0;}
+  .tv-hl-main{display:none;}
   .tv-headline{position:absolute;bottom:0;left:0;right:0;z-index:15;pointer-events:none;}
   .tv-hl-bar{background:linear-gradient(90deg,#a00,#d81818 60%,#a00);padding:clamp(3px,0.7vw,5px) clamp(8px,1.8vw,14px);display:flex;align-items:center;gap:clamp(4px,1vw,8px);}
   .tv-hl-tag{font-family:var(--f-type);font-size:clamp(6px,1.2vw,8px);background:#fff;color:#c00;padding:1px 5px;font-weight:700;letter-spacing:.06em;border-radius:1px;flex-shrink:0;}
@@ -805,10 +809,14 @@
           <canvas class="tv-static-cv" id="tvStatic" width="80" height="45"></canvas>
           <div class="tv-power-prompt" id="tvPP"><div class="tv-pp-txt">调 台 中<br>CONNECTING…</div></div>
           <div class="tv-photo" id="tvPhoto" data-cursor><img id="tvImg" alt=""></div>
+          <div class="tv-topbar">
+            <span class="tv-live-dot"></span><span class="tv-logo">新闻联播</span>
+            <span class="tv-divider"></span><span class="tv-topbar-ch">今日要闻</span>
+            <span class="tv-ch-num" id="tvChNum">SLWTV 1</span>
+          </div>
           <div class="tv-photo-fade"></div>
           <div class="tv-headline">
-            <div class="tv-hl-bar"><span class="tv-live-dot"></span><span class="tv-hl-tag">头条</span><span class="tv-hl-name" id="tvHlName">—</span><span class="tv-ch-num" id="tvChNum">SLWTV 1</span></div>
-            <div class="tv-hl-main"><div class="tv-hl-no" id="tvHlNo">NO.001</div><div class="tv-hl-txt" id="tvHlTxt">—</div></div>
+            <div class="tv-hl-bar"><span class="tv-hl-tag">头条</span><span class="tv-hl-name" id="tvHlName">—</span></div>
           </div>
           <div class="tv-end-screen" id="tvEnd"><div class="tv-end-txt">新闻播放完毕</div><div class="tv-end-sub">请前往下一部分</div></div>
           <div class="tv-prog" id="tvProg"></div>
