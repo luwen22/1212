@@ -25,7 +25,7 @@
   img{display:block;max-width:100%;}
   .ico{display:inline-flex;align-items:center;justify-content:center;line-height:0;}
   .ico svg{width:1em;height:1em;}
-  .ph img,.aph img,.pcard-photo .ph img,.tile img,.sthumb2 img,.gph img{object-position:center 30%;}
+  .ph img,.aph img,.pcard-photo .ph img,.tile img,.gph img{object-position:center 30%;}
 
   #loader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .8s ease;}
   #loader.hide{opacity:0;pointer-events:none;}
@@ -319,12 +319,13 @@
   .snake-svg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:visible;}
   .snake-line{fill:none;stroke:#cf9a4e;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.5;filter:drop-shadow(0 0 4px rgba(207,154,78,.45));}
   .snake-row{position:relative;z-index:1;display:flex;justify-content:space-around;gap:8px;}
-  .sstop{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;width:clamp(62px,20vw,100px);opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s var(--ease);}
+  .sstop{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;width:clamp(90px,26vw,148px);opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s var(--ease);}
   .sstop.in{opacity:1;transform:none;}
-  .sthumb2{width:clamp(58px,16vw,84px);height:clamp(58px,16vw,84px);border-radius:10px;overflow:hidden;background:#241c10;border:1px solid rgba(207,154,78,.35);display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:22px;box-shadow:0 8px 18px rgba(0,0,0,.45);transition:transform .3s var(--ease),box-shadow .3s;}
-  .sstop:hover .sthumb2{transform:scale(1.12) rotate(-2deg);box-shadow:0 14px 28px rgba(0,0,0,.55);}
-  .sthumb2 img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s;} .sthumb2 img.loaded{opacity:1;}
-  .splace2{font-family:var(--f-hand);font-size:clamp(13px,3.6vw,16px);color:#e7d8b8;letter-spacing:.04em;text-align:center;line-height:1.2;}
+  .sthumb2{width:100%;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#181410;border:1px solid rgba(207,154,78,.35);display:flex;align-items:center;justify-content:center;color:var(--gold-dim);font-size:22px;box-shadow:0 8px 18px rgba(0,0,0,.45);transition:transform .3s var(--ease),box-shadow .3s;}
+  .sstop:hover .sthumb2{transform:scale(1.07);box-shadow:0 14px 28px rgba(0,0,0,.6);}
+  .sthumb2 img{width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .6s;} .sthumb2 img.loaded{opacity:1;}
+  .splace2{font-family:var(--f-hand);font-size:clamp(12px,3.2vw,15px);color:#e7d8b8;letter-spacing:.04em;text-align:center;line-height:1.2;}
+  .shint{font-family:var(--f-type);font-size:clamp(8px,1.8vw,10px);color:rgba(207,154,78,.5);letter-spacing:.14em;text-align:center;}
 
   /* 大四（放映机·最后一程）*/
   #y4{background:#0a0907;padding-bottom:clamp(24px,5vh,48px);}
@@ -955,7 +956,7 @@
     const rows=[];for(let i=0;i<TRIPS.length;i+=cols)rows.push(TRIPS.slice(i,i+cols).map((t,j)=>({t,idx:i+j})));
     rows.forEach((row,r)=>{const rowEl=document.createElement('div');rowEl.className='snake-row';const ordered=r%2?row.slice().reverse():row;
       ordered.forEach(({t,idx})=>{const st=document.createElement('div');st.className='sstop reveal';st.dataset.idx=idx;
-        st.innerHTML=`<div class="sthumb2">${hasImg(t)?`<img data-src="${esc(t.src)}" alt="${esc(t.place)}">`:PHO}</div><div class="splace2">${esc(t.place)}</div>`;
+        st.innerHTML=`<div class="sthumb2">${hasImg(t)?`<img data-src="${esc(t.src)}" alt="${esc(t.place)}">`:PHO}</div><div class="splace2">${esc(t.place)}</div><div class="shint">＋ 点击放大</div>`;
         const im=st.querySelector('img');if(im)watchImg(im);
         st.addEventListener('click',()=>openLB(SNAKE_ITEMS,idx));rowEl.appendChild(st);watch(st);});
       wrap.appendChild(rowEl);});
