@@ -139,7 +139,7 @@
   .y1-bokeh{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
   .y1-bokeh i{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,206,128,.55),transparent 70%);filter:blur(2px);animation:bokeh linear infinite;}
   @keyframes bokeh{0%{transform:translateY(24px) scale(.8);opacity:0}16%{opacity:.7}84%{opacity:.45}100%{transform:translateY(-42vh) scale(1.12);opacity:0}}
-  #y1 .ch-era{color:#c9923a;} #y1 .ch-desc{color:#6b6052;}
+  #y1 .ch-era{color:#c9923a;} #y1 .ch-desc{color:#8a7a64;font-size:clamp(16px,4.6vw,22px);font-weight:500;letter-spacing:.08em;}
   #y1 .ch-title{font-family:var(--f-hand);font-weight:300;letter-spacing:.16em;}
   .doodle{position:absolute;color:#c9923a;opacity:.4;pointer-events:none;animation:doodleFloat 7s ease-in-out infinite;}
   .doodle svg{width:32px;height:32px;}
@@ -167,7 +167,8 @@
   .g-btn-a{width:clamp(62px,17vw,80px);height:clamp(62px,17vw,80px);border-color:rgba(220,175,65,.6);box-shadow:0 4px 0 #090603,0 8px 24px rgba(200,150,40,.22),inset 0 1px 0 rgba(255,210,120,.12);}
   .g-btn-a:active,.g-btn-a.on{box-shadow:0 1px 0 #090603,0 2px 10px rgba(200,150,40,.2),inset 0 1px 0 rgba(255,210,120,.08);}
   .g-col{display:flex;flex-direction:column;align-items:center;gap:5px;}
-  .g-lbl{font-family:var(--f-type);font-size:8.5px;color:rgba(190,150,55,.4);letter-spacing:.22em;}
+  .g-lbl{font-family:var(--f-type);font-size:10.5px;color:rgba(212,168,85,.85);letter-spacing:.1em;}
+  .g-tip{width:100%;text-align:center;margin:2px 0 10px;font-size:clamp(11px,3vw,13px);letter-spacing:.08em;color:var(--gold-dim);}
   .g-divider{width:1px;height:40px;background:rgba(200,155,55,.18);align-self:center;}
   .g-hints{display:flex;justify-content:center;gap:10px;padding:12px 4px 4px;flex-wrap:wrap;}
   .g-hint-cap{font-family:var(--f-type);font-size:clamp(11px,2.8vw,14px);letter-spacing:.1em;color:rgba(190,150,55,.6);background:rgba(12,8,3,.65);border:1px solid rgba(200,155,55,.26);border-radius:50px;padding:8px 18px;display:flex;align-items:center;gap:6px;white-space:nowrap;}
@@ -756,13 +757,14 @@
           </div>
         </div>
       </div>
+      <div class="g-tip">操作下方手柄逛校园 · ◀ ▶ 切换地点 · Ⓐ 看大图</div>
       <div class="game-ctrl">
         <div class="ctrl-dpad">
-          <div class="g-col"><button class="g-btn" id="gPrev">◀</button><div class="g-lbl">PREV</div></div>
-          <div class="g-col"><button class="g-btn" id="gNext">▶</button><div class="g-lbl">NEXT</div></div>
+          <div class="g-col"><button class="g-btn" id="gPrev">◀</button><div class="g-lbl">上一处</div></div>
+          <div class="g-col"><button class="g-btn" id="gNext">▶</button><div class="g-lbl">下一处</div></div>
         </div>
         <div class="g-divider"></div>
-        <div class="g-col"><button class="g-btn g-btn-a" id="gAct">Ⓐ</button><div class="g-lbl">VIEW</div></div>
+        <div class="g-col"><button class="g-btn g-btn-a" id="gAct">Ⓐ</button><div class="g-lbl">看大图</div></div>
       </div>
       `;
     let cur=0;
@@ -905,7 +907,7 @@
       else fill(acts[ci],ci);
     }
     /* ---- 自动轮播 ---- */
-    const AUTO=3000;let autoId=null,hintId=null;
+    const AUTO=2500;let autoId=null,hintId=null;
     function clearAuto(){clearTimeout(autoId);clearTimeout(hintId);}
     function startAuto(){
       clearAuto();
@@ -1048,7 +1050,7 @@
       const photo=hasImg(p)?`<img data-src="${esc(p.src)}" alt="${esc(p.name||'')}" style="object-position:${pos};${zoomCss}">`:PHO;
       const desc=p.note||(p.group?'合照里的他 · 待整理':'');
       card.innerHTML=`<div class="pcard-in">
-        <div class="pcard-face pcard-cover"><div class="holo"></div>${p.group?'<div class="pgroup-badge">合影</div>':''}<div class="pc-name">${esc(p.name||'')}</div><div class="pc-rule"></div>${desc?`<div class="pc-desc">${esc(desc)}</div>`:''}<div class="pc-hint"></div></div>
+        <div class="pcard-face pcard-cover"><div class="holo"></div><div class="pc-name">${esc(p.name||'')}</div><div class="pc-rule"></div>${desc?`<div class="pc-desc">${esc(desc)}</div>`:''}<div class="pc-hint"></div></div>
         <div class="pcard-face pcard-photo"><div class="ph">${photo}</div><div class="pname">${esc(p.name||'')}</div></div></div>`;
       const im=card.querySelector('img');if(im)watchImg(im);
       card.addEventListener('click',()=>{
