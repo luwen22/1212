@@ -372,6 +372,12 @@
   .pcard-photo .ph img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s;} .pcard-photo .ph img.loaded{opacity:1;}
   .pname{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:12px 10px;text-align:center;color:#fff;font-size:13px;letter-spacing:.08em;background:linear-gradient(to top,rgba(8,6,4,.92),transparent);}
   .pgroup-badge{position:absolute;top:8px;left:8px;z-index:6;font-size:10px;letter-spacing:.1em;color:#1a1206;background:rgba(212,168,85,.85);padding:2px 8px;border-radius:50px;}
+  /* 本人卡牌：翻开后彩色流光发光，与他人明显区分 */
+  .pcard.mine{z-index:3;animation:mineGlow 2.6s ease-in-out infinite;}
+  @keyframes mineGlow{0%,100%{box-shadow:0 0 16px 2px rgba(243,226,171,.55),0 0 36px 9px rgba(123,224,200,.26)}50%{box-shadow:0 0 28px 7px rgba(180,140,255,.55),0 0 58px 17px rgba(231,184,90,.42)}}
+  .pcard.mine .pcard-photo{background-image:linear-gradient(#15110c,#15110c),linear-gradient(135deg,#f3e2ab,#7be0c8,#b48cff,#e7b85a,#f3e2ab);background-size:auto,300% 300%;animation:mineHue 4s linear infinite;}
+  @keyframes mineHue{0%{background-position:0 0,0% 50%}100%{background-position:0 0,300% 50%}}
+  .pcard.mine .pname{background:linear-gradient(to top,rgba(58,28,86,.92),transparent);letter-spacing:.14em;}
   .down-cue{text-align:center;padding:clamp(40px,9vh,80px) 20px clamp(20px,5vh,40px);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--ink-faint);font-size:12px;letter-spacing:.34em;text-indent:.34em;}
   .down-cue .ar{font-size:16px;color:var(--gold-dim);animation:bob 1.8s ease-in-out infinite;}
 
@@ -487,7 +493,7 @@
     <div class="enter-group" id="enterGroup">
       <label class="name-field"><input id="nameInput" type="text" maxlength="12" autocomplete="off" spellcheck="false"></label>
       <button class="enter-link" id="enterLink" data-cursor></button>
-      <div class="enter-hint" id="enterHint">写下名字，轻点「来了」</div>
+      <div class="enter-hint" id="enterHint">请写下你的姓名全称 · 轻点「来了」</div>
     </div>
   </div>
   <div class="cover-foot" id="coverFoot"><div class="cover-place" id="coverPlace"></div><div class="copyright" id="copyright"></div></div>
@@ -540,7 +546,7 @@
 
   <section id="people">
     <div class="people-title reveal" id="peopleTitle"></div>
-    <div class="people-hint reveal">先是名字，轻点翻开看照片</div>
+    <div class="people-hint reveal">这里是每个人的名字 · 只有你的那张会自动翻开 · 仅可查看本人照片</div>
     <div class="grid" id="grid"></div>
     <div class="down-cue reveal"><span>向下滑动</span><span class="ar" id="cueAr2"></span></div>
   </section>
@@ -983,22 +989,28 @@
     const cnt=$('#y4count');let k=0;setInterval(()=>{const seq=['…3…2…1…','…READY…','…ROLL…'];cnt.textContent=seq[k++%seq.length];},2200);
   })();
 
-  /* 那些人：翻卡（默认盖名字 → 接龙连续翻开 → 翻开后点看大图）*/
+  /* 那些人：白名单翻卡（只有开头输入了本人姓名全称的人，滚到这里时自己的卡牌会自动翻开并发光；其余始终盖着名字，仅可查看本人照片）*/
   (function(){$('#peopleTitle').textContent=META_.peopleTitle||'';
     const ppItems=PPL.map(pp=>({src:pp.src||'',name:pp.name||''}));
-    // 进入视口的卡片排队，105ms 一张连续翻开，像接龙
+    const norm=s=>(s||'').trim();
+    const isMine=n=>!!norm(NAME)&&norm(n)===norm(NAME);
     let q=[],busy=false;
     function pump(){if(busy)return;const c=q.shift();if(!c)return;busy=true;c.classList.add('flipped');setTimeout(()=>{busy=false;pump();},240);}
-    const flipObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){flipObs.unobserve(e.target);if(!e.target.classList.contains('flipped')){q.push(e.target);pump();}}}),{threshold:.4});
-    const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal';card.style.transitionDelay=((i%4)*0.04)+'s';
+    // 只有“本人”的卡牌进入视口时自动翻开（保留翻牌动画），其余保持盖着
+    const flipObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){flipObs.unobserve(e.target);if(isMine(e.target.dataset.pname)){e.target.classList.add('mine');if(!e.target.classList.contains('flipped')){q.push(e.target);pump();}}}}),{threshold:.4});
+    const grid=$('#grid');PPL.forEach((p,i)=>{const card=document.createElement('div');card.className='pcard reveal';card.style.transitionDelay=((i%4)*0.04)+'s';card.dataset.pname=p.name||'';
       const pos=esc(p.pos||'center 30%');const zoomCss=p.zoom?`transform:scale(${+p.zoom});transform-origin:${pos};`:'';
       const photo=hasImg(p)?`<img data-src="${esc(p.src)}" alt="${esc(p.name||'')}" style="object-position:${pos};${zoomCss}">`:PHO;
       const desc=p.note||(p.group?'合照里的他 · 待整理':'');
       card.innerHTML=`<div class="pcard-in">
-        <div class="pcard-face pcard-cover"><div class="holo"></div>${p.group?'<div class="pgroup-badge">合影</div>':''}<div class="pc-name">${esc(p.name||'')}</div><div class="pc-rule"></div>${desc?`<div class="pc-desc">${esc(desc)}</div>`:''}<div class="pc-hint">翻开 · 点看大图</div></div>
+        <div class="pcard-face pcard-cover"><div class="holo"></div>${p.group?'<div class="pgroup-badge">合影</div>':''}<div class="pc-name">${esc(p.name||'')}</div><div class="pc-rule"></div>${desc?`<div class="pc-desc">${esc(desc)}</div>`:''}<div class="pc-hint"></div></div>
         <div class="pcard-face pcard-photo"><div class="ph">${photo}</div><div class="pname">${esc(p.name||'')}</div></div></div>`;
       const im=card.querySelector('img');if(im)watchImg(im);
-      card.addEventListener('click',()=>{if(card.classList.contains('flipped'))openLB(ppItems,i);else card.classList.add('flipped');});
+      card.addEventListener('click',()=>{
+        if(!isMine(card.dataset.pname)){toast('仅可查看本人照片');return;}
+        card.classList.add('mine');
+        if(card.classList.contains('flipped'))openLB([ppItems[i]],0);else card.classList.add('flipped');
+      });
       grid.appendChild(card);watch(card);flipObs.observe(card);});
   })();
 

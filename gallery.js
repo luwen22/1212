@@ -15,7 +15,7 @@ const POEM = [
 const META = {
   coverPlace: "2022 — 2026",
   copyright:  "© 立文之家 版权所有",
-  namePlaceholder: "写下你的名字",
+  namePlaceholder: "请输入姓名全称",
   enter:      "来了",
   present:    "立文之家 出品",
   endingWord: "来了",
