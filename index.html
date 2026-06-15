@@ -101,15 +101,9 @@
   .preface-stick{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px 15vh;gap:clamp(20px,4.6vh,46px);overflow:hidden;}
   .pre-fx{opacity:0;transform:translateY(22px);transition:opacity 1.7s ease,transform 1.7s var(--ease);}
   .pre-fx.in{opacity:1;transform:none;}
-  .pre-logo{position:relative;display:none;padding:14px 22px;}
-  .pre-logo::before{content:'';position:absolute;inset:0;border:1px solid var(--gold-dim);pointer-events:none;}
-  .pre-logo::after{content:'';position:absolute;inset:6px;border:1px solid rgba(212,168,85,.32);pointer-events:none;}
-  .pre-logo .lg-corner{position:absolute;width:14px;height:14px;border:1.5px solid var(--gold);pointer-events:none;}
-  .pre-logo .lg-corner.tl{top:-1px;left:-1px;border-right:none;border-bottom:none;}
-  .pre-logo .lg-corner.tr{top:-1px;right:-1px;border-left:none;border-bottom:none;}
-  .pre-logo .lg-corner.bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
-  .pre-logo .lg-corner.br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
-  .pre-logo img{display:block;width:clamp(220px,56vw,420px);height:auto;filter:drop-shadow(0 0 14px rgba(212,168,85,.28));}
+  .pre-logo{display:none;}
+  @keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 8px rgba(212,168,85,.22)) drop-shadow(0 0 22px rgba(212,168,85,.12))}50%{filter:drop-shadow(0 0 18px rgba(212,168,85,.72)) drop-shadow(0 0 40px rgba(212,168,85,.38))}}
+  .pre-logo img{display:block;width:clamp(220px,56vw,420px);height:auto;animation:logoGlow 3.2s ease-in-out infinite;}
   .pre-present{font-size:12px;letter-spacing:.5em;text-indent:.5em;color:var(--gold);}
   .pre-word{font-family:'Songti SC','STSong',serif;font-weight:700;font-size:clamp(64px,20vw,140px);letter-spacing:.14em;color:var(--ink);animation:preGlow 5s ease-in-out infinite;}
   @keyframes preGlow{0%,100%{text-shadow:0 0 34px rgba(212,168,85,.14)}50%{text-shadow:0 0 66px rgba(212,168,85,.32)}}
@@ -486,7 +480,7 @@
 <main id="story">
   <section id="preface">
     <div class="preface-stick">
-      <div class="pre-logo pre-fx" id="preLogo"><span class="lg-corner tl"></span><span class="lg-corner tr"></span><span class="lg-corner bl"></span><span class="lg-corner br"></span><img id="preLogoImg" alt="立文之家"></div>
+      <div class="pre-logo pre-fx" id="preLogo"><img id="preLogoImg" alt="立文之家"></div>
       <div class="pre-present pre-fx" id="prePresent"></div>
       <div class="pre-word pre-fx">来了</div>
       <div class="pre-rule pre-fx"></div>
