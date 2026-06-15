@@ -47,7 +47,7 @@ const CHAPTERS = [
       {place:"博学楼（3）",src:"photos/y1/26.jpg",pos:"center 45%"},{place:"博学楼（4）",src:"photos/y1/27.jpg",pos:"center 40%"},{place:"北门",src:"photos/y1/28.jpg",pos:"center 45%"}
     ] },
   { id:"y2", era:"大二", span:"2023秋—2024夏", title:"留下来，开始忙了", desc:"青春是一条条新闻",
-    quote:["那些年做了很多不是自己想做的事，","但你是真的。"],
+    quote:["那些年做了很多不是自己想做的事，","但学生会的生活是开心的"],
     fragments:["楼管分会","检查卫生","宣传稿","素拓部","已归档","团委办公室"],
     /* 活动：name=活动名  src=照片  pos="x% y%"=取景焦点。可无限追加，照片到位填 src 即可。 */
     activities:[

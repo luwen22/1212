@@ -279,13 +279,15 @@
   .tv-feet{display:flex;justify-content:space-between;width:clamp(85px,16vw,135px);}
   .tv-foot{height:clamp(3px,0.6vw,5px);width:clamp(14px,3vw,25px);background:linear-gradient(to right,#444,#888 50%,#444);border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,.5);}
   .tv-ch-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:clamp(3px,0.8vw,6px);padding:clamp(8px,1.5vw,12px) 0 clamp(4px,1vw,6px);}
-  .tv-ch-item{display:flex;align-items:center;gap:clamp(4px,1vw,7px);cursor:pointer;padding:clamp(4px,0.8vw,6px) clamp(6px,1.3vw,10px);border:1px solid rgba(200,155,55,.12);border-radius:4px;background:rgba(255,255,255,.02);opacity:0;transform:translateX(-6px);transition:opacity .4s ease,transform .4s ease,background .25s,border-color .25s;pointer-events:none;-webkit-tap-highlight-color:transparent;}
-  .tv-ch-item.revealed{opacity:1;transform:none;pointer-events:auto;}
+  .tv-ch-item{display:flex;align-items:center;gap:clamp(4px,1vw,7px);padding:clamp(4px,0.8vw,6px) clamp(6px,1.3vw,10px);border:1px solid rgba(255,255,255,.07);border-radius:4px;background:rgba(255,255,255,.02);min-height:clamp(22px,3.5vw,28px);transition:background .3s,border-color .3s;pointer-events:none;-webkit-tap-highlight-color:transparent;}
+  .tv-ch-item.revealed{border-color:rgba(200,155,55,.18);pointer-events:auto;cursor:pointer;}
+  .tv-ch-item.revealed:hover{background:rgba(212,168,85,.07);border-color:rgba(212,168,85,.3);}
   .tv-ch-item.active{background:rgba(212,168,85,.1);border-color:rgba(212,168,85,.4);}
-  .tv-ch-item:hover{background:rgba(212,168,85,.07);border-color:rgba(212,168,85,.25);}
-  .tv-ch-code{font-family:var(--f-type);font-size:clamp(7px,1.4vw,9.5px);color:rgba(200,155,55,.5);letter-spacing:.06em;flex-shrink:0;min-width:clamp(40px,7.5vw,58px);}
+  .tv-ch-code{font-family:var(--f-type);font-size:clamp(7px,1.4vw,9.5px);color:rgba(200,155,55,.5);letter-spacing:.06em;flex-shrink:0;min-width:clamp(40px,7.5vw,58px);opacity:0;transition:opacity .4s ease;}
+  .tv-ch-item.revealed .tv-ch-code{opacity:1;}
   .tv-ch-item.active .tv-ch-code{color:rgba(212,168,85,.92);}
-  .tv-ch-lbl{font-family:var(--f-type);font-size:clamp(9px,1.9vw,12px);color:rgba(255,255,255,.48);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tv-ch-lbl{font-family:var(--f-type);font-size:clamp(9px,1.9vw,12px);color:rgba(255,255,255,.48);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:0;transition:opacity .4s ease .1s;}
+  .tv-ch-item.revealed .tv-ch-lbl{opacity:1;}
   .tv-ch-item.active .tv-ch-lbl{color:rgba(255,255,255,.92);}
 
   /* 大三 旅游（地图 + 横向蛇形地点轴）*/
