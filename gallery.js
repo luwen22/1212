@@ -135,6 +135,7 @@ const GROUP_PHOTOS = [
   {name:"王紫庆",src:"photos/hz/91.jpg"},{name:"何佳",src:"photos/hz/92.jpg"},{name:"范子涵",src:"photos/hz/93.jpg"},
   {name:"徐旭丽",src:"photos/hz/94.jpg"},{name:"陈莹莹",src:"photos/hz/95.jpg"},{name:"陈紫玲",src:"photos/hz/96.jpg"},
   {name:"胡莎",src:"photos/hz/97.jpg"},{name:"王晗",src:"photos/hz/98.jpg"},
+  {name:"汪炜家",src:"photos/hz/99.jpg"},{name:"宗雅",src:"photos/hz/100.jpg"},
 ];
 
 const PEOPLE = [
@@ -157,5 +158,5 @@ const PEOPLE = [
   {name:"黄皓轩"},{name:"黄诚"},{name:"阳慧"},{name:"肖媛"},{name:"向玉"},{name:"张寒冰"},{name:"田聪"},{name:"刘子扬"},{name:"崔冠杨"},{name:"龚美芝"},{name:"韩玲"},{name:"余依琳"},{name:"肖雅兰"},{name:"胡杨"},{name:"义晴"},{name:"谭长运"},{name:"黄馨慧"},{name:"刘柄南"},{name:"毛清华"},{name:"张启敏"},{name:"潘晟"},{name:"孙琳"},{name:"唐搏"},{name:"邓承宏"},{name:"杨琨"},{name:"尹元妹"},{name:"赵梦博"},{name:"邹洋阳"},{name:"唐歆雨"},{name:"卢山林"},{name:"易子皓"},{name:"肖南"},{name:"杨秋露"},{name:"张有玲"},{name:"杨荣栋"},{name:"侯婷"},{name:"梧桐"},
   {name:"孙诗涵"},{name:"王滢"},{name:"聂丹"},{name:"张信"},{name:"王晗"},{name:"宗雅"},{name:"程紫茵"},{name:"李隆鑫"},{name:"陈冯强"},{name:"吴凯"},{name:"田悦"},{name:"余必洋"},{name:"邓珊珊"},{name:"郭加强"},
   {name:"方强"},{name:"何俊"},{name:"张佳"},{name:"周雯悦"},
-  {name:"杨超宇"},{name:"凌章"},{name:"徐爽"},{name:"蔡悦"},{name:"王紫庆"},{name:"何佳"},{name:"范子涵"},{name:"徐旭丽"},{name:"陈莹莹"},{name:"陈紫玲"},{name:"胡莎"}
+  {name:"杨超宇"},{name:"凌章"},{name:"徐爽"},{name:"蔡悦"},{name:"王紫庆"},{name:"何佳"},{name:"范子涵"},{name:"徐旭丽"},{name:"陈莹莹"},{name:"陈紫玲"},{name:"胡莎"},{name:"汪炜家"}
 ];
