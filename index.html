@@ -757,7 +757,7 @@
 
   const revObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}}),{threshold:.16,rootMargin:'0px 0px -8% 0px'});
   function watch(el){revObs.observe(el);}
-  const imgObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const im=e.target;if(im.dataset.src&&!im.src)im.src=im.dataset.src;imgObs.unobserve(im);}}),{rootMargin:'250px'});
+  const imgObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const im=e.target;if(im.dataset.src&&!im.src)im.src=im.dataset.src;imgObs.unobserve(im);}}),{rootMargin:'600px'});
   function watchImg(im){imgObs.observe(im);}
   document.addEventListener('load',e=>{if(e.target.tagName==='IMG')e.target.classList.add('loaded');},true);
   $$('.reveal,.quote').forEach(watch);
@@ -891,6 +891,8 @@
         gNum.textContent=String(cur+1).padStart(2,'0')+' / '+spots.length;
         gBar.style.width=((cur+1)/spots.length*100).toFixed(1)+'%';
         markLit(cur);
+        /* 预加载相邻几张，慢网下翻图更跟手 */
+        [cur+1,cur+2,cur-1].forEach(k=>{const sp=spots[k];if(sp&&sp.src){const pi=new Image();pi.src=sp.src;}});
       },220);
     }
     goTo(0);
