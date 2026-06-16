@@ -128,6 +128,7 @@ const GROUP_PHOTOS = [
   {name:"王铭娜",src:"photos/hz/61.jpg"},{name:"周汨祯",src:"photos/hz/62.jpg"},{name:"贺婧姝",src:"photos/hz/63.jpg"},{name:"吴慧涛",src:"photos/hz/64.jpg"},
   {name:"谭潇",src:"photos/hz/65.jpg"},{name:"谢芷妍",src:"photos/hz/66.jpg"},{name:"黄慧婷",src:"photos/hz/67.jpg"},{name:"邱振宇",src:"photos/hz/68.jpg"},
   {name:"孙诗涵",src:"photos/hz/69.jpg"},{name:"王滢",src:"photos/hz/70.jpg"},{name:"聂丹",src:"photos/hz/71.jpg"},{name:"张信",src:"photos/hz/72.jpg"},{name:"卢山林",src:"photos/hz/73.jpg"},
+  {name:"崔冠杨",src:"photos/hz/74.jpg"},{name:"张启敏",src:"photos/hz/75.jpg"},{name:"潘晟",src:"photos/hz/76.jpg"},
 ];
 
 const PEOPLE = [
