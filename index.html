@@ -550,6 +550,13 @@
   .bgm-ctrl.paused .bgm-bars i{animation-play-state:paused;transform:scaleY(.4);}
   .bgm-hint{font-size:11px;letter-spacing:.12em;color:var(--gold-dim);background:rgba(20,15,10,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:6px 12px;border-radius:50px;white-space:nowrap;border:1px solid rgba(212,168,85,.2);opacity:0;transform:translateX(-6px);transition:opacity .5s ease,transform .5s ease;}
   .bgm-ctrl.hint .bgm-hint{opacity:1;transform:translateX(0);}
+  /* 手机端性能降负：停掉持续重绘的动态噪点/光晕混合与 y1 旋转混合层，桌面端不受影响 */
+  @media (pointer:coarse){
+    .grain{animation:none;}
+    .leak{filter:blur(46px);} .leak.a,.leak.b{animation:none;}
+    .y1-aura{mix-blend-mode:normal;animation:none;opacity:.26;}
+    .y1-bokeh i{filter:blur(1px);}
+  }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s !important;}}
 </style>
 </head>
@@ -1209,7 +1216,7 @@
     if(!reduce){
       for(const o of PX){const r=o.el.getBoundingClientRect();if(r.bottom<-60||r.top>vh+60)continue;const c=(r.top+r.height/2)-vh/2;o.el.style.transform=`translate3d(0,${(c*o.k).toFixed(1)}px,0)`;}
       for(const b of chBodies){const r=b.getBoundingClientRect();if(r.bottom<0||r.top>vh)continue;const d=clamp(((r.top+r.height/2)-vh/2)/vh,-1,1);b.style.transform=`translateY(${(d*18).toFixed(1)}px)`;}
-      if(y1El&&y1aura){const r=y1El.getBoundingClientRect();if(r.bottom>0&&r.top<vh){const vis=clamp(1-Math.abs((r.top+r.height/2-vh/2)/vh),0,1);y1aura.style.opacity=(0.36+vis*0.5).toFixed(2);}}
+      if(!touch&&y1El&&y1aura){const r=y1El.getBoundingClientRect();if(r.bottom>0&&r.top<vh){const vis=clamp(1-Math.abs((r.top+r.height/2-vh/2)/vh),0,1);y1aura.style.opacity=(0.36+vis*0.5).toFixed(2);}}
     }
     if(mapEl&&route){const r=mapEl.getBoundingClientRect();if(r.bottom>0&&r.top<vh){const prog=clamp((vh*0.82-r.top)/((r.height*0.78)||1),0,1);route.style.strokeDashoffset=(routeLen*(1-prog)).toFixed(1);const N=rpins.length||1;rpins.forEach((p,i)=>p.classList.toggle('lit',prog>(i+0.55)/N));}}
     if(snakePath&&snakeWrap){const r=snakeWrap.getBoundingClientRect();const gp=clamp((vh*0.82-r.top)/(r.height||1),0,1);const len=+snakePath.dataset.len||0;snakePath.style.strokeDashoffset=len*(1-gp);}
