@@ -565,7 +565,7 @@
   <button class="bgm-btn" id="bgmBtn" type="button" aria-label="音乐开关"><span class="bgm-bars"><i></i><i></i><i></i></span></button>
   <span class="bgm-hint" id="bgmHint">点击关闭音乐</span>
 </div>
-<audio id="bgm" loop preload="auto"></audio>
+<audio id="bgm" loop preload="none"></audio>
 
 <section id="cover">
   <div class="lightshaft"></div><div class="shaft-glow"></div><div class="shoot"></div>
@@ -1142,7 +1142,7 @@
     PPL.forEach(p=>{if(p&&p.src)out.push(p.src);});
     return [...new Set(out)];}
   /* 洗牌后取有限张数循环复用：手机端避免一次解码上百张大图导致拼图空白（同一 src 只解码一次）*/
-  const POOL=(()=>{const a=buildPhotoPool();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(a.length,30));})();
+  const POOL=(()=>{const a=buildPhotoPool();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,Math.min(a.length,18));})();
   function spawnConfetti(){const box=$('#confetti');if(!box)return;const cols=['#f3e2ab','#d4a855','#e7b85a','#bb8f3e','#f6efd8','#caa14e'];for(let i=0;i<38;i++){const c=document.createElement('i');c.style.background=cols[i%cols.length];const w=5+Math.random()*7;c.style.width=w+'px';c.style.height=(w*0.45+2)+'px';c.style.left=(Math.random()*100)+'%';c.style.setProperty('--x',((Math.random()-.5)*170)+'px');c.style.animationDuration=(2.8+Math.random()*2.6)+'s';c.style.animationDelay=(Math.random()*0.5)+'s';box.appendChild(c);setTimeout(()=>c.remove(),6200);}}
   function buildGlyphTargets(text){const W=300,H=150,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';x.font='700 112px "Songti SC","STSong",serif';x.fillText(text,W/2,H/2+4);const d=x.getImageData(0,0,W,H).data,pts=[],step=8;for(let yy=0;yy<H;yy+=step)for(let xx=0;xx<W;xx+=step){if(d[(yy*W+xx)*4+3]>128)pts.push([xx/W,yy/H]);}return {pts,ratio:W/H};}
   function buildTiles(){const wall=$('#wall');wall.innerHTML='';TILES=[];const {pts,ratio}=buildGlyphTargets('来了');const vw=innerWidth,vh=innerHeight;const dispW=Math.min(vw*0.8,680),dispH=dispW/ratio;const TS=clamp(Math.round(dispW/24),22,36);
@@ -1152,7 +1152,7 @@
       /* 永远先铺金色底，保证「来了」即时可见；照片加载后覆盖其上，失败/慢则保留金底 */
       t.style.background=`linear-gradient(135deg,hsla(${36+Math.random()*14},62%,${48+Math.random()*22}%,.95),hsla(34,52%,32%,.82))`;
       const src=nextSrc();
-      if(src){const im=document.createElement('img');im.decoding='async';im.onerror=()=>im.remove();im.src=src;t.appendChild(im);}
+      if(src){const im=document.createElement('img');im.decoding='async';im.onerror=()=>im.remove();im.dataset.src=src;watchImg(im);t.appendChild(im);}
       const gx=50+(pt[0]-0.5)*(dispW/vw*100),gy=46+(pt[1]-0.5)*(dispH/vh*100);const ang=Math.random()*6.28,dist=70+Math.random()*120;
       t.dataset.gx=gx;t.dataset.gy=gy;t.dataset.sx=50+Math.cos(ang)*dist;t.dataset.sy=50+Math.sin(ang)*dist;t.dataset.rot=(Math.random()-.5)*120;t.dataset.scl=.4+Math.random()*.6;t.dataset.delay=Math.random()*.3;
       wall.appendChild(t);TILES.push(t);});glyphReady=true;}
